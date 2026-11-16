@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>LaboCiné — Le cinéma autrement</title>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;500;600;700;800;900&family=Oswald:wght@300;400;500;600;700&display=swap");
+
+:root{
+  --gold:#d7aa52;--gold-light:#f1d28c;--red:#8e3028;
+  --brown:#291b16;--cream:#f4e8cf;--muted:#c6b18d;
+  --green:#66845a;--blue:#557d91;
+  --font-title:"Roboto Slab",Rockwell,Georgia,serif;
+  --font-body:"Oswald","Arial Narrow",Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scrollbar-width:none;-ms-overflow-style:none}
+html::-webkit-scrollbar,body::-webkit-scrollbar,.movie-rail::-webkit-scrollbar{display:none;width:0;height:0}
+body{margin:0;background:radial-gradient(ellipse at top,#503322,#291b16 48%,#1d1411);color:var(--cream);font-family:var(--font-body);min-height:100vh;scrollbar-width:none;-ms-overflow-style:none;overflow-x:hidden}
+button,input,select{font:inherit}
+button{cursor:pointer}
+h1,h2,h3,h4,.logo-name,.movie-info h3,.ticket-head h1{font-family:var(--font-title);font-weight:900;letter-spacing:-.4px}
+p,.eyebrow,.logo-sub,.nav-links button,.nav-links a,.movie-info,.movie-meta,.detail-content p,.summary-card,.seat-legend,.form-group,label,.ticket-body{font-family:var(--font-body)}
+
+@keyframes fadeIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeInScale{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@keyframes glow{0%,100%{box-shadow:0 0 8px rgba(215,170,82,.12)}50%{box-shadow:0 0 23px rgba(215,170,82,.4)}}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes videoAppear{from{opacity:0;transform:translateY(20px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+
+header{position:sticky;top:0;z-index:20;background:rgba(35,23,18,.97);border-bottom:1px solid rgba(215,170,82,.45);box-shadow:0 5px 20px #0005;backdrop-filter:blur(12px)}
+.navbar{max-width:1250px;margin:auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{border:0;background:none;color:var(--gold-light);text-align:left;display:flex;align-items:center;gap:12px;padding:0;transition:transform .3s}
+.logo:hover{transform:scale(1.04)}
+.logo-mark{width:45px;height:45px;border:2px solid var(--gold);display:grid;place-items:center;font-size:12px;font-weight:bold;letter-spacing:1px;transform:rotate(-5deg);transition:.4s}
+.logo:hover .logo-mark{transform:rotate(5deg);background:rgba(215,170,82,.15)}
+.logo-name{font-size:23px;letter-spacing:2px;font-weight:bold}
+.logo-sub{display:block;color:var(--muted);font-size:9px;letter-spacing:3px;margin-top:3px}
+.nav-links{display:flex;gap:10px;align-items:center}
+.nav-links button,.nav-links a{
+  background:transparent;
+  border:1px solid transparent;
+  color:var(--cream);
+  padding:9px 13px;
+  border-radius:3px;
+  transition:.25s;
+  text-decoration:none;
+  font-size:inherit;
+  cursor:pointer;
+}
+.nav-links button:hover,.nav-links a:hover{
+  border-color:var(--gold);
+  color:var(--gold-light);
+  transform:translateY(-2px);
+}
+.page{display:none;min-height:calc(100vh - 75px)}
+.page.active{display:block;animation:fadeIn .45s ease both}
+.container{max-width:1200px;margin:auto;padding:35px 24px 65px}
+.eyebrow{color:var(--gold);text-transform:uppercase;letter-spacing:4px;font-size:11px;font-weight:bold}
+.hero{min-height:340px;padding:65px 25px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(215,170,82,.4);background:linear-gradient(90deg,rgba(30,18,14,.93),rgba(75,35,24,.72),rgba(30,18,14,.93)),repeating-linear-gradient(90deg,transparent 0 40px,rgba(215,170,82,.06) 41px 42px)}
+.hero::before,.hero::after{content:"";position:absolute;width:180px;height:180px;border:1px solid rgba(215,170,82,.22);border-radius:50%;animation:float 6s ease-in-out infinite}
+.hero::before{left:-80px;top:-85px}.hero::after{right:-80px;bottom:-85px;animation-delay:1.5s}
+.hero h1{max-width:800px;margin:15px 0;font-size:clamp(38px,7vw,75px);line-height:.98;color:var(--gold-light);text-shadow:2px 3px 0 rgba(0,0,0,.35);animation:fadeInScale .8s ease both}
+.hero p{color:#ead9b8;max-width:600px;line-height:1.7}
+.gold-line{width:90px;height:3px;background:var(--gold);margin:13px auto;animation:glow 3s infinite}
+.primary-btn,.secondary-btn,.red-btn{border:0;padding:13px 22px;font-weight:bold;letter-spacing:1px;text-transform:uppercase;border-radius:3px;transition:transform .25s,background .25s,box-shadow .25s}
+.primary-btn{background:var(--gold);color:#291b16}
+.primary-btn:hover{background:var(--gold-light);transform:translateY(-3px);box-shadow:0 7px 18px rgba(215,170,82,.2)}
+.secondary-btn{background:transparent;color:var(--gold-light);border:1px solid var(--gold)}
+.secondary-btn:hover{background:rgba(215,170,82,.12);transform:translateY(-2px)}
+.red-btn{background:var(--red);color:white}.red-btn:hover{filter:brightness(1.2);transform:translateY(-2px)}
+.section-heading{display:flex;align-items:end;justify-content:space-between;gap:15px;margin:42px 0 18px}
+.section-heading h2{color:var(--gold-light);font-size:29px;margin:0}
+.section-heading p{color:var(--muted);margin:5px 0 0;font-size:14px}
+.filters{display:flex;flex-wrap:wrap;gap:8px}
+.filter-btn{border:1px solid #8a6b40;color:var(--cream);background:#38251d;padding:8px 15px;border-radius:30px;transition:.25s}
+.filter-btn.active,.filter-btn:hover{background:var(--gold);color:var(--brown);border-color:var(--gold);transform:translateY(-2px)}
+.movie-rail{display:flex;gap:19px;overflow-x:auto;overflow-y:hidden;padding:12px 4px 25px;scroll-snap-type:x mandatory;scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;-ms-overflow-style:none;cursor:grab;touch-action:pan-x}
+.movie-rail:active{cursor:grabbing}.movie-rail .movie-card{flex:0 0 205px;scroll-snap-align:start}
+.catalogue-tools{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:22px 0 8px}
+.catalogue-tools input{flex:1;min-width:180px;padding:13px 16px;background:#211713;color:var(--cream);border:1px solid rgba(215,170,82,.5);border-radius:4px}
+.catalogue-tools select{flex:1 1 220px;width:auto;min-width:190px;padding:12px 14px;background:#211713;color:var(--cream);border:1px solid rgba(215,170,82,.5);border-radius:4px}
+.catalogue-tools button{font-size:11px;padding:12px 14px}
+.favorites-toggle{white-space:nowrap;border:1px solid var(--gold);color:var(--gold-light);background:transparent;padding:12px 17px;border-radius:4px;transition:.25s}
+.favorites-toggle.active,.favorites-toggle:hover{background:var(--gold);color:var(--brown)}
+.movie-card{position:relative;flex:0 0 205px;scroll-snap-align:start;background:#39261e;border:1px solid rgba(215,170,82,.35);transition:transform .3s,border-color .3s,box-shadow .3s;cursor:pointer;overflow:hidden;animation:fadeInScale .45s ease both}
+.movie-card:hover{transform:translateY(-8px) scale(1.02);border-color:var(--gold);box-shadow:0 12px 25px rgba(0,0,0,.35),0 0 12px rgba(215,170,82,.12)}
+.favorite-btn{position:absolute;z-index:3;top:10px;right:10px;width:38px;height:38px;border:1px solid var(--gold);border-radius:50%;background:rgba(41,27,22,.94);color:var(--gold-light);font-size:23px;line-height:1;display:grid;place-items:center;transition:.25s}
+.favorite-btn:hover{transform:scale(1.12)}.favorite-btn.is-favorite{background:var(--gold);color:var(--brown)}
+.movie-card:focus-visible{outline:3px solid var(--gold-light);outline-offset:4px}
+.poster{height:275px;padding:18px;position:relative;overflow:hidden;display:flex;flex-direction:column;justify-content:space-between;text-align:center;background:radial-gradient(circle at 50% 35%,rgba(244,210,140,.25),transparent 40%),linear-gradient(145deg,#a44a32,#48271d 70%);border-bottom:3px solid var(--gold)}
+.poster::before{content:"";position:absolute;inset:9px;border:1px solid rgba(241,210,140,.55);transition:inset .3s}
+.movie-card:hover .poster::before{inset:15px}
+.poster::after{content:"";position:absolute;width:130px;height:130px;border:1px solid rgba(241,210,140,.23);border-radius:50%;top:65px;left:50%;transform:translateX(-50%);transition:transform .5s}
+.movie-card:hover .poster::after{transform:translateX(-50%) scale(1.2)}
+.poster-top,.poster-title,.poster-year{position:relative;z-index:1}
+.poster-top{color:var(--gold-light);font-size:10px;letter-spacing:3px;text-transform:uppercase}
+.poster-title{font-size:27px;line-height:1.02;font-weight:bold;text-transform:uppercase;color:#f7dfad;text-shadow:2px 3px 0 #4b241b;font-family:var(--font-title)}
+.poster-year{color:#e8c88c;font-size:13px;letter-spacing:3px}
+.movie-info{padding:13px}.movie-info h3{margin:0 0 6px;color:var(--cream);font-size:16px;line-height:1.2}.movie-info p{margin:0;color:var(--muted);font-size:12px}
+.card-action{margin-top:12px;color:var(--gold);font-size:11px;text-transform:uppercase;letter-spacing:1px}
+.empty-catalogue{width:100%;padding:25px;text-align:center;color:var(--muted);border:1px dashed rgba(215,170,82,.45)}
+.panel{background:rgba(55,36,27,.9);border:1px solid rgba(215,170,82,.45);padding:28px;box-shadow:0 12px 30px #0003}
+.back-btn{border:0;background:none;color:var(--gold-light);padding:8px 0;margin-bottom:20px;transition:transform .2s}
+.back-btn:hover{transform:translateX(-4px)}
+.detail-layout{display:grid;grid-template-columns:310px 1fr;gap:35px;align-items:start}
+.detail-poster{height:360px;min-height:0;align-self:start;display:flex;align-items:center;justify-content:center;padding:25px;text-align:center;background:linear-gradient(145deg,#a44a32,#42251d);border:5px double var(--gold);color:var(--gold-light);font-size:32px;font-weight:bold;text-transform:uppercase;line-height:1.1;text-shadow:2px 3px #4b241b;font-family:var(--font-title);animation:glow 4s infinite;overflow:hidden;overflow-wrap:anywhere}
+.detail-content{min-width:0}
+.detail-content h1{color:var(--gold-light);font-size:clamp(32px,5vw,52px);margin:8px 0 14px}
+.meta-row{display:flex;flex-wrap:wrap;gap:9px;margin:15px 0 25px}
+.meta-chip{padding:7px 11px;border:1px solid #987443;color:var(--gold-light);font-size:12px}
+.detail-content p{color:#ddc9a7;line-height:1.8}
+.video-section{margin-top:30px;padding-top:22px;border-top:1px solid rgba(215,170,82,.35);animation:videoAppear .7s ease both}
+.video-section h3{color:var(--gold-light);margin:0 0 8px;font-size:22px}
+.video-section p{color:var(--muted);font-size:13px;margin:0 0 15px}
+.video-container{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#100b09;border:2px solid var(--gold);border-radius:5px;box-shadow:0 8px 25px #0007}
+.video-container iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.step-indicator{display:flex;justify-content:center;gap:0;margin:0 auto 30px;max-width:750px}
+.step{flex:1;text-align:center;color:#947c5b;font-size:11px;text-transform:uppercase;letter-spacing:1px;border-bottom:2px solid #634b35;padding:0 4px 12px}
+.step span{display:block;margin:0 auto 8px;width:27px;height:27px;border:1px solid #947c5b;border-radius:50%;line-height:25px}
+.step.active{color:var(--gold-light);border-color:var(--gold)}.step.active span{background:var(--gold);color:var(--brown);border-color:var(--gold)}
+.step.done{color:#c7b18a;border-color:var(--green)}.step.done span{background:var(--green);color:white;border-color:var(--green)}
+.booking-layout{display:grid;grid-template-columns:1fr 300px;gap:25px;align-items:start}
+.form-label{display:block;color:var(--gold-light);font-size:14px;margin:18px 0 8px}
+select,input{width:100%;padding:12px;background:#211713;color:var(--cream);border:1px solid #87663e;border-radius:3px;outline:none}
+select:focus,input:focus{border-color:var(--gold-light)}
+.time-options{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+.time-btn{padding:12px 18px;color:var(--cream);background:#291b16;border:1px solid #87663e;border-radius:3px;transition:.2s}
+.time-btn.selected,.time-btn:hover{background:var(--gold);color:var(--brown);border-color:var(--gold)}
+.summary-card{position:sticky;top:100px}.summary-card h3{margin-top:0;color:var(--gold-light)}
+.summary-line{display:flex;justify-content:space-between;gap:12px;padding:10px 0;border-bottom:1px solid #614a35;color:#d8c4a2;font-size:14px}
+.summary-line strong{color:var(--gold-light);text-align:right}
+.total-line{font-size:19px;color:var(--gold-light);font-weight:bold;margin-top:8px}
+.attendee-list{display:grid;gap:12px;margin-top:14px}
+.attendee-row{display:grid;grid-template-columns:minmax(90px,.7fr) minmax(150px,1.3fr) auto;align-items:center;gap:12px;padding:13px;background:#291b16;border:1px solid rgba(215,170,82,.35)}
+.attendee-name{color:var(--gold-light);font-size:14px}.attendee-row select{padding:9px}.attendee-price{color:var(--gold-light);font-weight:bold;white-space:nowrap}
+.calendar-grid{display:grid;grid-template-columns:repeat(7,minmax(105px,1fr));gap:10px;margin:18px 0 25px}
+.day-card{border:1px solid #87663e;background:#291b16;color:var(--cream);padding:14px 8px;border-radius:5px;text-align:center;min-width:0;transition:.2s}
+.day-card:hover{border-color:var(--gold);transform:translateY(-3px)}.day-card.selected{background:var(--gold);color:var(--brown);border-color:var(--gold-light);box-shadow:0 0 0 2px rgba(215,170,82,.2)}
+.day-name{font-size:12px;text-transform:uppercase;letter-spacing:1px}.day-number{font-family:var(--font-title);font-size:27px;font-weight:bold;margin:7px 0}.day-month{font-size:11px;opacity:.8}.day-hint{font-size:10px;margin-top:8px;opacity:.8}
+.calendar-note{color:var(--muted);font-size:12px;line-height:1.5}
+.concession-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px;margin-top:18px}
+.concession-card{background:#291b16;border:1px solid rgba(215,170,82,.35);padding:17px;border-radius:5px;display:flex;flex-direction:column;min-width:0}
+.concession-card h3{font-size:17px;color:var(--gold-light);margin:0 0 5px}
+.concession-card p{font-size:12px;color:var(--muted);line-height:1.5;margin:0 0 12px;flex:1}
+.concession-price{color:var(--gold);font-weight:bold;margin-bottom:12px}
+.quantity-control{display:flex;align-items:center;gap:10px}
+.quantity-control button{width:34px;height:34px;border:1px solid var(--gold);background:transparent;color:var(--gold-light);border-radius:4px;font-size:19px;transition:.2s}
+.quantity-control button:hover{background:var(--gold);color:var(--brown)}
+.quantity-control strong{min-width:20px;text-align:center}
+.concession-total{display:flex;justify-content:space-between;gap:10px;border-top:1px solid #614a35;margin-top:20px;padding-top:15px;color:var(--gold-light);font-size:17px}
+.concession-total strong{white-space:nowrap}
+.seat-legend{display:flex;flex-wrap:wrap;gap:15px;margin:20px 0;color:var(--muted);font-size:13px}
+.legend-item{display:flex;align-items:center;gap:7px}
+.seat-sample{width:17px;height:17px;border-radius:5px 5px 2px 2px;background:var(--green)}
+.seat-sample.selected{background:var(--gold)}.seat-sample.occupied{background:#78473d}.seat-sample.pmr{background:var(--blue)}
+.screen{max-width:570px;margin:20px auto 45px;text-align:center;color:var(--gold-light);letter-spacing:5px;font-size:12px;padding:13px;border-top:5px solid var(--gold);border-radius:50% 50% 0 0;box-shadow:0 -9px 22px rgba(215,170,82,.12)}
+.seat-grid{max-width:650px;margin:auto;display:flex;flex-direction:column;gap:10px}
+.seat-row{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:7px;align-items:center}
+.seat-row:nth-child(1){transform:perspective(500px) rotateX(-5deg) scale(.91)}
+.seat-row:nth-child(2){transform:perspective(500px) rotateX(-3deg) scale(.95)}
+.seat-row:nth-child(3){transform:scale(.98)}
+.seat-row-label{width:24px;color:var(--gold);font-size:12px;font-weight:bold;display:flex;align-items:center;justify-content:center}
+.seat{border:0;border-radius:6px 6px 3px 3px;height:39px;background:var(--green);color:white;font-size:11px;transition:.15s;min-width:0;padding:0}
+.seat:hover:not(.occupied):not(:disabled){transform:translateY(-3px);filter:brightness(1.2)}
+.seat.selected{background:var(--gold);color:var(--brown);box-shadow:0 0 0 2px var(--gold-light)}
+.seat.occupied{background:#78473d;color:#c5a59c;cursor:not-allowed;opacity:.7}
+.seat.pmr{background:var(--blue);border:1px solid #9ac3d4}
+.seat.pmr.selected{background:var(--gold);color:var(--brown);border:2px solid var(--gold-light)}
+.seat:disabled{cursor:not-allowed}
+.seat-counter{text-align:center;margin:22px auto 0;padding:14px;max-width:450px;background:#211713;border:1px solid rgba(215,170,82,.4);color:var(--gold-light);font-size:16px}
+.seat-counter strong{color:var(--gold);font-size:21px}
+.pmr-information{border:1px solid rgba(85,125,145,.7);background:rgba(44,77,91,.2);padding:13px 15px;color:#c5dce7;font-size:13px;line-height:1.6;margin:18px 0}
+.checkout-grid{display:grid;grid-template-columns:1fr 320px;gap:25px}
+.payment-choice{display:flex;gap:10px;flex-wrap:wrap}
+.payment-choice label{flex:1;min-width:125px;border:1px solid #87663e;padding:13px;color:var(--cream);cursor:pointer}
+.payment-choice input{width:auto;margin-right:7px;accent-color:var(--gold)}
+.notice{border-left:3px solid var(--gold);padding:12px 15px;color:var(--muted);background:#201611;font-size:13px;line-height:1.6;margin-top:18px}
+.ticket{max-width:720px;margin:25px auto;background:#f0dfbd;color:#342219;border:7px double #9b7138;padding:28px;position:relative}
+.ticket-head{text-align:center;border-bottom:2px dashed #9b7138;padding-bottom:18px}
+.ticket-head h1{color:#8b3028;margin:5px 0;font-size:34px}
+.ticket-head p{margin:5px;letter-spacing:3px;font-size:11px}
+.ticket-body{display:grid;grid-template-columns:1fr 180px;gap:25px;padding:20px 0}
+.ticket-info{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.ticket-field small{display:block;color:#8d6b42;text-transform:uppercase;font-size:10px;letter-spacing:1px}
+.ticket-field strong{display:block;margin-top:4px;font-size:15px;overflow-wrap:anywhere}
+#qrcode{background:white;padding:8px;width:150px;min-height:150px;margin:auto;display:grid;place-items:center}
+#qrcode img,#qrcode canvas{max-width:100%;height:auto}
+.qr-caption{font-size:10px;text-align:center;margin-top:8px;color:#6e4b2d}
+.ticket-foot{text-align:center;border-top:2px dashed #9b7138;padding-top:15px;font-size:12px;color:#76532e}
+.ticket-actions{display:flex;justify-content:center;flex-wrap:wrap;gap:12px;margin:25px 0}
+footer{text-align:center;color:#9c8463;border-top:1px solid rgba(215,170,82,.25);padding:25px 15px;font-size:12px;line-height:1.7}
+.floating-book{position:fixed;z-index:15;bottom:22px;right:22px;background:var(--gold);color:var(--brown);padding:13px 19px;border-radius:30px;border:2px solid var(--gold-light);box-shadow:0 5px 20px #0006;font-weight:bold;text-transform:uppercase;letter-spacing:1px;font-size:11px;transition:.25s}
+.floating-book:hover{transform:translateY(-4px);box-shadow:0 8px 24px rgba(215,170,82,.25)}
+
+@media(max-width:900px){
+.calendar-grid{grid-template-columns:repeat(4,minmax(0,1fr))}
+.detail-layout,.booking-layout,.checkout-grid{grid-template-columns:1fr}
+.detail-poster{height:300px;min-height:0;width:100%;max-width:360px;margin:0 auto}
+.summary-card{position:static}.ticket-body{grid-template-columns:1fr}
+#qrcode{margin:10px auto}
+}
+@media(max-width:600px){
+.navbar{padding:11px 15px}.logo-name{font-size:19px}.logo-mark{width:39px;height:39px}
+.nav-links{gap:2px}
+.nav-links button,.nav-links a{padding:8px 6px;font-size:12px}
+.container{padding:22px 14px 50px}.hero{min-height:300px;padding:45px 15px}
+.hero h1{font-size:43px}.section-heading{align-items:flex-start;flex-direction:column}
+.catalogue-tools{flex-direction:column;align-items:stretch}
+.catalogue-tools input,.catalogue-tools select,.catalogue-tools button{width:100%}
+.movie-rail .movie-card{flex-basis:170px}.poster{height:235px}.poster-title{font-size:23px}
+.panel{padding:19px}.step{font-size:9px;letter-spacing:0}
+.ticket{padding:15px}.ticket-head h1{font-size:26px}
+.ticket-info{grid-template-columns:1fr 1fr}
+.floating-book{right:12px;bottom:12px;padding:11px 15px}
+.attendee-row{grid-template-columns:1fr 1fr}.attendee-name{grid-column:1/-1}
+.attendee-price{text-align:right}.calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.day-card{padding:12px 6px}.concession-grid{grid-template-columns:1fr}
+.seat-row{grid-template-columns:repeat(10,minmax(0,1fr));gap:4px}
+.seat{height:31px;font-size:9px;border-radius:4px 4px 2px 2px}
+.seat-grid{gap:8px}.screen{margin-bottom:30px}
+.seat-legend{gap:10px;font-size:11px}.seat-sample{width:14px;height:14px}
+.ticket-info{gap:10px}.video-section{margin-top:24px}.video-section h3{font-size:19px}
+}
+@media(max-width:380px){
+.calendar-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+.seat-row{gap:3px}.seat{height:27px;font-size:8px}
+.step-indicator{margin-bottom:20px}
+}
+@media(prefers-reduced-motion:reduce){
+*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}
+}
+@media print{
+body{background:white;color:black}
+header,footer,.ticket-actions,.floating-book,.back-btn,.step-indicator{display:none!important}
+.page{display:none!important}#confirmationPage{display:block!important}
+#confirmationPage .container{padding:0}.ticket{box-shadow:none;margin:0 auto}
+}
+</style>
+</head>
+
+<body>
+<header>
+<div class="navbar">
+<button class="logo" onclick="goHome()" aria-label="Retour à l'accueil">
+<span class="logo-mark">LABO</span>
+<span><span class="logo-name">LaboCiné</span><span class="logo-sub">LE CINÉMA AUTREMENT</span></span>
+</button>
+<nav class="nav-links">
+<button onclick="goHome()">Accueil</button>
+<button onclick="scrollToFilms()">Les films</button>
+<a href="designsystem.html">Design System</a>
+</nav>
+</div>
+</header>
+
+<main>
+<section id="cataloguePage" class="page active">
+<div class="container">
+<div class="hero">
+<div class="eyebrow">Une légende du cinéma français</div>
+<h1>Le rire en grand format</h1>
+<div class="gold-line"></div>
+<p>Redécouvrez les films incontournables de Louis de Funès dans une salle au charme des grands cinémas d'autrefois.</p>
+<button class="primary-btn" onclick="scrollToFilms()">Découvrir les séances</button>
+</div>
+
+<div class="section-heading" id="filmsHeading">
+<div><div class="eyebrow">La programmation</div><h2>À l'affiche</h2><p>Choisissez un film pour découvrir sa fiche et réserver vos places.</p></div>
+<div class="filters">
+<button class="filter-btn active" data-filter="Tous">Tous</button>
+<button class="filter-btn" data-filter="Comédie">Comédie</button>
+<button class="filter-btn" data-filter="Aventure">Aventure</button>
+</div>
+</div>
+
+<div class="catalogue-tools">
+<input id="searchInput" type="search" placeholder="Rechercher un film..." aria-label="Rechercher un film">
+<button id="favoritesToggle" class="favorites-toggle" type="button" aria-pressed="false">♡ Mes favoris</button>
+<select id="sortSelect" aria-label="Trier les films">
+<option value="default">Trier par défaut</option>
+<option value="title-asc">Ordre alphabétique (A → Z)</option>
+<option value="title-desc">Ordre alphabétique (Z → A)</option>
+<option value="date-asc">Date : du plus ancien au plus récent</option>
+<option value="date-desc">Date : du plus récent au plus ancien</option>
+</select>
+<button id="resetFilters" class="secondary-btn" type="button">↻ Réinitialiser les filtres</button>
+<button id="clearFavorites" class="red-btn" type="button">Vider mes favoris</button>
+</div>
+
+<div class="section-heading">
+<div><div class="eyebrow">Notre sélection</div><h2>Les films à découvrir</h2><p>Faites défiler les affiches horizontalement pour parcourir la sélection.</p></div>
+<span style="color:var(--gold);font-size:13px">← Faites défiler →</span>
+</div>
+<div class="movie-rail" id="movieRail" aria-label="Sélection de films à faire défiler"></div>
+</div>
+</section>
+
+<section id="detailPage" class="page">
+<div class="container">
+<button class="back-btn" onclick="showPage('cataloguePage')">← Retour au catalogue</button>
+<div class="panel detail-layout">
+<div class="detail-poster" id="detailPoster"></div>
+<div class="detail-content">
+<div class="eyebrow">À l'affiche du cinéma</div>
+<h1 id="detailTitle"></h1>
+<div class="meta-row" id="detailMeta"></div>
+<h3>Synopsis</h3>
+<p id="detailSynopsis"></p>
+<div class="video-section">
+<h3>Bande-annonce et extrait vidéo</h3>
+<p>Retrouvez un extrait du film directement depuis cette fiche.</p>
+<div class="video-container" id="movieVideo">
+<div style="display:grid;place-items:center;height:100%;color:var(--gold-light)">Sélectionnez un film pour voir sa vidéo.</div>
+</div>
+</div>
+<button class="primary-btn" style="margin-top:25px" onclick="goToSession()">Choisir une séance</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="sessionPage" class="page">
+<div class="container">
+<div class="step-indicator">
+<div class="step active"><span>1</span> Séance</div><div class="step"><span>2</span> Places</div><div class="step"><span>3</span> Paiement</div><div class="step"><span>4</span> Billet</div>
+</div>
+<button class="back-btn" onclick="showPage('detailPage')">← Retour à la fiche du film</button>
+<div class="booking-layout">
+<div class="panel">
+<div class="eyebrow">Étape 1</div><h2>Choisissez votre séance</h2>
+<p style="color:var(--muted)" id="sessionMovieName"></p>
+<label class="form-label">Choisissez votre jour</label>
+<div class="calendar-grid" id="calendarGrid"></div>
+<p class="calendar-note">Les séances sont proposées sur les sept prochains jours. Choisissez une date pour afficher les horaires disponibles.</p>
+<label class="form-label">Horaires disponibles</label>
+<div class="time-options" id="timeOptions"></div>
+<label class="form-label" for="ticketQuantity">Nombre de spectateurs</label>
+<select id="ticketQuantity">
+<option value="1">1 spectateur</option><option value="2" selected>2 spectateurs</option><option value="3">3 spectateurs</option><option value="4">4 spectateurs</option><option value="5">5 spectateurs</option><option value="6">6 spectateurs</option>
+</select>
+<label class="form-label">Tarif de chaque spectateur</label>
+<p style="color:var(--muted);font-size:13px;line-height:1.6;margin-top:0">Sélectionnez un tarif différent pour chaque personne.</p>
+<div class="attendee-list" id="attendeeList"></div>
+<div class="notice" id="tariffNotice">Tarif normal : 8 € · Enfant : 5 € · Personne en situation de handicap : 5 €.</div>
+<div class="section-heading" style="margin-top:35px">
+<div><div class="eyebrow">Le comptoir gourmand</div><h2>La confiserie</h2><p>Ajoutez quelques gourmandises à votre séance !</p></div>
+</div>
+<div class="concession-grid" id="concessionGrid"></div>
+<div class="concession-total"><span>Total confiserie</span><strong id="concessionTotal">0,00 €</strong></div>
+<button class="primary-btn" style="margin-top:25px;width:100%" onclick="continueToSeats()">Choisir mes sièges</button>
+</div>
+<aside class="panel summary-card">
+<h3>Votre réservation</h3>
+<div class="summary-line"><span>Film</span><strong id="summaryMovie">—</strong></div>
+<div class="summary-line"><span>Date</span><strong id="summaryDate">—</strong></div>
+<div class="summary-line"><span>Horaire</span><strong id="summaryTime">—</strong></div>
+<div class="summary-line"><span>Spectateurs</span><strong id="summaryQty">2</strong></div>
+<div id="summaryTariffs"></div>
+<div class="summary-line"><span>Confiserie</span><strong id="summaryConcessions">0,00 €</strong></div>
+<div class="summary-line total-line"><span>Total</span><strong id="summaryTotal">—</strong></div>
+</aside>
+</div>
+</div>
+</section>
+
+<section id="seatsPage" class="page">
+<div class="container">
+<div class="step-indicator">
+<div class="step done"><span>1</span> Séance</div><div class="step active"><span>2</span> Places</div><div class="step"><span>3</span> Paiement</div><div class="step"><span>4</span> Billet</div>
+</div>
+<button class="back-btn" onclick="showPage('sessionPage')">← Retour aux séances</button>
+<div class="panel">
+<div class="eyebrow">Étape 2</div><h2>Choisissez vos sièges</h2>
+<p style="color:var(--muted)" id="seatInstruction"></p>
+<div class="seat-legend">
+<div class="legend-item"><span class="seat-sample selected"></span> Sélectionné</div>
+<div class="legend-item"><span class="seat-sample occupied"></span> Occupé</div>
+<div class="legend-item"><span class="seat-sample pmr"></span> PMR</div>
+</div>
+<div class="pmr-information">Les places bleues sont accessibles aux personnes à mobilité réduite. Dans cette maquette, elles sont réservées aux spectateurs ayant choisi le tarif handicapé.</div>
+<div class="screen">ÉCRAN</div>
+<div class="seat-grid" id="seatGrid"></div>
+<div class="seat-counter">Places sélectionnées : <strong id="seatCount">0 / 2</strong><div id="seatSelectionText" style="font-size:13px;margin-top:7px">Aucun siège sélectionné</div></div>
+<div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:25px">
+<button class="secondary-btn" onclick="showPage('sessionPage')">Retour</button>
+<button class="primary-btn" onclick="continueToCheckout()">Continuer vers le paiement</button>
+</div>
+</div>
+</div>
+</section>
+
+<section id="checkoutPage" class="page">
+<div class="container">
+<div class="step-indicator">
+<div class="step done"><span>1</span> Séance</div><div class="step done"><span>2</span> Places</div><div class="step active"><span>3</span> Paiement</div><div class="step"><span>4</span> Billet</div>
+</div>
+<button class="back-btn" onclick="showPage('seatsPage')">← Retour au plan de salle</button>
+<div class="checkout-grid">
+<div class="panel">
+<div class="eyebrow">Étape 3</div><h2>Vos informations</h2>
+<form id="checkoutForm">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<div><label class="form-label" for="firstName">Prénom</label><input id="firstName" required maxlength="50" placeholder="Votre prénom"></div>
+<div><label class="form-label" for="lastName">Nom</label><input id="lastName" required maxlength="50" placeholder="Votre nom"></div>
+</div>
+<label class="form-label" for="email">Adresse e-mail</label>
+<input id="email" type="email" required maxlength="100" placeholder="exemple@email.fr">
+<h3 style="margin-top:28px">Mode de paiement fictif</h3>
+<div class="payment-choice">
+<label><input type="radio" name="payment" value="Carte bancaire simulée" checked> Carte bancaire</label>
+<label><input type="radio" name="payment" value="Paiement sur place simulé"> Sur place</label>
+</div>
+<div class="notice">Démonstration uniquement : aucun paiement réel n'est effectué. Ne saisissez aucune donnée bancaire.</div>
+<button type="submit" class="primary-btn" style="margin-top:22px;width:100%">Confirmer ma réservation</button>
+</form>
+</div>
+<aside class="panel summary-card">
+<h3>Récapitulatif</h3>
+<div class="summary-line"><span>Film</span><strong id="checkoutMovie">—</strong></div>
+<div class="summary-line"><span>Séance</span><strong id="checkoutSession">—</strong></div>
+<div class="summary-line"><span>Sièges</span><strong id="checkoutSeats">—</strong></div>
+<div id="checkoutTariffs"></div>
+<div class="summary-line"><span>Confiserie</span><strong id="checkoutConcessions">—</strong></div>
+<div id="checkoutConcessionDetails"></div>
+<div class="summary-line total-line"><span>Total fictif</span><strong id="checkoutTotal">—</strong></div>
+</aside>
+</div>
+</div>
+</section>
+
+<section id="confirmationPage" class="page">
+<div class="container">
+<div class="step-indicator">
+<div class="step done"><span>1</span> Séance</div><div class="step done"><span>2</span> Places</div><div class="step done"><span>3</span> Paiement</div><div class="step active"><span>4</span> Billet</div>
+</div>
+<div style="text-align:center">
+<div class="eyebrow">Réservation terminée</div>
+<h1 style="color:var(--gold-light)">Votre billet de cinéma</h1>
+<p style="color:var(--muted)">Votre réservation de démonstration a bien été créée.</p>
+</div>
+<div class="ticket" id="printableTicket">
+<div class="ticket-head"><p>LABOCINÉ PRÉSENTE</p><h1>VOTRE ENTRÉE</h1><p>LE RIRE EN GRAND FORMAT</p></div>
+<div class="ticket-body">
+<div class="ticket-info">
+<div class="ticket-field" style="grid-column:1/-1"><small>Film</small><strong id="ticketMovie">—</strong></div>
+<div class="ticket-field"><small>Nom</small><strong id="ticketName">—</strong></div>
+<div class="ticket-field"><small>Référence</small><strong id="ticketReference">—</strong></div>
+<div class="ticket-field"><small>Date</small><strong id="ticketDate">—</strong></div>
+<div class="ticket-field"><small>Horaire</small><strong id="ticketTime">—</strong></div>
+<div class="ticket-field" style="grid-column:1/-1"><small>Sièges et tarifs individuels</small><strong id="ticketSeatTariffs">—</strong></div>
+<div class="ticket-field"><small>Nombre de places</small><strong id="ticketQuantityDisplay">—</strong></div>
+<div class="ticket-field"><small>Total fictif</small><strong id="ticketTotal">—</strong></div>
+<div class="ticket-field" style="grid-column:1/-1"><small>Confiserie</small><strong id="ticketConcessions">Aucun achat</strong></div>
+<div class="ticket-field" style="grid-column:1/-1"><small>E-mail indiqué</small><strong id="ticketEmail">—</strong></div>
+</div>
+<div>
+<div id="qrcode"></div>
+<div class="qr-caption">SCANNER POUR DÉCOUVRIR LA SURPRISE</div>
+<div style="text-align:center;margin-top:8px">
+<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener" style="color:#8b3028;font-size:11px">Ouvrir le lien du QR code</a>
+</div>
+</div>
+</div>
+<div class="ticket-foot">BILLET DE DÉMONSTRATION — SANS VALEUR D'ENTRÉE RÉELLE<br>Merci de votre visite et bonne séance.</div>
+</div>
+<div class="ticket-actions">
+<button class="primary-btn" onclick="window.print()">Imprimer le billet</button>
+<button class="secondary-btn" onclick="goHome()">Retour à l'accueil</button>
+</div>
+<div class="notice" style="max-width:720px;margin:15px auto">Ce site est une maquette : aucun billet réel n'est émis, aucun paiement n'est encaissé et aucun e-mail n'est envoyé. Le QR code mène à une vidéo YouTube.</div>
+</div>
+</section>
+</main>
+
+<button class="floating-book" id="floatingBook" onclick="scrollToFilms()">Réserver une place</button>
+<footer><div>LaboCiné</div>Une expérience fictive dédiée aux grandes comédies du cinéma français.<br>Site de démonstration — ni réservation réelle, ni paiement réel.</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+<script>
+/* FILMS */
+const movies=[
+{title:"Fantômas",year:1964,duration:"104 min",genre:"Aventure",director:"André Hunebelle",synopsis:"Le commissaire Juve et le journaliste Fandor se lancent à la poursuite d'un mystérieux criminel insaisissable. Une enquête pleine de déguisements, de rebondissements et de suspense comique."},
+{title:"Le Gendarme de Saint-Tropez",year:1964,duration:"95 min",genre:"Comédie",director:"Jean Girault",synopsis:"À Saint-Tropez, le maréchal des logis-chef Cruchot découvre une station balnéaire pleine de surprises. Entre zèle, situations imprévues et personnages hauts en couleur, il tente de faire régner l'ordre à sa manière."},
+{title:"La Soupe aux choux",year:1981,duration:"98 min",genre:"Comédie",director:"Jean Girault",synopsis:"Deux amis vivant paisiblement à la campagne voient leur quotidien bouleversé par l'arrivée d'un visiteur venu d'une autre planète, attiré par une soupe aux choux particulièrement parfumée."},
+{title:"L'Aile ou la Cuisse",year:1976,duration:"104 min",genre:"Comédie",director:"Claude Zidi",synopsis:"Un célèbre critique gastronomique défend la cuisine traditionnelle face à l'essor de la nourriture industrielle. Avec son fils, il part dans une aventure pleine de dégustations et de surprises."},
+{title:"Le Grand Restaurant",year:1966,duration:"85 min",genre:"Comédie",director:"Jacques Besnard",synopsis:"Monsieur Septime dirige un restaurant prestigieux où tout doit être parfait. Mais lorsqu'un événement inattendu bouleverse son établissement, le patron se retrouve au cœur d'une affaire rocambolesque."},
+{title:"Les Aventures de Rabbi Jacob",year:1973,duration:"100 min",genre:"Aventure",director:"Gérard Oury",synopsis:"Un homme d'affaires français se retrouve mêlé à une affaire internationale et doit prendre une identité inattendue. Son parcours le conduit dans une série de situations aussi surprenantes que comiques."},
+{title:"L'Avare",year:1980,duration:"125 min",genre:"Comédie",director:"Jean Girault et Louis de Funès",synopsis:"Harpagon aime son argent plus que tout et surveille sa fortune avec obsession. Lorsque ses enfants veulent choisir leur avenir, les conflits familiaux se multiplient."},
+{title:"Hibernatus",year:1969,duration:"82 min",genre:"Comédie",director:"Édouard Molinaro",synopsis:"Un homme retrouvé prisonnier des glaces est ramené à la vie après un siècle d'hibernation. Sa famille doit alors s'adapter à une situation aussi extraordinaire que compliquée."},
+{title:"Le Gendarme se marie",year:1968,duration:"92 min",genre:"Comédie",director:"Jean Girault",synopsis:"Cruchot rencontre Josépha, une veuve pleine de caractère. Alors qu'il espère vivre une belle histoire, ses obligations de gendarme et sa vie sentimentale se mêlent joyeusement."},
+{title:"Le Gendarme en balade",year:1970,duration:"100 min",genre:"Comédie",director:"Jean Girault",synopsis:"Après une carrière bien remplie, Cruchot et ses collègues découvrent les joies inattendues de la retraite. Mais le repos ne dure pas longtemps pour cette brigade."},
+{title:"Le Gendarme et les Extra-terrestres",year:1979,duration:"96 min",genre:"Aventure",director:"Jean Girault",synopsis:"La brigade de Saint-Tropez est confrontée à d'étranges visiteurs venus d'ailleurs. Cruchot tente de convaincre ses collègues de l'incroyable découverte."},
+{title:"La Folie des grandeurs",year:1971,duration:"108 min",genre:"Aventure",director:"Gérard Oury",synopsis:"Dans l'Espagne du XVIIe siècle, un ministre déchu prépare sa revanche avec l'aide de son valet. Intrigues, déguisements et ambitions démesurées composent cette grande comédie historique."},
+{title:"Le Gendarme et les Gendarmettes",year:1982,duration:"102 min",genre:"Comédie",director:"Jean Girault et Tony Aboyantz",synopsis:"La brigade de Saint-Tropez accueille de nouvelles recrues. Cruchot et ses collègues doivent s'adapter à cette nouvelle organisation, tandis qu'une affaire vient troubler leur quotidien."}
+];
+
+/* VIDÉOS YOUTUBE */
+const movieClips={
+"Le Gendarme de Saint-Tropez":"l3BYt_lmxzU",
+"Fantômas":"I6ezWUaHAgo",
+"La Soupe aux choux":"pp1Z9RfA9FY",
+"L'Aile ou la Cuisse":"hbLceMrm_ww",
+"Le Grand Restaurant":"AqFBwCUie0g",
+"Les Aventures de Rabbi Jacob":"4DIZAtjzy4E",
+"L'Avare":"uQwVN08lxEc",
+"Hibernatus":"caawvM28Y8I",
+"Le Gendarme se marie":"p02OqDQ1Ixg",
+"Le Gendarme en balade":"RBvYiOzwtWw",
+"Le Gendarme et les Extra-terrestres":"EVPjP6mPfbs",
+"La Folie des grandeurs":"CPTkKsh0UOI",
+"Le Gendarme et les Gendarmettes":"rzKJ59sZkBU"
+};
+
+/* TARIFS ET CONFISERIE */
+const tariffs={
+normal:{label:"Normal",price:8},
+child:{label:"Enfant",price:5},
+pmr:{label:"Handicapé",price:5}
+};
+const concessions=[
+{id:"popcorn-small",name:"Popcorn classique",description:"Un petit popcorn salé ou sucré.",price:3.50},
+{id:"popcorn-large",name:"Grand popcorn",description:"Le grand format pour les plus gourmands.",price:5.50},
+{id:"soda",name:"Boisson fraîche",description:"Cola, limonade ou boisson fruitée.",price:2.80},
+{id:"water",name:"Eau minérale",description:"Une bouteille d'eau fraîche.",price:2},
+{id:"menu-classic",name:"Menu classique",description:"Un popcorn classique et une boisson.",price:5.80},
+{id:"menu-duo",name:"Menu duo",description:"Deux boissons et un grand popcorn à partager.",price:9.50}
+];
+
+/* ÉTAT */
+const state={movie:null,date:"",time:"",quantity:2,attendeeTypes:["normal","normal"],seats:[],customer:{},reference:"",concessionQuantities:{}};
+function euro(value){return value.toFixed(2).replace(".",",")+" €"}
+function getTicketTotal(){return state.attendeeTypes.reduce((sum,type)=>sum+tariffs[type].price,0)}
+function getConcessionTotal(){return concessions.reduce((sum,item)=>sum+(state.concessionQuantities[item.id]||0)*item.price,0)}
+function getGrandTotal(){return getTicketTotal()+getConcessionTotal()}
+function getConcessionDescription(){return concessions.filter(item=>(state.concessionQuantities[item.id]||0)>0).map(item=>item.name+" × "+state.concessionQuantities[item.id]).join(", ")}
+
+/* NAVIGATION */
+function showPage(id){
+document.querySelectorAll(".page").forEach(page=>page.classList.remove("active"));
+document.getElementById(id).classList.add("active");
+document.getElementById("floatingBook").style.display=id==="cataloguePage"||id==="detailPage"?"block":"none";
+window.scrollTo({top:0,behavior:"smooth"});
+}
+function goHome(){showPage("cataloguePage")}
+function scrollToFilms(){
+showPage("cataloguePage");
+setTimeout(()=>document.getElementById("filmsHeading").scrollIntoView({behavior:"smooth"}),100);
+}
+function posterTitle(title){return title.replace("Le ","").replace("Les ","").replace("La ","")}
+
+/* FAVORIS ET CATALOGUE */
+let currentFilter="Tous",currentSort="default",showFavoritesOnly=false,favorites=[];
+try{favorites=JSON.parse(localStorage.getItem("laboCineFavorites")||"[]");if(!Array.isArray(favorites))favorites=[]}catch(error){favorites=[]}
+const searchInput=document.getElementById("searchInput");
+const favoritesToggle=document.getElementById("favoritesToggle");
+const sortSelect=document.getElementById("sortSelect");
+const resetFiltersButton=document.getElementById("resetFilters");
+const clearFavoritesButton=document.getElementById("clearFavorites");
+
+resetFiltersButton.addEventListener("click",()=>{
+searchInput.value="";currentFilter="Tous";currentSort="default";sortSelect.value="default";showFavoritesOnly=false;
+favoritesToggle.classList.remove("active");favoritesToggle.setAttribute("aria-pressed","false");favoritesToggle.textContent="♡ Mes favoris";
+document.querySelectorAll(".filters .filter-btn").forEach(button=>button.classList.toggle("active",button.dataset.filter==="Tous"));
+renderMovies();
+});
+clearFavoritesButton.addEventListener("click",()=>{
+if(favorites.length===0){alert("Tu n'as aucun favori à supprimer.");return}
+if(!confirm("Es-tu sûr de vouloir supprimer tous tes films favoris ?"))return;
+favorites=[];saveFavorites();showFavoritesOnly=false;
+favoritesToggle.classList.remove("active");favoritesToggle.setAttribute("aria-pressed","false");favoritesToggle.textContent="♡ Mes favoris";
+renderMovies();alert("Tous tes favoris ont été supprimés !");
+});
+function saveFavorites(){try{localStorage.setItem("laboCineFavorites",JSON.stringify(favorites))}catch(error){console.warn("Les favoris ne peuvent pas être enregistrés dans ce navigateur.")}}
+function toggleFavorite(title){if(favorites.includes(title))favorites=favorites.filter(item=>item!==title);else favorites.push(title);saveFavorites();renderMovies()}
+searchInput.addEventListener("input",renderMovies);
+sortSelect.addEventListener("change",()=>{currentSort=sortSelect.value;renderMovies()});
+favoritesToggle.addEventListener("click",()=>{
+showFavoritesOnly=!showFavoritesOnly;favoritesToggle.classList.toggle("active",showFavoritesOnly);
+favoritesToggle.setAttribute("aria-pressed",String(showFavoritesOnly));
+favoritesToggle.textContent=showFavoritesOnly?"♥ Tous les films":"♡ Mes favoris";renderMovies();
+});
+
+function renderMovies(){
+const rail=document.getElementById("movieRail");rail.innerHTML="";
+const searchTerm=searchInput.value.trim().toLocaleLowerCase("fr");
+const filteredMovies=movies.map((movie,index)=>({...movie,index}))
+.filter(movie=>currentFilter==="Tous"||movie.genre===currentFilter)
+.filter(movie=>movie.title.toLocaleLowerCase("fr").includes(searchTerm))
+.filter(movie=>!showFavoritesOnly||favorites.includes(movie.title));
+
+if(currentSort==="title-asc")filteredMovies.sort((a,b)=>a.title.localeCompare(b.title,"fr",{sensitivity:"base"}));
+else if(currentSort==="title-desc")filteredMovies.sort((a,b)=>b.title.localeCompare(a.title,"fr",{sensitivity:"base"}));
+else if(currentSort==="date-asc")filteredMovies.sort((a,b)=>a.year-b.year||a.title.localeCompare(b.title,"fr"));
+else if(currentSort==="date-desc")filteredMovies.sort((a,b)=>b.year-a.year||a.title.localeCompare(b.title,"fr"));
+
+if(filteredMovies.length===0){
+const empty=document.createElement("p");empty.className="empty-catalogue";
+empty.textContent=showFavoritesOnly&&!searchTerm?"Vous n'avez pas encore ajouté de film à vos favoris.":"Aucun film ne correspond à votre recherche.";
+rail.appendChild(empty);return;
+}
+
+filteredMovies.forEach(movie=>{
+const card=document.createElement("article");card.className="movie-card";card.tabIndex=0;
+card.setAttribute("role","button");card.setAttribute("aria-label","Découvrir "+movie.title);
+card.innerHTML=`<button class="favorite-btn" type="button" aria-pressed="false">♡</button>
+<div class="poster"><div class="poster-top">LaboCiné présente</div><div class="poster-title"></div><div class="poster-year">${movie.year}</div></div>
+<div class="movie-info"><h3></h3><p>${movie.year} · ${movie.genre}</p><div class="card-action">Découvrir le film →</div></div>`;
+card.querySelector(".poster-title").textContent=posterTitle(movie.title);
+card.querySelector(".movie-info h3").textContent=movie.title;
+const favoriteButton=card.querySelector(".favorite-btn");
+const isFavorite=favorites.includes(movie.title);
+favoriteButton.textContent=isFavorite?"♥":"♡";favoriteButton.classList.toggle("is-favorite",isFavorite);
+favoriteButton.setAttribute("aria-pressed",String(isFavorite));
+favoriteButton.setAttribute("aria-label",(isFavorite?"Retirer ":"Ajouter ")+movie.title+" des favoris");
+favoriteButton.addEventListener("click",event=>{event.stopPropagation();toggleFavorite(movie.title)});
+card.addEventListener("click",()=>openMovie(movie.index));
+card.addEventListener("keydown",event=>{if(event.target===favoriteButton)return;if(event.key==="Enter"||event.key===" "){event.preventDefault();openMovie(movie.index)}});
+rail.appendChild(card);
+});
+}
+document.querySelectorAll(".filters .filter-btn").forEach(button=>{
+button.addEventListener("click",()=>{
+document.querySelectorAll(".filters .filter-btn").forEach(item=>item.classList.remove("active"));
+button.classList.add("active");currentFilter=button.dataset.filter;renderMovies();
+});
+});
+
+/* FICHE FILM ET LECTEUR YOUTUBE */
+function openMovie(index){
+state.movie=movies[index];
+document.getElementById("detailPoster").textContent=posterTitle(state.movie.title);
+document.getElementById("detailTitle").textContent=state.movie.title;
+document.getElementById("detailSynopsis").textContent=state.movie.synopsis;
+const meta=document.getElementById("detailMeta");meta.innerHTML="";
+[state.movie.year,state.movie.duration,state.movie.genre,state.movie.director].forEach(value=>{
+const chip=document.createElement("span");chip.className="meta-chip";chip.textContent=value;meta.appendChild(chip);
+});
+
+const videoContainer=document.getElementById("movieVideo");
+const videoId=movieClips[state.movie.title];
+videoContainer.innerHTML="";
+
+if(videoId){
+const iframe=document.createElement("iframe");
+const videoUrl=new URL("https://www.youtube.com/embed/"+videoId);
+videoUrl.searchParams.set("rel","0");
+videoUrl.searchParams.set("playsinline","1");
+iframe.src=videoUrl.toString();
+iframe.title="Bande-annonce de "+state.movie.title;
+iframe.setAttribute("referrerpolicy","strict-origin-when-cross-origin");
+iframe.setAttribute("allow","accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share");
+iframe.setAttribute("allowfullscreen","");
+iframe.setAttribute("loading","eager");
+iframe.width="100%";
+iframe.height="100%";
+videoContainer.appendChild(iframe);
+}else{
+videoContainer.innerHTML=`<div style="display:grid;place-items:center;height:100%;padding:20px;text-align:center;color:var(--gold-light)">Aucune vidéo disponible pour ce film.</div>`;
+}
+showPage("detailPage");
+}
+
+/* CALENDRIER */
+function getDateValue(date){return date.getFullYear()+"-"+String(date.getMonth()+1).padStart(2,"0")+"-"+String(date.getDate()).padStart(2,"0")}
+function buildCalendar(){
+const calendar=document.getElementById("calendarGrid");calendar.innerHTML="";
+const today=new Date();
+for(let i=0;i<7;i++){
+const date=new Date(today);date.setDate(today.getDate()+i+1);
+const value=getDateValue(date);
+const dayName=date.toLocaleDateString("fr-FR",{weekday:"short"});
+const month=date.toLocaleDateString("fr-FR",{month:"short"});
+const card=document.createElement("button");card.type="button";
+card.className="day-card"+(state.date===value?" selected":"");
+card.innerHTML=`<div class="day-name"></div><div class="day-number">${date.getDate()}</div><div class="day-month"></div><div class="day-hint">Voir les séances</div>`;
+card.querySelector(".day-name").textContent=dayName.replace(".","").toUpperCase();
+card.querySelector(".day-month").textContent=month.replace(".","");
+card.addEventListener("click",()=>{state.date=value;state.time="";buildCalendar();renderTimes();updateSessionSummary()});
+calendar.appendChild(card);
+}
+}
+function renderTimes(){
+const container=document.getElementById("timeOptions");container.innerHTML="";
+if(!state.date){container.innerHTML='<p style="color:var(--muted);font-size:13px">Choisissez d’abord un jour dans le calendrier.</p>';return}
+["14:00","16:30","19:00","21:15"].forEach(time=>{
+const button=document.createElement("button");button.type="button";
+button.className="time-btn"+(state.time===time?" selected":"");button.textContent=time;
+button.addEventListener("click",()=>{state.time=time;renderTimes();updateSessionSummary()});
+container.appendChild(button);
+});
+}
+
+/* DÉMARRAGE RÉSERVATION */
+function goToSession(){
+if(!state.movie)return;
+state.date="";state.time="";state.seats=[];state.quantity=2;
+state.attendeeTypes=["normal","normal"];state.concessionQuantities={};
+document.getElementById("sessionMovieName").textContent=state.movie.title;
+document.getElementById("ticketQuantity").value="2";
+buildCalendar();renderTimes();renderAttendeeTypes();renderConcessions();updateSessionSummary();
+showPage("sessionPage");
+}
+
+/* TARIFS INDIVIDUELS */
+function renderAttendeeTypes(){
+const list=document.getElementById("attendeeList");list.innerHTML="";
+state.attendeeTypes.forEach((type,index)=>{
+const row=document.createElement("div");row.className="attendee-row";
+const name=document.createElement("strong");name.className="attendee-name";name.textContent="Spectateur "+(index+1);
+const select=document.createElement("select");select.setAttribute("aria-label","Tarif du spectateur "+(index+1));
+Object.entries(tariffs).forEach(([key,value])=>{const option=document.createElement("option");option.value=key;option.textContent=value.label+" — "+euro(value.price);select.appendChild(option)});
+select.value=type;
+const price=document.createElement("strong");price.className="attendee-price";price.textContent=euro(tariffs[type].price);
+select.addEventListener("change",()=>{state.attendeeTypes[index]=select.value;price.textContent=euro(tariffs[select.value].price);state.seats=[];updateSessionSummary()});
+row.append(name,select,price);list.appendChild(row);
+});
+}
+document.getElementById("ticketQuantity").addEventListener("change",event=>{
+const newQuantity=Number(event.target.value);
+if(!Number.isInteger(newQuantity)||newQuantity<1||newQuantity>6){event.target.value=String(state.quantity);return}
+state.attendeeTypes=Array.from({length:newQuantity},(_,index)=>state.attendeeTypes[index]||"normal");
+state.quantity=newQuantity;state.seats=[];renderAttendeeTypes();updateSessionSummary();
+});
+
+/* CONFISERIE */
+function renderConcessions(){
+const grid=document.getElementById("concessionGrid");grid.innerHTML="";
+concessions.forEach(item=>{
+const quantity=state.concessionQuantities[item.id]||0;
+const card=document.createElement("div");card.className="concession-card";
+const title=document.createElement("h3");title.textContent=item.name;
+const description=document.createElement("p");description.textContent=item.description;
+const price=document.createElement("div");price.className="concession-price";price.textContent=euro(item.price);
+const control=document.createElement("div");control.className="quantity-control";
+const minus=document.createElement("button");minus.type="button";minus.textContent="−";minus.setAttribute("aria-label","Retirer "+item.name);
+const count=document.createElement("strong");count.textContent=quantity;
+const plus=document.createElement("button");plus.type="button";plus.textContent="+";plus.setAttribute("aria-label","Ajouter "+item.name);
+minus.disabled=quantity===0;minus.style.opacity=quantity===0?".4":"1";
+minus.addEventListener("click",()=>{state.concessionQuantities[item.id]=Math.max(0,(state.concessionQuantities[item.id]||0)-1);renderConcessions();updateSessionSummary()});
+plus.addEventListener("click",()=>{state.concessionQuantities[item.id]=(state.concessionQuantities[item.id]||0)+1;renderConcessions();updateSessionSummary()});
+control.append(minus,count,plus);card.append(title,description,price,control);grid.appendChild(card);
+});
+document.getElementById("concessionTotal").textContent=euro(getConcessionTotal());
+}
+
+/* RÉCAPITULATIF */
+function formatDate(value){
+if(!value)return "—";
+return new Date(value+"T12:00:00").toLocaleDateString("fr-FR",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+}
+function updateSessionSummary(){
+document.getElementById("summaryMovie").textContent=state.movie?.title||"—";
+document.getElementById("summaryDate").textContent=formatDate(state.date);
+document.getElementById("summaryTime").textContent=state.time||"—";
+document.getElementById("summaryQty").textContent=state.quantity;
+const tariffSummary=document.getElementById("summaryTariffs");tariffSummary.innerHTML="";
+state.attendeeTypes.forEach((type,index)=>{
+const line=document.createElement("div");line.className="summary-line";
+const label=document.createElement("span");label.textContent="Spectateur "+(index+1)+" · "+tariffs[type].label;
+const price=document.createElement("strong");price.textContent=euro(tariffs[type].price);
+line.append(label,price);tariffSummary.appendChild(line);
+});
+document.getElementById("summaryConcessions").textContent=euro(getConcessionTotal());
+document.getElementById("summaryTotal").textContent=euro(getGrandTotal());
+document.getElementById("concessionTotal").textContent=euro(getConcessionTotal());
+document.getElementById("tariffNotice").textContent="Tarif normal : 8 € · Enfant : 5 € · Handicapé : 5 €. Chaque tarif est attribué individuellement à un spectateur.";
+}
+
+/* PLAN DE SALLE */
+function continueToSeats(){
+if(!state.date){alert("Veuillez choisir une date dans le calendrier.");return}
+if(!state.time){alert("Veuillez choisir un horaire.");return}
+state.quantity=state.attendeeTypes.length;state.seats=[];renderSeats();showPage("seatsPage");
+}
+const occupiedSeats=new Set(["A2","A6","B4","C1","C7","D3","D8","E2","E5"]);
+const pmrSeats=new Set(["E1","E8"]);
+function renderSeats(){
+const grid=document.getElementById("seatGrid");grid.innerHTML="";
+const pmrCount=state.attendeeTypes.filter(type=>type==="pmr").length;
+document.getElementById("seatInstruction").textContent="Choisissez "+state.quantity+" sièges pour "+state.movie.title+".";
+["A","B","C","D","E"].forEach(row=>{
+const rowElement=document.createElement("div");rowElement.className="seat-row";
+const rowLabel=document.createElement("div");rowLabel.className="seat-row-label";rowLabel.textContent=row;rowElement.appendChild(rowLabel);
+for(let number=1;number<=8;number++){
+const id=row+number;const seat=document.createElement("button");
+seat.type="button";seat.className="seat";seat.textContent=number;seat.setAttribute("aria-label","Siège "+id);
+if(pmrSeats.has(id))seat.classList.add("pmr");
+if(occupiedSeats.has(id)){seat.classList.add("occupied");seat.disabled=true;seat.title="Siège occupé"}
+else if(pmrSeats.has(id)&&pmrCount===0){seat.disabled=true;seat.style.opacity=".4";seat.title="Réservé aux places accessibles"}
+else{
+seat.title=pmrSeats.has(id)?"Place accessible PMR":"Siège "+id;
+if(state.seats.includes(id))seat.classList.add("selected");
+seat.addEventListener("click",()=>toggleSeat(id));
+}
+seat.style.gridColumn=number<=4?String(number+1):String(number+2);
+rowElement.appendChild(seat);
+}
+grid.appendChild(rowElement);
+});
+updateSeatText();
+}
+function toggleSeat(id){
+const pmrCount=state.attendeeTypes.filter(type=>type==="pmr").length;
+const selectedPmr=state.seats.filter(seat=>pmrSeats.has(seat)).length;
+if(state.seats.includes(id)){state.seats=state.seats.filter(seat=>seat!==id)}
+else{
+if(state.seats.length>=state.quantity){alert("Vous avez déjà sélectionné le nombre de sièges réservé.");return}
+if(pmrSeats.has(id)&&selectedPmr>=pmrCount){alert("Vous n'avez pas assez de spectateurs avec le tarif handicapé pour sélectionner cette place PMR.");return}
+state.seats.push(id);
+}
+renderSeats();
+}
+function updateSeatText(){
+const sortedSeats=state.seats.slice().sort();
+document.getElementById("seatCount").textContent=state.seats.length+" / "+state.quantity;
+document.getElementById("seatSelectionText").textContent=sortedSeats.length?sortedSeats.join(", "):"Aucun siège sélectionné";
+}
+
+/* PASSAGE AU PAIEMENT */
+function continueToCheckout(){
+if(state.seats.length!==state.quantity){alert("Veuillez sélectionner exactement "+state.quantity+" siège(s).");return}
+const selectedPmr=state.seats.filter(seat=>pmrSeats.has(seat)).length;
+const pmrCount=state.attendeeTypes.filter(type=>type==="pmr").length;
+if(selectedPmr!==pmrCount){alert("Le nombre de places PMR doit correspondre au nombre de spectateurs ayant le tarif handicapé.");return}
+document.getElementById("checkoutMovie").textContent=state.movie.title;
+document.getElementById("checkoutSession").textContent=formatDate(state.date)+" à "+state.time;
+document.getElementById("checkoutSeats").textContent=state.seats.slice().sort().join(", ");
+const summary=document.getElementById("checkoutTariffs");summary.innerHTML="";
+state.attendeeTypes.forEach((type,index)=>{
+const line=document.createElement("div");line.className="summary-line";
+const label=document.createElement("span");
+label.textContent="Spectateur "+(index+1)+" · "+tariffs[type].label+" · "+state.seats.slice().sort()[index];
+const price=document.createElement("strong");price.textContent=euro(tariffs[type].price);
+line.append(label,price);summary.appendChild(line);
+});
+document.getElementById("checkoutConcessions").textContent=euro(getConcessionTotal());
+const concessionDetails=document.getElementById("checkoutConcessionDetails");concessionDetails.innerHTML="";
+concessions.filter(item=>(state.concessionQuantities[item.id]||0)>0).forEach(item=>{
+const line=document.createElement("div");line.className="summary-line";
+const label=document.createElement("span");label.textContent=item.name+" × "+state.concessionQuantities[item.id];
+const price=document.createElement("strong");price.textContent=euro(item.price*state.concessionQuantities[item.id]);
+line.append(label,price);concessionDetails.appendChild(line);
+});
+document.getElementById("checkoutTotal").textContent=euro(getGrandTotal());
+showPage("checkoutPage");
+}
+
+/* FORMULAIRE ET BILLET */
+document.getElementById("checkoutForm").addEventListener("submit",event=>{
+event.preventDefault();
+const firstName=document.getElementById("firstName").value.trim();
+const lastName=document.getElementById("lastName").value.trim();
+const email=document.getElementById("email").value.trim();
+if(!firstName||!lastName||!email){alert("Veuillez remplir tous les champs.");return}
+state.customer={firstName,lastName,email};
+state.reference="LABO-"+Math.random().toString(36).slice(2,8).toUpperCase();
+createTicket();showPage("confirmationPage");
+});
+
+function createTicket(){
+document.getElementById("ticketMovie").textContent=state.movie.title;
+document.getElementById("ticketName").textContent=state.customer.firstName+" "+state.customer.lastName;
+document.getElementById("ticketReference").textContent=state.reference;
+document.getElementById("ticketDate").textContent=formatDate(state.date);
+document.getElementById("ticketTime").textContent=state.time;
+document.getElementById("ticketQuantityDisplay").textContent=state.quantity;
+document.getElementById("ticketTotal").textContent=euro(getGrandTotal());
+document.getElementById("ticketEmail").textContent=state.customer.email;
+const seatTariffs=document.getElementById("ticketSeatTariffs");
+seatTariffs.textContent=state.seats.slice().sort().map((seat,index)=>"Siège "+seat+" : "+tariffs[state.attendeeTypes[index]].label+" ("+euro(tariffs[state.attendeeTypes[index]].price)+")").join(" | ");
+document.getElementById("ticketConcessions").textContent=getConcessionDescription()||"Aucun achat";
+const qr=document.getElementById("qrcode");qr.innerHTML="";
+if(window.QRCode){
+new QRCode(qr,{text:"https://www.youtube.com/watch?v=dQw4w9WgXcQ",width:134,height:134,colorDark:"#291b16",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H});
+}else{
+const link=document.createElement("a");link.href="https://www.youtube.com/watch?v=dQw4w9WgXcQ";link.target="_blank";link.rel="noopener";link.textContent="Ouvrir la surprise";link.style.color="#8b3028";qr.appendChild(link);
+}
+}
+
+/* INITIALISATION */
+renderMovies();
+</script>
+</body>
+</html>
+
+<!-- serveur local : ctrl shift p : live server open with live server -->

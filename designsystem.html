@@ -1,0 +1,2533 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LaboCiné — Design System</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600;700&family=Roboto+Slab:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --gold:#d7aa52;
+  --gold-light:#f1d28c;
+  --red:#8e3028;
+  --brown:#291b16;
+  --cream:#f4e8cf;
+  --muted:#c6b18d;
+  --green:#66845a;
+  --blue:#557d91;
+  --occupied:#78473d;
+  --dark-input:#211713;
+
+  --font-title:"Roboto Slab",Rockwell,Georgia,serif;
+  --font-condensed:"Oswald","Arial Narrow",Arial,sans-serif;
+  --font-body:"Oswald","Arial Narrow",Arial,sans-serif;
+
+  --content-width:1200px;
+  --nav-height:75px;
+  --radius:4px;
+  --border-gold:1px solid rgba(215,170,82,.45);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:#f4e8cf;
+  color:var(--brown);
+  font-family:var(--font-body);
+  font-weight:300;
+  line-height:1.6;
+}
+
+button,input,select{font:inherit}
+a{color:inherit}
+
+h1,h2,h3,h4{
+  font-family:var(--font-title);
+  font-weight:900;
+  line-height:1.15;
+}
+
+code{
+  font-family:monospace;
+  background:rgba(41,27,22,.08);
+  padding:2px 5px;
+  border-radius:3px;
+}
+
+.container{
+  width:min(var(--content-width),calc(100% - 48px));
+  margin:auto;
+}
+
+.topbar{
+  background:var(--brown);
+  color:var(--cream);
+  border-bottom:3px solid var(--gold);
+}
+
+.topbar-inner{
+  min-height:var(--nav-height);
+  max-width:var(--content-width);
+  margin:auto;
+  padding:12px 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+
+.brand-mark{
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border:2px solid var(--gold);
+  color:var(--gold-light);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:1px;
+  transform:rotate(-5deg);
+}
+
+.brand-name{
+  color:var(--gold-light);
+  font-family:var(--font-title);
+  font-size:22px;
+  font-weight:900;
+  letter-spacing:1px;
+}
+
+.brand-subtitle{
+  display:block;
+  color:var(--muted);
+  font-size:10px;
+  letter-spacing:3px;
+  font-weight:300;
+}
+
+.topbar-label{
+  color:var(--muted);
+  font-size:11px;
+  letter-spacing:2px;
+  text-transform:uppercase;
+}
+
+/* NAVIGATION */
+
+.sidebar{
+  position:fixed;
+  top:var(--nav-height);
+  bottom:0;
+  left:0;
+  width:235px;
+  overflow-y:auto;
+  background:#38251d;
+  color:var(--cream);
+  padding:25px 16px;
+  border-right:1px solid rgba(215,170,82,.3);
+  z-index:10;
+}
+
+.sidebar-title{
+  color:var(--gold);
+  font-size:10px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  margin:15px 10px 8px;
+}
+
+.sidebar a{
+  display:block;
+  text-decoration:none;
+  padding:9px 11px;
+  color:#e3d2b2;
+  font-size:13px;
+  border-radius:3px;
+}
+
+.sidebar a:hover{
+  background:rgba(215,170,82,.13);
+  color:var(--gold-light);
+}
+
+main{
+  margin-left:235px;
+  padding:35px 38px 70px;
+  max-width:1500px;
+}
+
+section{
+  margin-bottom:55px;
+  scroll-margin-top:25px;
+}
+
+.section-header{
+  border-bottom:1px solid rgba(41,27,22,.2);
+  padding-bottom:15px;
+  margin-bottom:25px;
+}
+
+.section-header h2{
+  margin:4px 0;
+  font-size:29px;
+  color:var(--brown);
+}
+
+.section-header p{
+  margin:6px 0 0;
+  color:#78644d;
+  font-size:14px;
+}
+
+.eyebrow{
+  color:var(--red);
+  font-size:11px;
+  font-weight:500;
+  text-transform:uppercase;
+  letter-spacing:3px;
+}
+
+.intro{
+  padding:38px;
+  background:var(--brown);
+  color:var(--cream);
+  border:2px solid var(--gold);
+  position:relative;
+  overflow:hidden;
+}
+
+.intro::after{
+  content:"";
+  position:absolute;
+  width:240px;
+  height:240px;
+  border:1px solid rgba(215,170,82,.3);
+  border-radius:50%;
+  right:-90px;
+  top:-100px;
+}
+
+.intro h1{
+  position:relative;
+  z-index:1;
+  color:var(--gold-light);
+  font-size:clamp(35px,5vw,58px);
+  margin:8px 0;
+}
+
+.intro p{
+  max-width:700px;
+  color:#dfcba8;
+  font-size:15px;
+}
+
+.intro .eyebrow{color:var(--gold)}
+
+/* CARTES */
+
+.card{
+  background:#fff9ed;
+  border:1px solid rgba(41,27,22,.15);
+  border-radius:var(--radius);
+  padding:22px;
+  margin-bottom:18px;
+}
+
+.card h3{
+  margin:0 0 12px;
+  color:var(--brown);
+  font-size:19px;
+}
+
+.card p{
+  color:#75634d;
+  font-size:14px;
+}
+
+.grid-2{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;
+}
+
+.grid-3{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:14px;
+}
+
+.grid-4{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+/* BRIEF ET PERSONAS */
+
+.brief-highlight{
+  background:var(--brown);
+  color:var(--cream);
+  border:1px solid var(--gold);
+  padding:25px;
+  margin-bottom:18px;
+}
+
+.brief-highlight h3{
+  color:var(--gold-light);
+  font-family:var(--font-title);
+  font-size:21px;
+}
+
+.brief-highlight p{color:#dfcba8}
+.brief-highlight strong{color:var(--gold-light)}
+
+.brief-tag{
+  display:inline-block;
+  background:rgba(215,170,82,.15);
+  color:var(--gold-light);
+  border:1px solid rgba(215,170,82,.5);
+  padding:5px 10px;
+  margin:4px 5px 4px 0;
+  font-size:11px;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+
+.persona-card{
+  background:#fff9ed;
+  border:1px solid rgba(41,27,22,.15);
+  border-top:4px solid var(--gold);
+  padding:22px;
+  margin-bottom:18px;
+}
+
+.persona-header{
+  display:flex;
+  align-items:center;
+  gap:15px;
+  margin-bottom:18px;
+}
+
+.persona-avatar{
+  width:75px;
+  height:75px;
+  flex-shrink:0;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--brown);
+  border:2px solid var(--gold);
+  color:var(--gold-light);
+  font-family:var(--font-title);
+  font-size:25px;
+  font-weight:900;
+}
+
+.persona-name{
+  font-family:var(--font-title);
+  font-size:23px;
+  font-weight:900;
+  color:var(--brown);
+}
+
+.persona-role{
+  color:var(--red);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.persona-info{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+.persona-info-item{
+  padding:12px;
+  background:#f4e8cf;
+  border-left:3px solid var(--gold);
+}
+
+.persona-info-item strong{
+  display:block;
+  color:var(--red);
+  font-size:12px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-bottom:4px;
+}
+
+.persona-info-item p{
+  margin:0;
+  font-size:13px;
+}
+
+.persona-quote{
+  margin-top:17px;
+  padding:15px;
+  background:var(--brown);
+  color:var(--gold-light);
+  font-family:var(--font-title);
+  font-style:italic;
+  font-size:14px;
+  border-left:4px solid var(--gold);
+}
+
+.persona-device{
+  color:#806d55;
+  font-size:12px;
+  margin-top:5px;
+}
+
+.section-note{
+  padding:14px 16px;
+  background:#211713;
+  color:var(--muted);
+  border-left:3px solid var(--gold);
+  font-size:13px;
+  margin-top:15px;
+}
+
+/* 02 — COULEURS */
+
+.color-grid{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px;
+}
+
+.color-swatch{
+  overflow:hidden;
+  background:#fff9ed;
+  border:1px solid rgba(41,27,22,.13);
+  border-radius:4px;
+}
+
+.swatch-color{height:95px}
+.swatch-info{padding:12px}
+
+.swatch-name{
+  font-family:var(--font-title);
+  font-weight:800;
+  font-size:14px;
+}
+
+.swatch-code{
+  color:#806d55;
+  font-size:12px;
+  margin-top:3px;
+}
+
+.color-use{
+  color:#806d55;
+  font-size:11px;
+  margin-top:5px;
+}
+
+/* 03 — TYPOGRAPHIE */
+
+.type-sample{
+  background:#fff9ed;
+  border:1px solid rgba(41,27,22,.15);
+  padding:22px;
+  margin-bottom:15px;
+}
+
+.type-label{
+  color:var(--red);
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:10px;
+  font-weight:600;
+}
+
+.type-example-title{
+  font-family:var(--font-title);
+  font-weight:900;
+  color:var(--brown);
+  font-size:clamp(30px,4vw,45px);
+  line-height:1.1;
+  margin:12px 0;
+}
+
+.type-example-actor{
+  font-family:var(--font-condensed);
+  font-weight:300;
+  text-transform:uppercase;
+  letter-spacing:2px;
+  font-size:clamp(23px,3vw,34px);
+  color:var(--red);
+  margin:12px 0;
+}
+
+.type-example-body{
+  font-family:var(--font-body);
+  font-size:17px;
+  font-weight:300;
+  color:#6f5a43;
+}
+
+.type-meta{
+  border-top:1px solid rgba(41,27,22,.12);
+  padding-top:10px;
+  margin-top:15px;
+  color:#806d55;
+  font-size:12px;
+}
+
+.type-scale{
+  display:grid;
+  grid-template-columns:90px 1fr;
+  gap:12px;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid rgba(41,27,22,.1);
+}
+
+.type-scale:last-child{border:0}
+.type-size{color:#806d55;font-size:12px}
+
+/* 04 — ESPACEMENTS */
+
+.spacing-list{display:grid;gap:14px}
+
+.spacing-item{
+  display:grid;
+  grid-template-columns:65px 1fr 50px;
+  align-items:center;
+  gap:12px;
+  font-size:12px;
+}
+
+.spacing-bar{
+  height:13px;
+  background:var(--gold);
+  border:1px solid #b58a3c;
+}
+
+.spacing-value{text-align:right;color:#806d55}
+
+/* 05 — BOUTONS */
+
+.button-row{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  gap:12px;
+  margin:15px 0;
+}
+
+.btn{
+  border:0;
+  padding:12px 19px;
+  border-radius:3px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-family:var(--font-condensed);
+  font-weight:500;
+  font-size:12px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.btn-primary{background:var(--gold);color:var(--brown)}
+
+.btn-primary:hover{
+  background:var(--gold-light);
+  transform:translateY(-2px);
+}
+
+.btn-secondary{
+  background:transparent;
+  color:var(--red);
+  border:1px solid var(--red);
+}
+
+.btn-secondary:hover{background:rgba(142,48,40,.08)}
+
+.btn-dark{
+  background:var(--brown);
+  color:var(--gold-light);
+  border:1px solid var(--gold);
+}
+
+.btn-danger{background:var(--red);color:white}
+
+.btn-disabled{
+  background:#c8bda9;
+  color:#817765;
+  cursor:not-allowed;
+}
+
+/* 06 — FORMULAIRES */
+
+.form-demo{
+  display:grid;
+  gap:8px;
+  margin-bottom:17px;
+}
+
+.form-demo label{
+  font-size:13px;
+  color:var(--brown);
+  font-weight:500;
+}
+
+.form-demo input,.form-demo select{
+  width:100%;
+  padding:12px;
+  background:var(--dark-input);
+  color:var(--cream);
+  border:1px solid rgba(215,170,82,.55);
+  border-radius:3px;
+  outline:none;
+}
+
+.form-demo input:focus,.form-demo select:focus{
+  border-color:var(--gold-light);
+  box-shadow:0 0 0 2px rgba(215,170,82,.2);
+}
+
+.form-demo input::placeholder{color:#a99577}
+
+/* 07 — NAVIGATION ET FILTRES */
+
+.nav-demo{
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:15px;
+  background:var(--brown);
+  color:var(--cream);
+  padding:17px;
+  border-bottom:3px solid var(--gold);
+}
+
+.nav-demo-links{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+}
+
+.nav-demo-links span{padding:7px 12px;font-size:12px}
+
+.nav-demo-links span.active{
+  color:var(--gold-light);
+  border:1px solid var(--gold);
+}
+
+.filter-demo{display:flex;flex-wrap:wrap;gap:8px}
+
+.filter{
+  border:1px solid #8a6b40;
+  color:var(--cream);
+  background:#38251d;
+  padding:8px 15px;
+  border-radius:30px;
+  font-size:12px;
+}
+
+.filter.active{
+  background:var(--gold);
+  color:var(--brown);
+  border-color:var(--gold);
+}
+
+.tools-demo{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  padding:15px;
+  background:var(--brown);
+}
+
+.tools-demo input,.tools-demo select{
+  min-width:140px;
+  flex:1;
+  padding:10px;
+  background:var(--dark-input);
+  color:var(--cream);
+  border:1px solid rgba(215,170,82,.5);
+}
+
+/* 08 — CARTES DE FILMS */
+
+.movie-demo{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:15px;
+}
+
+.movie-card{
+  position:relative;
+  background:#39261e;
+  border:1px solid rgba(215,170,82,.45);
+  color:var(--cream);
+  overflow:hidden;
+}
+
+.movie-poster{
+  height:230px;
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  text-align:center;
+  border-bottom:3px solid var(--gold);
+  background:
+    radial-gradient(circle at 50% 35%,rgba(244,210,140,.25),transparent 40%),
+    linear-gradient(145deg,#a44a32,#48271d 70%);
+  position:relative;
+}
+
+.movie-poster::before{
+  content:"";
+  position:absolute;
+  inset:8px;
+  border:1px solid rgba(241,210,140,.55);
+}
+
+.poster-top,.poster-title,.poster-year{
+  position:relative;
+  z-index:1;
+}
+
+.poster-top{
+  color:var(--gold-light);
+  font-size:9px;
+  letter-spacing:3px;
+  text-transform:uppercase;
+}
+
+.poster-title{
+  color:#f7dfad;
+  font-family:var(--font-title);
+  font-weight:900;
+  text-transform:uppercase;
+  font-size:24px;
+  line-height:1.05;
+  text-shadow:2px 3px 0 #4b241b;
+}
+
+.poster-year{
+  color:#e8c88c;
+  letter-spacing:3px;
+  font-size:12px;
+}
+
+.movie-card-info{padding:13px}
+
+.movie-card-info h4{
+  margin:0 0 5px;
+  color:var(--cream);
+  font-size:15px;
+}
+
+.movie-card-info p{
+  color:var(--muted);
+  font-size:12px;
+  margin:0;
+}
+
+.movie-card-info a{
+  display:inline-block;
+  color:var(--gold);
+  font-size:11px;
+  text-decoration:none;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  margin-top:12px;
+}
+
+.favorite{
+  position:absolute;
+  top:10px;
+  right:10px;
+  z-index:2;
+  width:34px;
+  height:34px;
+  border-radius:50%;
+  display:grid;
+  place-items:center;
+  background:var(--brown);
+  color:var(--gold-light);
+  border:1px solid var(--gold);
+  font-size:19px;
+}
+
+/* 09 — CARROUSEL */
+
+.carousel-demo{
+  background:var(--brown);
+  padding:17px;
+  overflow:hidden;
+}
+
+.carousel-track{
+  display:flex;
+  gap:12px;
+  overflow-x:auto;
+  padding-bottom:10px;
+}
+
+.carousel-mini{
+  flex:0 0 135px;
+  height:175px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+  padding:12px;
+  text-align:center;
+  background:linear-gradient(145deg,#a44a32,#48271d);
+  border:1px solid var(--gold);
+  color:var(--gold-light);
+}
+
+.carousel-mini strong{
+  font-family:var(--font-title);
+  font-weight:900;
+  font-size:17px;
+  line-height:1.1;
+  text-transform:uppercase;
+}
+
+.carousel-mini small{font-size:10px;letter-spacing:2px}
+
+/* 10 — TARIFS */
+
+.tariff-card{
+  background:var(--brown);
+  border:1px solid rgba(215,170,82,.45);
+  padding:18px;
+  color:var(--cream);
+}
+
+.tariff-card h4{
+  color:var(--gold-light);
+  margin:0 0 8px;
+  font-size:16px;
+}
+
+.tariff-price{
+  color:var(--gold);
+  font-family:var(--font-title);
+  font-size:30px;
+  font-weight:900;
+}
+
+.tariff-card p{
+  color:var(--muted);
+  font-size:12px;
+  margin:5px 0 0;
+}
+
+/* 11 — PLAN DE SALLE */
+
+.seat-legend{
+  display:flex;
+  flex-wrap:wrap;
+  gap:15px;
+  margin-bottom:18px;
+  font-size:12px;
+}
+
+.legend{display:flex;align-items:center;gap:6px}
+
+.seat{
+  width:27px;
+  height:27px;
+  border-radius:5px 5px 2px 2px;
+  display:inline-grid;
+  place-items:center;
+  color:white;
+  font-size:10px;
+}
+
+.seat-available{background:var(--green)}
+.seat-selected{background:var(--gold);color:var(--brown)}
+.seat-occupied{background:var(--occupied)}
+.seat-pmr{background:var(--blue)}
+
+.screen-demo{
+  max-width:430px;
+  margin:15px auto 25px;
+  text-align:center;
+  color:var(--gold);
+  border-top:4px solid var(--gold);
+  padding:10px;
+  letter-spacing:5px;
+  font-size:11px;
+  background:rgba(215,170,82,.06);
+}
+
+.seat-map{
+  display:grid;
+  grid-template-columns:repeat(8,30px);
+  justify-content:center;
+  gap:8px;
+}
+
+.seat-map .seat{width:30px;height:30px}
+
+/* 12 — RÉSERVATION */
+
+.steps{
+  display:flex;
+  gap:0;
+  background:var(--brown);
+  padding:17px;
+}
+
+.step{
+  flex:1;
+  text-align:center;
+  color:var(--muted);
+  font-size:10px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  border-bottom:2px solid #634b35;
+  padding-bottom:10px;
+}
+
+.step-number{
+  width:25px;
+  height:25px;
+  display:grid;
+  place-items:center;
+  margin:0 auto 7px;
+  border:1px solid var(--muted);
+  border-radius:50%;
+}
+
+.step.active{
+  color:var(--gold-light);
+  border-color:var(--gold);
+}
+
+.step.active .step-number{
+  background:var(--gold);
+  color:var(--brown);
+  border-color:var(--gold);
+}
+
+.step.done{color:#c7b18a;border-color:var(--green)}
+
+.step.done .step-number{
+  background:var(--green);
+  border-color:var(--green);
+  color:white;
+}
+
+.notice-demo{
+  padding:14px 16px;
+  background:#211713;
+  color:var(--muted);
+  border-left:3px solid var(--gold);
+  font-size:13px;
+}
+
+/* 13 — BILLET */
+
+.ticket-demo{
+  max-width:700px;
+  margin:auto;
+  padding:22px;
+  background:#f0dfbd;
+  color:#342219;
+  border:7px double #9b7138;
+}
+
+.ticket-title{
+  text-align:center;
+  border-bottom:2px dashed #9b7138;
+  padding-bottom:15px;
+}
+
+.ticket-title small{letter-spacing:3px;font-size:10px}
+
+.ticket-title h3{
+  color:var(--red);
+  font-size:30px;
+  margin:5px 0;
+}
+
+.ticket-content{
+  display:grid;
+  grid-template-columns:1fr 115px;
+  gap:20px;
+  padding:18px 0;
+}
+
+.ticket-fields{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:13px;
+}
+
+.ticket-field small{
+  display:block;
+  color:#8d6b42;
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:1px;
+}
+
+.ticket-field strong{display:block;font-size:13px}
+
+.qr-demo{
+  width:100px;
+  height:100px;
+  display:grid;
+  place-items:center;
+  margin:auto;
+  background:white;
+  border:7px solid white;
+  outline:1px solid #9b7138;
+  color:#342219;
+  font-size:12px;
+  text-align:center;
+}
+
+.ticket-footer{
+  border-top:2px dashed #9b7138;
+  text-align:center;
+  padding-top:13px;
+  font-size:10px;
+  color:#76532e;
+}
+
+/* 14 — ICONOGRAPHIE */
+
+.icon-demo{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+}
+
+.icon-item{
+  background:var(--brown);
+  color:var(--gold-light);
+  text-align:center;
+  padding:17px 8px;
+  font-size:12px;
+}
+
+.icon-symbol{
+  display:block;
+  font-size:25px;
+  margin-bottom:7px;
+}
+
+/* 15 — ACCESSIBILITÉ ET RESPONSIVE */
+
+.accessibility-list{
+  padding-left:20px;
+  color:#66533d;
+  font-size:14px;
+}
+
+.accessibility-list li{margin:8px 0}
+
+.responsive-demo{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:12px;
+}
+
+.device{
+  background:var(--brown);
+  color:var(--cream);
+  padding:17px;
+  text-align:center;
+  border:1px solid var(--gold);
+}
+
+.device strong{
+  display:block;
+  color:var(--gold-light);
+  font-family:var(--font-title);
+  font-size:16px;
+}
+
+.device span{font-size:12px;color:var(--muted)}
+
+/* 17 — MÉDIAS ET BANDES-ANNONCES */
+
+.trailer-section{
+  margin:32px 0;
+}
+
+.trailer-container{
+  position:relative;
+  width:100%;
+  aspect-ratio:16 / 9;
+  overflow:hidden;
+  border-radius:12px;
+  background:var(--dark-input);
+  border:2px solid var(--gold);
+  box-shadow:0 8px 24px rgba(0,0,0,.25);
+}
+
+.trailer-container iframe{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  display:block;
+  border:0;
+}
+
+.trailer-caption{
+  margin-top:12px;
+  color:#806d55;
+  font-size:12px;
+  font-style:italic;
+}
+
+.media-label{
+  display:inline-block;
+  padding:6px 12px;
+  background:var(--gold);
+  color:var(--brown);
+  font-family:var(--font-condensed);
+  text-transform:uppercase;
+  font-size:12px;
+  letter-spacing:1px;
+  border-radius:3px;
+  margin-bottom:12px;
+}
+
+.media-placeholder{
+  aspect-ratio:16 / 9;
+  background:var(--dark-input);
+  border:2px dashed var(--gold);
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  gap:12px;
+  color:var(--gold-light);
+  text-align:center;
+  padding:20px;
+}
+
+.media-placeholder .play-icon{
+  font-size:45px;
+  line-height:1;
+}
+
+.media-placeholder p{
+  color:var(--muted);
+  margin:0;
+}
+
+.media-rules{
+  padding-left:20px;
+  color:#66533d;
+  font-size:14px;
+}
+
+.media-rules li{margin:8px 0}
+
+.media-code{
+  display:block;
+  padding:15px;
+  background:#211713;
+  color:var(--gold-light);
+  border-left:3px solid var(--gold);
+  font-family:monospace;
+  font-size:12px;
+  line-height:1.7;
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  overflow-x:auto;
+}
+
+/* FOOTER */
+
+footer{
+  margin-left:235px;
+  padding:25px;
+  text-align:center;
+  background:var(--brown);
+  color:var(--muted);
+  font-size:12px;
+  border-top:2px solid var(--gold);
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+  .sidebar{
+    position:static;
+    width:auto;
+    display:flex;
+    flex-wrap:wrap;
+    gap:5px;
+    padding:12px;
+  }
+
+  .sidebar-title{display:none}
+  .sidebar a{font-size:11px;padding:7px}
+  main{margin-left:0;padding:25px}
+  footer{margin-left:0}
+}
+
+@media(max-width:700px){
+  .container{width:calc(100% - 28px)}
+  main{padding:18px 14px 45px}
+  .intro{padding:25px}
+  .grid-2,.grid-3,.grid-4,.color-grid{grid-template-columns:1fr 1fr}
+  .movie-demo{grid-template-columns:1fr 1fr}
+  .responsive-demo{grid-template-columns:1fr}
+  .ticket-content{grid-template-columns:1fr}
+  .qr-demo{margin:10px auto}
+  .topbar-label{display:none}
+  .persona-info{grid-template-columns:1fr}
+  .trailer-container{border-radius:8px}
+}
+
+@media(max-width:450px){
+  .grid-2,.grid-3,.grid-4,.color-grid,.movie-demo{grid-template-columns:1fr}
+  .brand-name{font-size:18px}
+  .topbar-inner{padding:10px 14px}
+  .steps{padding:12px 5px}
+  .step{font-size:8px;letter-spacing:0}
+  .seat-map{grid-template-columns:repeat(8,25px);gap:5px}
+  .seat-map .seat{width:25px;height:25px}
+  .persona-header{align-items:flex-start}
+  .persona-avatar{width:60px;height:60px}
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">
+      <div class="brand-mark">LABO</div>
+      <div>
+        <div class="brand-name">LaboCiné</div>
+        <span class="brand-subtitle">LE CINÉMA AUTREMENT</span>
+      </div>
+    </div>
+    <div class="topbar-label">Guide des styles · Version 2.1</div>
+  </div>
+</header>
+
+<nav class="sidebar">
+
+  <div class="sidebar-title">Présentation</div>
+  <a href="#intro">Présentation générale</a>
+  <a href="#brief">01 · Brief & Personas</a>
+
+  <div class="sidebar-title">Identité visuelle</div>
+  <a href="#colors">02 · Couleurs</a>
+  <a href="#typography">03 · Typographies</a>
+  <a href="#spacing">04 · Espacements</a>
+
+  <div class="sidebar-title">Composants</div>
+  <a href="#buttons">05 · Boutons</a>
+  <a href="#forms">06 · Formulaires</a>
+  <a href="#navigation">07 · Navigation et filtres</a>
+  <a href="#movies">08 · Cartes de films</a>
+  <a href="#carousel">09 · Carrousel</a>
+  <a href="#tariffs">10 · Tarifs</a>
+  <a href="#seats">11 · Plan de salle</a>
+  <a href="#booking">12 · Réservation</a>
+  <a href="#ticket">13 · Billet</a>
+  <a href="#icons">14 · Iconographie</a>
+  <a href="#media">15 · Médias & bandes-annonces</a>
+
+  <div class="sidebar-title">Règles</div>
+  <a href="#accessibility">16 · Accessibilité</a>
+  <a href="#responsive">17 · Responsive</a>
+
+</nav>
+
+<main>
+
+<!-- PRÉSENTATION -->
+
+<section id="intro">
+  <div class="intro">
+    <div class="eyebrow">Design system officiel</div>
+    <h1>L'identité visuelle de LaboCiné</h1>
+    <p>
+      Un univers inspiré des affiches de cinéma français des années 60 et 70 :
+      des couleurs chaleureuses, une typographie de caractère et une ambiance
+      de salle de cinéma traditionnelle.
+    </p>
+    <p>
+      Ce document définit les règles graphiques, les composants,
+      les objectifs du projet et les profils des utilisateurs
+      du site LaboCiné.
+    </p>
+  </div>
+</section>
+
+<!-- 01 — BRIEF ET PERSONAS -->
+
+<section id="brief">
+
+  <div class="section-header">
+    <div class="eyebrow">01 · Stratégie de projet</div>
+    <h2>Brief & Personas</h2>
+    <p>
+      Comprendre le projet, ses objectifs et les utilisateurs
+      auxquels s'adresse l'expérience LaboCiné.
+    </p>
+  </div>
+
+  <div class="brief-highlight">
+    <div class="eyebrow">Présentation du projet</div>
+    <h3>LaboCiné — Le cinéma autrement</h3>
+    <p>
+      LaboCiné est une plateforme fictive de découverte et de réservation
+      dédiée aux grands classiques du cinéma français, notamment aux films
+      de Louis de Funès.
+    </p>
+    <p>
+      Le projet associe une expérience numérique moderne à un univers
+      graphique rétro inspiré des anciennes affiches de cinéma.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Problématique</h3>
+    <p>
+      Comment moderniser l'expérience de réservation d'un cinéma tout en
+      conservant le charme nostalgique des affiches et des salles
+      de cinéma d'autrefois ?
+    </p>
+  </div>
+
+  <div class="grid-2">
+
+    <div class="card">
+      <h3>Objectifs du projet</h3>
+      <ul class="accessibility-list">
+        <li>Valoriser le patrimoine du cinéma français.</li>
+        <li>Donner envie de redécouvrir les films classiques.</li>
+        <li>Proposer une navigation simple et intuitive.</li>
+        <li>Faciliter la recherche et le choix des films.</li>
+        <li>Simplifier le parcours de réservation.</li>
+        <li>Proposer une expérience responsive et accessible.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Cibles du projet</h3>
+      <p>
+        <strong>Cible principale :</strong> les amateurs de cinéma français,
+        les nostalgiques des grands classiques et les spectateurs
+        souhaitant partager une sortie culturelle.
+      </p>
+      <p>
+        <strong>Cible secondaire :</strong> les jeunes adultes curieux
+        de découvrir les anciens films et à la recherche
+        d'une expérience cinématographique originale.
+      </p>
+    </div>
+
+    <div class="card">
+      <h3>Valeurs de la marque</h3>
+      <div>
+        <span class="brief-tag">Nostalgie</span>
+        <span class="brief-tag">Convivialité</span>
+        <span class="brief-tag">Patrimoine</span>
+        <span class="brief-tag">Simplicité</span>
+        <span class="brief-tag">Accessibilité</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Direction artistique</h3>
+      <p>
+        Un univers rétro inspiré des affiches françaises des années 1960
+        et 1970.
+      </p>
+      <p>
+        Une palette chaude associant brun profond, or, rouge affiche
+        et crème. Roboto Slab apporte du caractère aux titres,
+        tandis qu'Oswald structure les textes et les éléments d'interface.
+      </p>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>Fonctionnalités principales</h3>
+    <div class="grid-2">
+      <ul class="accessibility-list">
+        <li>Catalogue de films et affiches.</li>
+        <li>Recherche, filtres et tri.</li>
+        <li>Système de favoris.</li>
+        <li>Fiches descriptives des films.</li>
+        <li>Choix des dates et horaires.</li>
+      </ul>
+      <ul class="accessibility-list">
+        <li>Tarifs différenciés.</li>
+        <li>Plan de salle avec places PMR.</li>
+        <li>Réservation en quatre étapes.</li>
+        <li>Billet récapitulatif.</li>
+        <li>QR code de démonstration.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- PERSONA 1 -->
+
+  <div class="section-header" style="margin-top:40px">
+    <div class="eyebrow">Profil utilisateur 01</div>
+    <h2>Michel, 54 ans</h2>
+    <p>Le passionné de cinéma français et de grands classiques.</p>
+  </div>
+
+  <div class="persona-card">
+
+    <div class="persona-header">
+      <div class="persona-avatar">M</div>
+      <div>
+        <div class="persona-name">Michel, 54 ans</div>
+        <div class="persona-role">Persona principal · Amateur de cinéma classique</div>
+        <div class="persona-device">Cadre administratif · Ordinateur et smartphone</div>
+      </div>
+    </div>
+
+    <p>
+      Michel apprécie les comédies françaises et particulièrement
+      les films de Louis de Funès. Il aime retrouver les films
+      qui ont marqué son enfance et partager ces moments avec sa famille.
+    </p>
+
+    <div class="persona-info">
+
+      <div class="persona-info-item">
+        <strong>Objectifs</strong>
+        <p>
+          Retrouver ses films préférés, consulter les séances,
+          réserver plusieurs places et choisir des sièges côte à côte.
+        </p>
+      </div>
+
+      <div class="persona-info-item">
+        <strong>Motivations</strong>
+        <p>
+          Nostalgie, souvenirs, plaisir de revoir des classiques
+          et sorties familiales.
+        </p>
+      </div>
+
+      <div class="persona-info-item">
+        <strong>Frustrations</strong>
+        <p>
+          Les sites trop complexes, les informations difficiles à trouver,
+          les formulaires trop longs et les plans de salle peu lisibles.
+        </p>
+      </div>
+
+      <div class="persona-info-item">
+        <strong>Besoins UX</strong>
+        <p>
+          Navigation claire, textes lisibles, informations détaillées
+          et parcours de réservation rassurant.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="persona-quote">
+      « J'aimerais retrouver les films de mon époque et réserver
+      facilement une séance avec ma famille. »
+    </div>
+
+  </div>
+
+  <!-- PERSONA 2 -->
+
+  <div class="section-header" style="margin-top:40px">
+    <div class="eyebrow">Profil utilisateur 02</div>
+    <h2>Emma, 24 ans</h2>
+    <p>La jeune curieuse de cinéma et de découvertes culturelles.</p>
+  </div>
+
+  <div class="persona-card">
+
+    <div class="persona-header">
+      <div class="persona-avatar">E</div>
+      <div>
+        <div class="persona-name">Emma, 24 ans</div>
+        <div class="persona-role">Persona secondaire · Curieuse de cinéma</div>
+        <div class="persona-device">Étudiante · Utilisatrice mobile</div>
+      </div>
+    </div>
+
+    <p>
+      Emma aime découvrir de nouvelles activités culturelles.
+      Elle connaît peu le cinéma français ancien, mais apprécie
+      les expériences originales et les univers graphiques vintage.
+    </p>
+
+    <div class="persona-info">
+
+      <div class="persona-info-item">
+        <strong>Objectifs</strong>
+        <p>
+          Découvrir des films classiques, parcourir les affiches,
+          comparer les horaires et réserver avec ses amis.
+        </p>
+      </div>
+
+      <div class="persona-info-item">
+        <strong>Motivations</strong>
+        <p>
+          Découverte culturelle, sorties originales et envie
+          de découvrir une autre époque du cinéma.
+        </p>
+      </div>
+
+      <div class="persona-info-item">
+        <strong>Frustrations</strong>
+        <p>
+          Interfaces vieillissantes, recherche peu pratique sur mobile,
+          informations mal organisées et parcours trop longs.
+        </p>
+      </div>
+
+      <div class="persona-info-item">
+        <strong>Besoins UX</strong>
+        <p>
+          Interface visuelle, affiches attractives, filtres efficaces,
+          favoris accessibles et navigation mobile fluide.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="persona-quote">
+      « Je ne connais pas tous ces films, mais j'aimerais les découvrir
+      facilement et réserver une séance avec mes amis. »
+    </div>
+
+  </div>
+
+  <!-- SYNTHÈSE UX -->
+
+  <div class="section-header" style="margin-top:40px">
+    <div class="eyebrow">Analyse des utilisateurs</div>
+    <h2>Synthèse des besoins UX</h2>
+    <p>Les attentes communes et les différences entre les deux profils.</p>
+  </div>
+
+  <div class="card">
+    <div style="overflow-x:auto">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;text-align:left">
+        <thead>
+          <tr style="background:#291b16;color:#f1d28c">
+            <th style="padding:12px">Critères</th>
+            <th style="padding:12px">Michel</th>
+            <th style="padding:12px">Emma</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Appareil principal</td>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Ordinateur</td>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Smartphone</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Motivation</td>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Nostalgie</td>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Découverte</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Priorité</td>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Simplicité</td>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Rapidité</td>
+          </tr>
+          <tr>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Fonction clé</td>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Réservation</td>
+            <td style="padding:12px;border-bottom:1px solid #ddd">Recherche et favoris</td>
+          </tr>
+          <tr>
+            <td style="padding:12px">Attente graphique</td>
+            <td style="padding:12px">Lisibilité</td>
+            <td style="padding:12px">Attractivité</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Conséquences sur le design system</h3>
+    <ul class="accessibility-list">
+      <li><strong>Roboto Slab :</strong> des titres marquants qui rappellent les affiches anciennes.</li>
+      <li><strong>Oswald :</strong> une lecture structurée et une interface facile à parcourir.</li>
+      <li><strong>Palette chaude :</strong> une ambiance rétro et conviviale.</li>
+      <li><strong>Cartes de films :</strong> une découverte visuelle pour les nouveaux spectateurs.</li>
+      <li><strong>Recherche et filtres :</strong> un accès rapide au catalogue.</li>
+      <li><strong>Favoris :</strong> la possibilité de conserver ses films préférés.</li>
+      <li><strong>Plan de salle :</strong> une sélection des places plus compréhensible.</li>
+      <li><strong>Responsive design :</strong> une expérience adaptée aux différents écrans.</li>
+      <li><strong>Accessibilité :</strong> une interface utilisable par le plus grand nombre.</li>
+    </ul>
+  </div>
+
+  <div class="section-note">
+    Les personas présentés sont des profils fictifs construits à partir
+    des usages envisagés pour LaboCiné. Ils ne sont pas issus
+    d'une enquête ou d'entretiens utilisateurs réels.
+  </div>
+
+</section>
+
+<!-- 02 — COULEURS -->
+
+<section id="colors">
+  <div class="section-header">
+    <div class="eyebrow">02 · Identité visuelle</div>
+    <h2>Palette de couleurs</h2>
+    <p>Une palette chaude, inspirée des anciennes affiches et des salles de cinéma.</p>
+  </div>
+
+  <div class="color-grid">
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#291b16"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Brun profond</div>
+        <div class="swatch-code">#291B16</div>
+        <div class="color-use">Arrière-plans et navigation</div>
+      </div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#d7aa52"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Or cinéma</div>
+        <div class="swatch-code">#D7AA52</div>
+        <div class="color-use">Boutons et éléments actifs</div>
+      </div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#f4e8cf"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Crème</div>
+        <div class="swatch-code">#F4E8CF</div>
+        <div class="color-use">Texte et fonds clairs</div>
+      </div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#8e3028"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Rouge affiche</div>
+        <div class="swatch-code">#8E3028</div>
+        <div class="color-use">Accents et actions importantes</div>
+      </div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#f1d28c"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Or clair</div>
+        <div class="swatch-code">#F1D28C</div>
+        <div class="color-use">Titres sur fond sombre</div>
+      </div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#c6b18d"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Sable doux</div>
+        <div class="swatch-code">#C6B18D</div>
+        <div class="color-use">Textes secondaires</div>
+      </div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#66845a"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Vert disponible</div>
+        <div class="swatch-code">#66845A</div>
+        <div class="color-use">Sièges disponibles</div>
+      </div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#557d91"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Bleu PMR</div>
+        <div class="swatch-code">#557D91</div>
+        <div class="color-use">Places accessibles</div>
+      </div>
+    </div>
+
+    <div class="color-swatch">
+      <div class="swatch-color" style="background:#78473d"></div>
+      <div class="swatch-info">
+        <div class="swatch-name">Brun occupé</div>
+        <div class="swatch-code">#78473D</div>
+        <div class="color-use">Sièges indisponibles</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- 03 — TYPOGRAPHIE -->
+
+<section id="typography">
+  <div class="section-header">
+    <div class="eyebrow">03 · Identité typographique</div>
+    <h2>Typographies</h2>
+    <p>Deux familles complémentaires pour retrouver l'esthétique des affiches de cinéma classiques.</p>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Police principale · Titres</div>
+    <div class="type-example-title">LA GRANDE VADROUILLE</div>
+    <div class="type-meta">
+      Roboto Slab · Graisse 900 · Alternative visuelle à Clarendon Bold / Slab Serif Extra Bold
+    </div>
+    <p>
+      Utilisation : grands titres, titres de sections, noms des films,
+      affiches, logo et titres de billets.
+    </p>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Police secondaire · Acteurs</div>
+    <div class="type-example-actor">BOURVIL ET LOUIS DE FUNÈS</div>
+    <div class="type-meta">
+      Oswald · Graisse 300 · Approche condensée proche de DIN Condensed Light
+    </div>
+    <p>
+      Utilisation : noms d'acteurs, crédits, informations de casting
+      et mentions en capitales.
+    </p>
+  </div>
+
+  <div class="type-sample">
+    <div class="type-label">Police de lecture · Textes et interface</div>
+    <div class="type-example-body">
+      Redécouvrez les grandes comédies du cinéma français dans une ambiance
+      inspirée des salles d'autrefois.
+    </div>
+    <div class="type-meta">
+      Oswald · Graisse 300 à 500 · Paragraphes, descriptions, boutons,
+      formulaires, filtres et informations pratiques.
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Échelle typographique</h3>
+
+    <div class="type-scale">
+      <div class="type-size">H1 · 48 px</div>
+      <div style="font-family:var(--font-title);font-weight:900;font-size:32px">LaboCiné</div>
+    </div>
+
+    <div class="type-scale">
+      <div class="type-size">H2 · 29 px</div>
+      <div style="font-family:var(--font-title);font-weight:900;font-size:25px">À l'affiche</div>
+    </div>
+
+    <div class="type-scale">
+      <div class="type-size">H3 · 19 px</div>
+      <div style="font-family:var(--font-title);font-weight:800;font-size:19px">Les films à découvrir</div>
+    </div>
+
+    <div class="type-scale">
+      <div class="type-size">Acteurs · 30 px</div>
+      <div style="font-family:var(--font-condensed);font-weight:300;font-size:26px;letter-spacing:2px">LOUIS DE FUNÈS</div>
+    </div>
+
+    <div class="type-scale">
+      <div class="type-size">Corps · 16 px</div>
+      <div style="font-family:var(--font-body);font-weight:300;font-size:16px">Une expérience de cinéma rétro.</div>
+    </div>
+
+    <div class="type-scale">
+      <div class="type-size">Petit · 12 px</div>
+      <div style="font-family:var(--font-body);font-weight:400;font-size:12px">Informations et métadonnées</div>
+    </div>
+  </div>
+
+  <div class="notice-demo">
+    Important : Roboto Slab est une alternative à Clarendon Bold, et Oswald est une alternative condensée à DIN Condensed. Ce ne sont pas les fichiers originaux de ces deux polices.
+  </div>
+</section>
+
+<!-- 04 — ESPACEMENTS -->
+
+<section id="spacing">
+  <div class="section-header">
+    <div class="eyebrow">04 · Structure</div>
+    <h2>Espacements et dimensions</h2>
+    <p>Des espacements réguliers pour conserver une interface aérée.</p>
+  </div>
+
+  <div class="card">
+    <div class="spacing-list">
+      <div class="spacing-item">
+        <span>XS</span>
+        <div class="spacing-bar" style="width:8px"></div>
+        <span class="spacing-value">4 px</span>
+      </div>
+      <div class="spacing-item">
+        <span>S</span>
+        <div class="spacing-bar" style="width:16px"></div>
+        <span class="spacing-value">8 px</span>
+      </div>
+      <div class="spacing-item">
+        <span>M</span>
+        <div class="spacing-bar" style="width:32px"></div>
+        <span class="spacing-value">16 px</span>
+      </div>
+      <div class="spacing-item">
+        <span>L</span>
+        <div class="spacing-bar" style="width:48px"></div>
+        <span class="spacing-value">24 px</span>
+      </div>
+      <div class="spacing-item">
+        <span>XL</span>
+        <div class="spacing-bar" style="width:72px"></div>
+        <span class="spacing-value">36 px</span>
+      </div>
+      <div class="spacing-item">
+        <span>XXL</span>
+        <div class="spacing-bar" style="width:100px"></div>
+        <span class="spacing-value">50 px</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Conteneur principal</h3>
+      <p>Largeur maximale : 1200 px.</p>
+      <p>Marges horizontales adaptables selon l'écran.</p>
+    </div>
+    <div class="card">
+      <h3>Bordures et arrondis</h3>
+      <p>Bordures fines dorées ou brun foncé.</p>
+      <p>Rayon standard : 3 à 4 px.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 05 — BOUTONS -->
+
+<section id="buttons">
+  <div class="section-header">
+    <div class="eyebrow">05 · Interaction</div>
+    <h2>Boutons</h2>
+    <p>Des boutons sobres, lisibles et inspirés de la signalétique des cinémas.</p>
+  </div>
+
+  <div class="card">
+    <h3>Styles de boutons</h3>
+    <div class="button-row">
+      <button class="btn btn-primary">Réserver une place</button>
+      <button class="btn btn-secondary">En savoir plus</button>
+      <button class="btn btn-dark">Retour au catalogue</button>
+      <button class="btn btn-danger">Supprimer</button>
+      <button class="btn btn-disabled" disabled>Indisponible</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Règles d'utilisation</h3>
+    <ul class="accessibility-list">
+      <li>Le bouton principal utilise le fond or.</li>
+      <li>Le bouton secondaire utilise un contour rouge ou doré.</li>
+      <li>Les actions destructives utilisent le rouge.</li>
+      <li>Les libellés sont courts, explicites et en majuscules.</li>
+      <li>La police des boutons est Oswald, graisse 500.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 06 — FORMULAIRES -->
+
+<section id="forms">
+  <div class="section-header">
+    <div class="eyebrow">06 · Saisie</div>
+    <h2>Formulaires</h2>
+    <p>Des champs sombres avec des bordures dorées, cohérents avec l'univers du site.</p>
+  </div>
+
+  <div class="card">
+    <div class="grid-2">
+      <div class="form-demo">
+        <label for="demo-name">Prénom</label>
+        <input id="demo-name" placeholder="Votre prénom">
+      </div>
+
+      <div class="form-demo">
+        <label for="demo-email">Adresse e-mail</label>
+        <input id="demo-email" type="email" placeholder="exemple@email.fr">
+      </div>
+    </div>
+
+    <div class="form-demo">
+      <label for="demo-movie">Choisir un film</label>
+      <select id="demo-movie">
+        <option>Le Gendarme de Saint-Tropez</option>
+        <option>La Soupe aux choux</option>
+        <option>L'Aile ou la Cuisse</option>
+      </select>
+    </div>
+  </div>
+</section>
+
+<!-- 07 — NAVIGATION -->
+
+<section id="navigation">
+  <div class="section-header">
+    <div class="eyebrow">07 · Navigation</div>
+    <h2>Navigation, filtres et outils</h2>
+    <p>Les commandes qui permettent de parcourir et d'organiser le catalogue.</p>
+  </div>
+
+  <div class="card">
+    <h3>Navigation principale</h3>
+    <div class="nav-demo">
+      <div class="brand">
+        <div class="brand-mark">LABO</div>
+        <div class="brand-name">LaboCiné</div>
+      </div>
+      <div class="nav-demo-links">
+        <span class="active">Accueil</span>
+        <span>Les films</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Filtres par catégorie</h3>
+    <div class="filter-demo">
+      <button class="filter active">Tous</button>
+      <button class="filter">Comédie</button>
+      <button class="filter">Aventure</button>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>Outils du catalogue</h3>
+    <div class="tools-demo">
+      <input placeholder="Rechercher un film..." aria-label="Exemple de recherche">
+      <button class="btn btn-secondary">♡ Mes favoris</button>
+      <select aria-label="Exemple de tri">
+        <option>Trier par défaut</option>
+        <option>Ordre alphabétique A → Z</option>
+        <option>Ordre alphabétique Z → A</option>
+        <option>Plus ancien au plus récent</option>
+        <option>Plus récent au plus ancien</option>
+      </select>
+      <button class="btn btn-secondary">Réinitialiser</button>
+      <button class="btn btn-danger">Vider les favoris</button>
+    </div>
+    <p>
+      La recherche, les filtres et le tri peuvent être combinés.
+      La réinitialisation remet les filtres à leur état initial sans effacer
+      les favoris enregistrés.
+    </p>
+  </div>
+</section>
+
+<!-- 08 — CARTES DE FILMS -->
+
+<section id="movies">
+  <div class="section-header">
+    <div class="eyebrow">08 · Catalogue</div>
+    <h2>Cartes de films</h2>
+    <p>Des affiches verticales inspirées des anciennes campagnes de cinéma.</p>
+  </div>
+
+  <div class="movie-demo">
+
+    <article class="movie-card">
+      <div class="movie-poster">
+        <span class="favorite">♡</span>
+        <div class="poster-top">LaboCiné présente</div>
+        <div class="poster-title">Le Gendarme de Saint-Tropez</div>
+        <div class="poster-year">1964</div>
+      </div>
+      <div class="movie-card-info">
+        <h4>Le Gendarme de Saint-Tropez</h4>
+        <p>1964 · Comédie</p>
+        <a href="#movies">Découvrir le film →</a>
+      </div>
+    </article>
+
+    <article class="movie-card">
+      <div class="movie-poster" style="background:linear-gradient(145deg,#8e3028,#392019)">
+        <span class="favorite">♥</span>
+        <div class="poster-top">LaboCiné présente</div>
+        <div class="poster-title">La Soupe aux choux</div>
+        <div class="poster-year">1981</div>
+      </div>
+      <div class="movie-card-info">
+        <h4>La Soupe aux choux</h4>
+        <p>1981 · Comédie</p>
+        <a href="#movies">Découvrir le film →</a>
+      </div>
+    </article>
+
+    <article class="movie-card">
+      <div class="movie-poster" style="background:linear-gradient(145deg,#a16b32,#39251b)">
+        <span class="favorite">♡</span>
+        <div class="poster-top">LaboCiné présente</div>
+        <div class="poster-title">L'Aile ou la Cuisse</div>
+        <div class="poster-year">1976</div>
+      </div>
+      <div class="movie-card-info">
+        <h4>L'Aile ou la Cuisse</h4>
+        <p>1976 · Comédie</p>
+        <a href="#movies">Découvrir le film →</a>
+      </div>
+    </article>
+
+  </div>
+
+  <div class="notice-demo" style="margin-top:15px">
+    Les affiches présentées ici sont des exemples graphiques du système de cartes.
+    Elles ne remplacent pas les visuels officiels des films.
+  </div>
+</section>
+
+<!-- 09 — CARROUSEL -->
+
+<section id="carousel">
+  <div class="section-header">
+    <div class="eyebrow">09 · Navigation horizontale</div>
+    <h2>Carrousel de films</h2>
+    <p>Une rangée horizontale défilante pour parcourir les affiches sur ordinateur et mobile.</p>
+  </div>
+
+  <div class="card">
+    <div class="carousel-demo">
+      <div class="carousel-track">
+        <div class="carousel-mini">
+          <small>1964</small>
+          <strong>Fantômas</strong>
+          <small>Découvrir →</small>
+        </div>
+        <div class="carousel-mini">
+          <small>1964</small>
+          <strong>Le Gendarme de Saint-Tropez</strong>
+          <small>Découvrir →</small>
+        </div>
+        <div class="carousel-mini">
+          <small>1981</small>
+          <strong>La Soupe aux choux</strong>
+          <small>Découvrir →</small>
+        </div>
+        <div class="carousel-mini">
+          <small>1976</small>
+          <strong>L'Aile ou la Cuisse</strong>
+          <small>Découvrir →</small>
+        </div>
+        <div class="carousel-mini">
+          <small>1966</small>
+          <strong>Le Grand Restaurant</strong>
+          <small>Découvrir →</small>
+        </div>
+      </div>
+    </div>
+    <p>
+      Le carrousel utilise le défilement horizontal, l'accrochage visuel des cartes
+      et une barre de défilement discrète.
+    </p>
+  </div>
+</section>
+
+<!-- 10 — TARIFS -->
+
+<section id="tariffs">
+  <div class="section-header">
+    <div class="eyebrow">10 · Réservation</div>
+    <h2>Tarifs</h2>
+    <p>Trois catégories de tarifs, attribuées individuellement à chaque spectateur.</p>
+  </div>
+
+  <div class="grid-3">
+    <div class="tariff-card">
+      <h4>Tarif normal</h4>
+      <div class="tariff-price">8 €</div>
+      <p>Tarif standard par spectateur.</p>
+    </div>
+
+    <div class="tariff-card">
+      <h4>Tarif enfant</h4>
+      <div class="tariff-price">5 €</div>
+      <p>Tarif enfant par spectateur.</p>
+    </div>
+
+    <div class="tariff-card">
+      <h4>Tarif handicapé</h4>
+      <div class="tariff-price">5 €</div>
+      <p>Tarif associé aux besoins d'accessibilité.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 11 — PLAN DE SALLE -->
+
+<section id="seats">
+  <div class="section-header">
+    <div class="eyebrow">11 · Accessibilité</div>
+    <h2>Plan de salle et sièges PMR</h2>
+    <p>Les couleurs permettent de distinguer rapidement les états des sièges.</p>
+  </div>
+
+  <div class="card">
+    <div class="seat-legend">
+      <div class="legend"><span class="seat seat-available"></span> Disponible</div>
+      <div class="legend"><span class="seat seat-selected"></span> Sélectionné</div>
+      <div class="legend"><span class="seat seat-occupied"></span> Occupé</div>
+      <div class="legend"><span class="seat seat-pmr"></span> Accessible PMR</div>
+    </div>
+
+    <div class="screen-demo">ÉCRAN</div>
+
+    <div class="seat-map">
+      <span class="seat seat-available">1</span>
+      <span class="seat seat-available">2</span>
+      <span class="seat seat-occupied">3</span>
+      <span class="seat seat-available">4</span>
+      <span class="seat seat-available">5</span>
+      <span class="seat seat-selected">6</span>
+      <span class="seat seat-available">7</span>
+      <span class="seat seat-pmr">8</span>
+
+      <span class="seat seat-available">1</span>
+      <span class="seat seat-occupied">2</span>
+      <span class="seat seat-available">3</span>
+      <span class="seat seat-available">4</span>
+      <span class="seat seat-selected">5</span>
+      <span class="seat seat-available">6</span>
+      <span class="seat seat-available">7</span>
+      <span class="seat seat-pmr">8</span>
+    </div>
+
+    <div class="notice-demo" style="margin-top:22px">
+      Les sièges bleus identifient les emplacements accessibles PMR.
+      Les sièges sélectionnés sont affichés en or.
+    </div>
+  </div>
+</section>
+
+<!-- 12 — RÉSERVATION -->
+
+<section id="booking">
+  <div class="section-header">
+    <div class="eyebrow">12 · Parcours utilisateur</div>
+    <h2>Étapes de réservation</h2>
+    <p>Un parcours divisé en quatre étapes clairement identifiées.</p>
+  </div>
+
+  <div class="card">
+    <div class="steps">
+      <div class="step done">
+        <div class="step-number">1</div>
+        Séance
+      </div>
+      <div class="step active">
+        <div class="step-number">2</div>
+        Places
+      </div>
+      <div class="step">
+        <div class="step-number">3</div>
+        Paiement
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        Billet
+      </div>
+    </div>
+  </div>
+
+  <div class="grid-2">
+    <div class="card">
+      <h3>Étape 1 — Séance</h3>
+      <p>Choix de la date, de l'horaire et du nombre de spectateurs.</p>
+      <p>Attribution d'un tarif à chaque spectateur.</p>
+    </div>
+
+    <div class="card">
+      <h3>Étape 2 — Places</h3>
+      <p>Sélection des sièges disponibles dans le plan de salle.</p>
+      <p>Prise en compte des places accessibles PMR.</p>
+    </div>
+
+    <div class="card">
+      <h3>Étape 3 — Paiement</h3>
+      <p>Saisie des coordonnées de contact et choix d'un mode de paiement fictif.</p>
+      <p>Aucune donnée bancaire n'est demandée.</p>
+    </div>
+
+    <div class="card">
+      <h3>Étape 4 — Billet</h3>
+      <p>Affichage du billet récapitulatif et de son QR code.</p>
+      <p>Possibilité d'imprimer le billet de démonstration.</p>
+    </div>
+  </div>
+
+  <div class="notice-demo">
+    Le parcours est une simulation de réservation. Il ne réalise aucun paiement
+    et ne crée aucune réservation auprès d'un cinéma réel.
+  </div>
+</section>
+
+<!-- 13 — BILLET -->
+
+<section id="ticket">
+  <div class="section-header">
+    <div class="eyebrow">13 · Confirmation</div>
+    <h2>Billet de cinéma</h2>
+    <p>Un billet imprimable inspiré des tickets traditionnels.</p>
+  </div>
+
+  <div class="ticket-demo">
+    <div class="ticket-title">
+      <small>LABOCINÉ PRÉSENTE</small>
+      <h3>VOTRE ENTRÉE</h3>
+      <small>LE RIRE EN GRAND FORMAT</small>
+    </div>
+
+    <div class="ticket-content">
+      <div class="ticket-fields">
+        <div class="ticket-field">
+          <small>Film</small>
+          <strong>Le Gendarme de Saint-Tropez</strong>
+        </div>
+        <div class="ticket-field">
+          <small>Référence</small>
+          <strong>LABO-EXEMPLE</strong>
+        </div>
+        <div class="ticket-field">
+          <small>Date</small>
+          <strong>Exemple de date</strong>
+        </div>
+        <div class="ticket-field">
+          <small>Horaire</small>
+          <strong>19:00</strong>
+        </div>
+        <div class="ticket-field">
+          <small>Sièges</small>
+          <strong>B5 · B6</strong>
+        </div>
+        <div class="ticket-field">
+          <small>Total fictif</small>
+          <strong>16,00 €</strong>
+        </div>
+      </div>
+
+      <div class="qr-demo">QR<br>CODE</div>
+    </div>
+
+    <div class="ticket-footer">
+      BILLET DE DÉMONSTRATION — SANS VALEUR D'ENTRÉE RÉELLE
+    </div>
+  </div>
+</section>
+
+<!-- 14 — ICONOGRAPHIE -->
+
+<section id="icons">
+  <div class="section-header">
+    <div class="eyebrow">14 · Éléments graphiques</div>
+    <h2>Iconographie et symboles</h2>
+    <p>Une iconographie simple qui accompagne les interactions sans surcharger l'interface.</p>
+  </div>
+
+  <div class="icon-demo">
+    <div class="icon-item">
+      <span class="icon-symbol">♡</span>
+      Favoris
+    </div>
+    <div class="icon-item">
+      <span class="icon-symbol">⌕</span>
+      Recherche
+    </div>
+    <div class="icon-item">
+      <span class="icon-symbol">↻</span>
+      Réinitialiser
+    </div>
+    <div class="icon-item">
+      <span class="icon-symbol">→</span>
+      Continuer
+    </div>
+    <div class="icon-item">
+      <span class="icon-symbol">♥</span>
+      Favori actif
+    </div>
+    <div class="icon-item">
+      <span class="icon-symbol">←</span>
+      Retour
+    </div>
+    <div class="icon-item">
+      <span class="icon-symbol">▣</span>
+      Billet
+    </div>
+    <div class="icon-item">
+      <span class="icon-symbol">⌑</span>
+      QR code
+    </div>
+  </div>
+</section>
+
+<!-- 15 — MÉDIAS ET BANDES-ANNONCES -->
+
+<section id="media">
+
+  <div class="section-header">
+    <div class="eyebrow">15 · Contenus vidéo</div>
+    <h2>Médias & bandes-annonces</h2>
+    <p>
+      Les règles d'intégration des bandes-annonces dans les fiches films
+      LaboCiné.
+    </p>
+  </div>
+
+  <div class="brief-highlight">
+    <div class="eyebrow">Objectif du composant</div>
+    <h3>Donner vie aux classiques du cinéma</h3>
+    <p>
+      Les bandes-annonces permettent aux visiteurs de découvrir l'ambiance,
+      les personnages et l'univers d'un film avant de consulter les séances
+      et de poursuivre leur parcours de réservation.
+    </p>
+    <p>
+      Le lecteur vidéo reprend les codes visuels de LaboCiné :
+      fond brun profond, bordure dorée et présentation sobre.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Exemple de lecteur vidéo intégré</h3>
+
+    <div class="media-label">Bande-annonce</div>
+
+    <div class="trailer-container">
+      <iframe
+        src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+        title="Bande-annonce du film"
+        loading="lazy"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <p class="trailer-caption">
+      Exemple de lecteur vidéo au format 16:9.
+      Remplacer VIDEO_ID par l'identifiant réel de la vidéo YouTube.
+    </p>
+  </div>
+
+  <div class="grid-2">
+
+    <div class="card">
+      <h3>Règles visuelles</h3>
+      <ul class="media-rules">
+        <li>Format vidéo : 16:9.</li>
+        <li>Bordure dorée de 2 px.</li>
+        <li>Coins arrondis de 12 px.</li>
+        <li>Fond brun foncé.</li>
+        <li>Lecteur adapté aux mobiles.</li>
+        <li>Label « Bande-annonce » au-dessus du lecteur.</li>
+        <li>Largeur du lecteur adaptée à son conteneur.</li>
+      </ul>
+    </div>
+
+    <div class="card">
+      <h3>Règles d'intégration</h3>
+      <ul class="media-rules">
+        <li>Utiliser une URL d'intégration YouTube.</li>
+        <li>Ne pas utiliser directement l'URL de partage.</li>
+        <li>Ajouter un titre accessible à chaque iframe.</li>
+        <li>Activer le chargement différé avec loading="lazy".</li>
+        <li>Vérifier que l'intégration de la vidéo est autorisée.</li>
+        <li>Prévoir un contenu alternatif si la vidéo est indisponible.</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div class="card">
+    <h3>Structure HTML du lecteur</h3>
+    <p>
+      Ce modèle peut être réutilisé dans chaque fiche de film.
+      Il suffit de remplacer l'identifiant YouTube.
+    </p>
+
+    <pre class="media-code"><code>&lt;div class="trailer-section"&gt;
+
+  &lt;div class="media-label"&gt;
+    Bande-annonce
+  &lt;/div&gt;
+
+  &lt;div class="trailer-container"&gt;
+    &lt;iframe
+      src="https://www.youtube-nocookie.com/embed/VIDEO_ID"
+      title="Bande-annonce du film"
+      loading="lazy"
+      allowfullscreen&gt;
+    &lt;/iframe&gt;
+  &lt;/div&gt;
+
+  &lt;p class="trailer-caption"&gt;
+    Découvrez la bande-annonce du film.
+  &lt;/p&gt;
+
+&lt;/div&gt;</code></pre>
+  </div>
+
+  <div class="card">
+    <h3>Comment récupérer une URL YouTube ?</h3>
+
+    <ol class="media-rules">
+      <li>Ouvrir la vidéo de la bande-annonce sur YouTube.</li>
+      <li>Cliquer sur le bouton « Partager ».</li>
+      <li>Récupérer l'identifiant de la vidéo dans son URL.</li>
+      <li>Insérer cet identifiant à la place de VIDEO_ID dans le lecteur.</li>
+      <li>Tester la lecture directement sur le site.</li>
+    </ol>
+
+    <p>
+      Exemple : pour l'adresse
+      <code>https://www.youtube.com/watch?v=ABC123XYZ</code>,
+      l'URL d'intégration est
+      <code>https://www.youtube-nocookie.com/embed/ABC123XYZ</code>.
+    </p>
+  </div>
+
+  <div class="card">
+    <h3>Emplacement dans une fiche film</h3>
+    <p>
+      Pour conserver un parcours de découverte logique, la bande-annonce
+      doit apparaître après les informations principales du film.
+    </p>
+
+    <div class="steps">
+      <div class="step done">
+        <div class="step-number">1</div>
+        Affiche
+      </div>
+      <div class="step done">
+        <div class="step-number">2</div>
+        Synopsis
+      </div>
+      <div class="step active">
+        <div class="step-number">3</div>
+        Bande-annonce
+      </div>
+      <div class="step">
+        <div class="step-number">4</div>
+        Séances
+      </div>
+    </div>
+  </div>
+
+  <div class="notice-demo">
+    <strong>Attention :</strong>
+    le lecteur présenté dans le design system est un exemple.
+    Il ne contient pas une bande-annonce réelle tant que VIDEO_ID
+    n'a pas été remplacé. Privilégier les vidéos publiées par les
+    distributeurs, producteurs ou ayants droit et autorisées à être
+    intégrées sur un site externe.
+  </div>
+
+</section>
+
+<!-- 16 — ACCESSIBILITÉ -->
+
+<section id="accessibility">
+  <div class="section-header">
+    <div class="eyebrow">16 · Bonnes pratiques</div>
+    <h2>Accessibilité</h2>
+    <p>Une interface compréhensible et utilisable par le plus grand nombre.</p>
+  </div>
+
+  <div class="card">
+    <ul class="accessibility-list">
+      <li>Utiliser des libellés explicites sur les boutons et les champs.</li>
+      <li>Conserver un contraste suffisant entre le texte et son arrière-plan.</li>
+      <li>Ne pas utiliser uniquement la couleur pour indiquer l'état d'un siège.</li>
+      <li>Permettre la navigation au clavier dans les éléments interactifs.</li>
+      <li>Associer chaque champ de formulaire à une étiquette.</li>
+      <li>Afficher clairement les erreurs et les étapes du parcours.</li>
+      <li>Identifier les places accessibles PMR de manière visible.</li>
+      <li>Prévoir des textes alternatifs pour les images informatives.</li>
+      <li>Donner un titre descriptif aux lecteurs vidéo intégrés.</li>
+      <li>Prévoir des sous-titres lorsqu'ils sont disponibles pour les vidéos.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- 17 — RESPONSIVE -->
+
+<section id="responsive">
+  <div class="section-header">
+    <div class="eyebrow">17 · Adaptation</div>
+    <h2>Responsive design</h2>
+    <p>Le site s'adapte aux écrans d'ordinateur, de tablette et de téléphone.</p>
+  </div>
+
+  <div class="responsive-demo">
+    <div class="device">
+      <strong>Desktop</strong>
+      <span>À partir de 1000 px</span>
+      <p>Navigation complète et cartes en plusieurs colonnes.</p>
+    </div>
+
+    <div class="device">
+      <strong>Tablette</strong>
+      <span>700 à 1000 px</span>
+      <p>Contenu réorganisé et navigation adaptée.</p>
+    </div>
+
+    <div class="device">
+      <strong>Mobile</strong>
+      <span>Jusqu'à 700 px</span>
+      <p>Colonnes réduites, carrousel horizontal et formulaires empilés.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  LaboCiné · Design System · Version 2.1<br>
+  Brief & Personas · Identité rétro française · Médias & bandes-annonces<br>
+  Roboto Slab & Oswald
+</footer>
+
+</body>
+</html>
