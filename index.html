@@ -398,7 +398,55 @@ header,footer,.ticket-actions,.floating-book,.back-btn,.step-indicator{display:n
 .seat-sample.selected{background:#f0c928!important;border:1px solid #ffe36a!important}
 .seat-sample.occupied{background:#d62828!important;border:1px solid #ff7777!important}
 .seat-sample.pmr{background:#1876b9!important;border:1px solid #65b9f0!important;color:#fff!important}
+
+/* AJOUTS — reflets dorés, billet ancien, nouvelles pages */
+button,a,.custom-select-trigger,.custom-select-option,select,.day-card,.time-btn,.quantity-control button,.movie-card,.seat,.filter-btn,.favorites-toggle{
+  position:relative;isolation:isolate;overflow:hidden;
+}
+button::after,.custom-select-trigger::after,.custom-select-option::after,.day-card::after,.time-btn::after,.quantity-control button::after,.filter-btn::after,.favorites-toggle::after{
+  content:"";position:absolute;inset:-35% auto -35% -65%;width:38%;transform:skewX(-22deg);
+  background:linear-gradient(90deg,transparent,rgba(255,239,183,.38),rgba(255,255,255,.12),transparent);
+  pointer-events:none;transition:left .65s ease;z-index:2;
+}
+button:hover::after,.custom-select-trigger:hover::after,.custom-select-option:hover::after,.day-card:hover::after,.time-btn:hover::after,.quantity-control button:hover::after,.filter-btn:hover::after,.favorites-toggle:hover::after{left:135%}
+.profile-layout{display:grid;grid-template-columns:minmax(230px,.7fr) 1.3fr;gap:22px;align-items:start}
+.avatar-picker{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
+.avatar-choice{width:54px;height:54px;border:2px solid #87663e;border-radius:50%;background:#2b1c16;color:var(--gold-light);font-size:27px;display:grid;place-items:center}
+.avatar-choice.active{border-color:var(--gold-light);background:#6c4827;box-shadow:0 0 0 3px #d7aa5244}
+.profile-avatar{font-size:54px;width:90px;height:90px;display:grid;place-items:center;border:2px solid var(--gold);border-radius:50%;background:#2b1c16;margin-bottom:15px}
+.reservation-card,.cinefile-card,.bio-card{background:#291b16;border:1px solid rgba(215,170,82,.4);padding:18px;margin:12px 0}
+.reservation-card h3,.cinefile-card h3,.bio-card h3{color:var(--gold-light);margin:0 0 8px}
+.profile-reservation-summary{color:var(--gold-light);font-size:13px;padding:10px 12px;background:#211713;border-left:3px solid var(--gold)}
+.profile-section-title{font-family:var(--font-title);color:var(--gold-light);font-size:18px;margin:22px 0 8px}
+.reservation-status{display:inline-block;margin-top:10px;padding:4px 8px;border:1px solid rgba(215,170,82,.5);color:var(--gold-light);font-size:10px;letter-spacing:1px}
+.reservation-cancelled{opacity:.72;border-style:dashed}
+.reservation-cancelled .reservation-status{color:#e49a8e;border-color:#9b5148}
+.reservation-cancel-btn{display:block;margin-top:12px;padding:8px 12px;background:transparent;border:1px solid #a75c50;color:#f0b4a8;border-radius:3px;font:inherit;font-size:12px;cursor:pointer}
+.reservation-cancel-btn:hover{background:#6b3029}
+.cinefile-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-top:12px}
+.cinefile-fact{padding:10px;background:#211713;border-left:2px solid var(--gold);font-size:13px;color:var(--muted)}
+.cinefile-fact strong{display:block;color:var(--gold-light);font-size:11px;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
+.bio-timeline{border-left:2px solid var(--gold);margin:25px 0 25px 10px;padding-left:20px}
+.bio-event{position:relative;padding:0 0 18px 6px;color:#ddc9a7;line-height:1.65}
+.bio-event::before{content:"";position:absolute;left:-27px;top:5px;width:10px;height:10px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 4px #d7aa5230}
+.filmography-list{columns:2;column-gap:30px;padding-left:20px;color:#ddc9a7;line-height:1.7}
+.filmography-list li{break-inside:avoid;margin-bottom:5px}
+@media(max-width:700px){.profile-layout{grid-template-columns:1fr}.cinefile-grid{grid-template-columns:1fr}.filmography-list{columns:1}}
+
 </style>
+
+<style id="user-final-adjustments">
+/* Ajustements demandés : masquer le bouton flottant de réservation et alléger la typographie des menus. */
+#floatingBook,.floating-book{display:none!important;}
+select, select option, .custom-select, .custom-select-trigger, .custom-select-value,
+.custom-select-menu, .custom-select-option, .attendee-row select{
+  font-family:"Oswald","Arial Narrow",Arial,sans-serif!important;
+  font-weight:300!important;
+  letter-spacing:.25px;
+}
+.custom-select-option{font-weight:300!important;}
+</style>
+
 </head>
 
 <body>
@@ -412,6 +460,8 @@ header,footer,.ticket-actions,.floating-book,.back-btn,.step-indicator{display:n
 <button onclick="goHome()" aria-label="Accueil" title="Accueil"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Accueil</span></button>
 <button onclick="scrollToFilms()" aria-label="Les films" title="Les films"><span class="nav-icon nav-film" aria-hidden="true">▥</span><span class="nav-label">Les films</span></button>
 <a href="designsystem.html" aria-label="Design System" title="Design System"><span class="nav-icon" aria-hidden="true">⚙</span><span class="nav-label">Design System</span></a>
+<button onclick="showPage('profilePage');renderProfile()" aria-label="Mon profil" title="Mon profil"><span class="nav-icon" aria-hidden="true">♙</span><span class="nav-label">Mon profil</span></button>
+<button onclick="showPage('biographyPage')" aria-label="La vie de Louis de Funès" title="La vie de Louis de Funès"><span class="nav-icon" aria-hidden="true">✦</span><span class="nav-label">Sa vie</span></button>
 </nav>
 </div>
 </header>
@@ -477,6 +527,7 @@ header,footer,.ticket-actions,.floating-book,.back-btn,.step-indicator{display:n
 </div>
 </div>
 <button class="primary-btn" style="margin-top:25px" onclick="goToSession()">Choisir une séance</button>
+<div class="cinefile-card" id="cinefileCard" aria-live="polite"><h3>Dans les coulisses : anecdotes et histoires vraies</h3><div class="cinefile-grid" id="cinefileFacts"></div><p id="cinefileNote" style="margin:12px 0 0"></p></div>
 </div>
 </div>
 </div>
@@ -633,6 +684,38 @@ header,footer,.ticket-actions,.floating-book,.back-btn,.step-indicator{display:n
 <div class="notice" style="max-width:720px;margin:15px auto">Ce site est une maquette : aucun billet réel n'est émis, aucun paiement n'est encaissé et aucun e-mail n'est envoyé. Le QR code mène à une vidéo YouTube.</div>
 </div>
 </section>
+
+<section id="profilePage" class="page"><div class="container">
+<button class="back-btn" onclick="goHome()">← Retour à l'accueil</button>
+<div class="eyebrow">Votre espace personnel</div><h1 style="color:var(--gold-light)">Mon profil</h1>
+<div class="profile-layout">
+<div class="panel"><div class="profile-avatar" id="profileAvatarPreview">🎬</div><h2>Mon identité cinéphile</h2>
+<label class="form-label" for="profileName">Mon prénom</label><input id="profileName" maxlength="35" placeholder="Votre prénom">
+<div class="form-label">Choisir un avatar</div><div class="avatar-picker" id="avatarPicker">
+<button class="avatar-choice active" type="button" data-avatar="🎬">🎬</button><button class="avatar-choice" type="button" data-avatar="🍿">🍿</button><button class="avatar-choice" type="button" data-avatar="🎭">🎭</button><button class="avatar-choice" type="button" data-avatar="🎞️">🎞️</button><button class="avatar-choice" type="button" data-avatar="⭐">⭐</button><button class="avatar-choice" type="button" data-avatar="🎩">🎩</button></div>
+<button class="primary-btn" type="button" onclick="saveProfile()">Enregistrer mon profil</button><p class="calendar-note">Ces informations restent enregistrées sur ce navigateur.</p></div>
+<div class="panel"><h2>Mes réservations</h2><p style="color:var(--muted)">Retrouvez le récapitulatif de vos réservations en cours.</p><div id="profileReservations"><p class="calendar-note">Aucune réservation enregistrée pour le moment.</p></div></div>
+</div></div></section>
+<section id="biographyPage" class="page"><div class="container">
+<button class="back-btn" onclick="goHome()">← Retour à l'accueil</button><div class="eyebrow">Hommage à une légende</div><h1 style="color:var(--gold-light)">Louis de Funès : une vie de cinéma</h1>
+<div class="panel"><h2>De Courbevoie aux grandes comédies françaises</h2><p style="color:#ddc9a7;line-height:1.8">Né dans une famille d'origine espagnole, Louis de Funès devient l'un des visages les plus populaires du cinéma français. Avant la célébrité, il enchaîne les petits métiers et joue du piano dans les bars. Ses débuts au cinéma sont modestes : il apparaît dans de nombreux petits rôles avant de s'imposer progressivement comme une vedette de la comédie.</p>
+<div class="bio-timeline">
+<div class="bio-event"><strong>31 juillet 1914 — Naissance</strong><br>Louis Germain David de Funès de Galarza naît à Courbevoie, près de Paris.</div>
+<div class="bio-event"><strong>Années 1930–1940 — Les débuts</strong><br>Il se forme au piano, exerce différents métiers et joue comme pianiste de bar. Il commence à apparaître au cinéma au milieu des années 1940, souvent dans de petits rôles.</div>
+<div class="bio-event"><strong>1943 — Vie familiale</strong><br>Il épouse Jeanne Barthélémy, qui partagera sa vie et l'accompagnera au fil de sa carrière.</div>
+<div class="bio-event"><strong>Années 1950 — Théâtre et seconds rôles</strong><br>Il rejoint notamment la troupe des Branquignols et multiplie les apparitions à l'écran. Sa gestuelle et son énergie attirent de plus en plus l'attention.</div>
+<div class="bio-event"><strong>1963–1966 — La consécration</strong><br><em>Pouic-Pouic</em>, <em>Le Gendarme de Saint-Tropez</em>, <em>Fantômas</em>, <em>Le Corniaud</em> et <em>La Grande Vadrouille</em> installent son immense popularité.</div>
+<div class="bio-event"><strong>Années 1970 — Les grands personnages</strong><br>Il enchaîne les succès, notamment <em>La Folie des grandeurs</em>, <em>Les Aventures de Rabbi Jacob</em> et <em>L'Aile ou la Cuisse</em>.</div>
+<div class="bio-event"><strong>1980 — Une reconnaissance majeure</strong><br>Il reçoit un César d'honneur pour l'ensemble de sa carrière et joue Harpagon dans <em>L'Avare</em>, qu'il coréalise.</div>
+<div class="bio-event"><strong>27 janvier 1983 — Décès</strong><br>Louis de Funès meurt à Nantes, à l'âge de 68 ans. Son œuvre continue d'être redécouverte et transmise au public.</div>
+</div>
+<h2>Son jeu et son caractère comique</h2><p style="color:#ddc9a7;line-height:1.8">Son style repose sur un rythme très précis, les ruptures de ton, les regards, les gestes brusques et une expressivité du visage exceptionnelle. Il donne souvent vie à des personnages autoritaires, nerveux, vaniteux ou dépassés par les événements. Derrière cette énergie à l'écran, il était aussi connu pour son goût du travail minutieux, de la musique et du jardinage.</p>
+<h2>Filmographie — rôles marquants dans l'ordre chronologique</h2><p class="calendar-note">Sélection chronologique de ses films les plus connus et de ses rôles importants, et non inventaire exhaustif de ses plus de 140 films et apparitions.</p>
+<ul class="filmography-list">
+<li>1946 — <em>La Tentation de Barbizon</em></li><li>1947 — <em>Six Heures à perdre</em></li><li>1947 — <em>Antoine et Antoinette</em></li><li>1954 — <em>Ah ! les belles bacchantes</em></li><li>1956 — <em>La Traversée de Paris</em></li><li>1958 — <em>Ni vu, ni connu</em></li><li>1963 — <em>Pouic-Pouic</em></li><li>1963 — <em>Faites sauter la banque !</em></li><li>1964 — <em>Le Gendarme de Saint-Tropez</em></li><li>1964 — <em>Fantômas</em></li><li>1965 — <em>Le Gendarme à New York</em></li><li>1965 — <em>Le Corniaud</em></li><li>1965 — <em>Fantômas se déchaîne</em></li><li>1966 — <em>La Grande Vadrouille</em></li><li>1966 — <em>Le Grand Restaurant</em></li><li>1967 — <em>Oscar</em></li><li>1967 — <em>Les Grandes Vacances</em></li><li>1967 — <em>Fantômas contre Scotland Yard</em></li><li>1968 — <em>Le Petit Baigneur</em></li><li>1968 — <em>Le Tatoué</em></li><li>1968 — <em>Le Gendarme se marie</em></li><li>1969 — <em>Hibernatus</em></li><li>1970 — <em>L'Homme orchestre</em></li><li>1970 — <em>Le Gendarme en balade</em></li><li>1971 — <em>Sur un arbre perché</em></li><li>1971 — <em>Jo</em></li><li>1971 — <em>La Folie des grandeurs</em></li><li>1973 — <em>Les Aventures de Rabbi Jacob</em></li><li>1976 — <em>L'Aile ou la Cuisse</em></li><li>1978 — <em>La Zizanie</em></li><li>1979 — <em>Le Gendarme et les Extra-terrestres</em></li><li>1980 — <em>L'Avare</em></li><li>1981 — <em>La Soupe aux choux</em></li><li>1982 — <em>Le Gendarme et les Gendarmettes</em></li>
+</ul><p class="calendar-note">Pour approfondir : <a href="https://museedefunes.fr/carriere/" target="_blank" rel="noopener">Musée Louis de Funès</a> · <a href="https://www.cinematheque.fr/exposition/louis-de-funes.html" target="_blank" rel="noopener">Cinémathèque française</a> · <a href="https://www.allocine.fr/personne/fichepersonne-1639/filmographie/" target="_blank" rel="noopener">Filmographie AlloCiné</a>.</p>
+</div></div></section>
+
 </main>
 
 <button class="floating-book" id="floatingBook" onclick="scrollToFilms()">Réserver une place</button>
@@ -657,6 +740,65 @@ const movies=[
 {title:"La Folie des grandeurs",year:1971,duration:"108 min",genre:"Aventure",director:"Gérard Oury",synopsis:"Dans l'Espagne du XVIIe siècle, un ministre déchu prépare sa revanche avec l'aide de son valet. Intrigues, déguisements et ambitions démesurées composent cette grande comédie historique."},
 {title:"Le Gendarme et les Gendarmettes",year:1982,duration:"102 min",genre:"Comédie",director:"Jean Girault et Tony Aboyantz",synopsis:"La brigade de Saint-Tropez accueille de nouvelles recrues. Cruchot et ses collègues doivent s'adapter à cette nouvelle organisation, tandis qu'une affaire vient troubler leur quotidien."}
 ];
+
+
+const cinephileFacts={
+"Fantômas":[
+{label:"Une star annoncée",text:"Jean Marais tient le double rôle de Fantômas et du journaliste Fandor. Louis de Funès, dans le rôle de Juve, apporte une dimension comique qui prendra une place majeure dans le succès de la série."},
+{label:"Une équipe qui se retrouve",text:"Le réalisateur André Hunebelle retrouve ici plusieurs collaborateurs de ses films d'aventure et de cape et d'épée : le film mélange ainsi spectacle, cascades et comédie."}
+],
+"Le Gendarme de Saint-Tropez":[
+{label:"Une rencontre décisive",text:"Le film lance la collaboration durable entre Louis de Funès et le réalisateur Jean Girault : ils travailleront ensemble sur de nombreux épisodes du Gendarme et d'autres comédies."},
+{label:"Un décor bien réel",text:"Saint-Tropez n'est pas qu'un nom dans le scénario : le port, les rues et les paysages de la ville participent directement à l'identité visuelle du film."}
+],
+"La Soupe aux choux":[
+{label:"Une dernière collaboration",text:"Le film est l'un des derniers tournés par Louis de Funès et Jean Girault. Le réalisateur meurt en 1982, pendant la préparation de leur film suivant, Le Gendarme et les Gendarmettes."},
+{label:"Un duo de vieux amis",text:"Jean Carmet partage l'affiche avec Louis de Funès. Le contraste entre leurs deux personnages repose beaucoup sur leur complicité et leur rythme de jeu."}
+],
+"L'Aile ou la Cuisse":[
+{label:"Un duo inattendu",text:"Coluche partage ici pour la première fois l'affiche avec Louis de Funès. Le film joue sur le contraste entre le critique gastronomique très sérieux et son fils plus fantaisiste."},
+{label:"Un retour attendu",text:"Le tournage marque le retour de Louis de Funès au premier plan après ses graves problèmes cardiaques de 1975. La production adapte le rythme de travail à sa santé."}
+],
+"Le Grand Restaurant":[
+{label:"Des gags travaillés à la maison",text:"Louis de Funès préparait souvent ses idées comiques en dehors du plateau. Son fils Patrick a raconté qu'il testait parfois ses trouvailles auprès de son épouse avant de les proposer au tournage."},
+{label:"Un réalisateur de confiance",text:"Le film est réalisé par Jacques Besnard, un collaborateur déjà connu de Louis de Funès. Malgré les annonces de l'époque, l'acteur ne signe pas lui-même la réalisation."}
+],
+"Les Aventures de Rabbi Jacob":[
+{label:"Une préparation très sérieuse",text:"Pour préparer son rôle de Victor Pivert, Louis de Funès a été encouragé par Gérard Oury à découvrir la culture juive et à assister à un office dans une synagogue."},
+{label:"Un décor qui trompe l'œil",text:"La célèbre rue des Rosiers a été reconstituée dans le vieux Saint-Denis : la vraie rue parisienne était trop étroite et trop fréquentée pour y tourner la scène comme prévu."},
+{label:"Une danse répétée",text:"Louis de Funès a travaillé plusieurs semaines avec le compositeur Vladimir Cosma pour préparer la danse devenue l'un des moments les plus célèbres du film."}
+],
+"L'Avare":[
+{label:"Un rôle qu'il rêvait de jouer",text:"Louis de Funès souhaitait depuis longtemps interpréter Harpagon. Il réalise le film avec Jean Girault et s'investit étroitement dans son adaptation et sa mise en scène."},
+{label:"Un tournage aménagé",text:"Après ses problèmes cardiaques, le planning a été organisé pour lui permettre de travailler moins longtemps chaque jour et de préserver des temps de repos."},
+{label:"Un vrai décor de village",text:"Les extérieurs de la maison d'Harpagon ont notamment été tournés dans la rue des Cordeliers, à Senlis, dont les rues anciennes donnent au film son atmosphère."}
+],
+"Hibernatus":[
+{label:"Une maison qui n'est pas au Vésinet",text:"L'histoire est située au Vésinet, mais la villa visible dans les plans extérieurs se trouve à Paris, dans le quartier privé du hameau Boileau. Les rues censées évoquer le Vésinet ont aussi été filmées à Versailles."},
+{label:"Un scénario en mouvement",text:"Le scénario a connu de nombreuses versions avant le tournage. Bernard Alane, qui joue l'homme sorti de la glace, a même proposé sa mère, Annick Alane, pour un rôle ajouté en cours de route."},
+{label:"Une entente compliquée",text:"Louis de Funès et le réalisateur Édouard Molinaro n'avaient pas la même façon d'aborder le comique. De Funès aimait sentir les réactions autour de lui, tandis que Molinaro gardait une approche plus distante."}
+],
+"Le Gendarme se marie":[
+{label:"Un tournage pendant Mai 68",text:"Le tournage commence à Saint-Tropez en mai 1968 et est interrompu par les grèves nationales. L'équipe reprend finalement le travail au début du mois de juin."},
+{label:"Une histoire de confiance",text:"Pendant cette période agitée, Louis de Funès confie au réalisateur Jean Girault un secret concernant un coffre caché dans le jardin de son château. L'anecdote a été rapportée par le producteur Christian Fechner."}
+],
+"Le Gendarme en balade":[
+{label:"Retrouvailles de la brigade",text:"Le film réunit à nouveau la bande du Gendarme autour de Jean Girault. Les acteurs retrouvent leurs personnages après plusieurs années, ce qui nourrit le thème des retrouvailles et de la retraite."},
+{label:"Un personnage devenu culte",text:"À ce stade, Cruchot est devenu le rôle emblématique de Louis de Funès : le personnage est désormais écrit en tenant compte des habitudes et du tempérament comique que le public connaît."}
+],
+"Le Gendarme et les Extra-terrestres":[
+{label:"Un retour attendu",text:"Après plusieurs années sans nouvel épisode, Louis de Funès retrouve en 1978 Jean Girault et les comédiens de la brigade pour ce cinquième film."},
+{label:"Saint-Tropez et ses environs",text:"Le tournage commence à Saint-Tropez, puis certaines prises de vues sont déplacées vers Port-Grimaud. Les lieux réels de la région donnent leur décor aux aventures de la brigade."}
+],
+"La Folie des grandeurs":[
+{label:"Un projet qui change de casting",text:"Le film est librement inspiré de Ruy Blas de Victor Hugo. Le duo Louis de Funès–Yves Montand donne finalement au projet son équilibre comique, entre le maître et son valet."},
+{label:"Un palais bien réel",text:"Plusieurs scènes spectaculaires ont été tournées à l'Alhambra de Grenade, en Espagne. Le palais que l'on voit à l'écran est donc un véritable monument, pas un décor de studio."}
+],
+"Le Gendarme et les Gendarmettes":[
+{label:"Un dernier film",text:"C'est le dernier film de la carrière de Louis de Funès. Le tournage est marqué par la disparition du réalisateur Jean Girault en 1982 ; Tony Aboyantz prend alors le relais."},
+{label:"Une brigade qui évolue",text:"Le scénario introduit de nouvelles recrues féminines dans la brigade. Le film joue aussi sur le décalage entre les habitudes des anciens gendarmes et cette nouvelle organisation."}
+]
+};
 
 /* VIDÉOS YOUTUBE */
 const movieClips={
@@ -802,6 +944,11 @@ detailPoster.style.setProperty("--poster-bg",`url("${state.movie.image}")`);
 }else{detailPoster.textContent=posterTitle(state.movie.title)}
 document.getElementById("detailTitle").textContent=state.movie.title;
 document.getElementById("detailSynopsis").textContent=state.movie.synopsis;
+document.getElementById("detailSynopsis").textContent=state.movie.synopsis;
+const facts=cinephileFacts[state.movie.title]||[{label:"Dans les coulisses",text:"Aucune anecdote de tournage suffisamment vérifiée n'est encore renseignée pour ce film."}];
+const factsHost=document.getElementById("cinefileFacts");factsHost.innerHTML="";
+facts.forEach(fact=>{const item=document.createElement("div");item.className="cinefile-fact";const label=document.createElement("strong");label.textContent=fact.label;const content=document.createElement("span");content.textContent=fact.text;item.append(label,content);factsHost.appendChild(item)});
+document.getElementById("cinefileNote").textContent="Casting, coulisses du tournage, lieux réels et histoires entre les membres de l'équipe.";
 const meta=document.getElementById("detailMeta");meta.innerHTML="";
 [state.movie.year,state.movie.duration,state.movie.genre,state.movie.director].forEach(value=>{
 const chip=document.createElement("span");chip.className="meta-chip";chip.textContent=value;meta.appendChild(chip);
@@ -1044,6 +1191,8 @@ document.getElementById("ticketEmail").textContent=state.customer.email;
 const seatTariffs=document.getElementById("ticketSeatTariffs");
 seatTariffs.textContent=state.seats.slice().sort().map((seat,index)=>"Siège "+seat+" : "+tariffs[state.attendeeTypes[index]].label+" ("+euro(tariffs[state.attendeeTypes[index]].price)+")").join(" | ");
 document.getElementById("ticketConcessions").textContent=getConcessionDescription()||"Aucun achat";
+savedReservations.push({movie:state.movie.title,date:formatDate(state.date),dateISO:state.date,time:state.time,seats:state.seats.slice().sort().join(", "),reference:state.reference,total:euro(getGrandTotal()),status:"active",createdAt:new Date().toISOString()});
+try{localStorage.setItem("laboCineReservations",JSON.stringify(savedReservations))}catch(error){}
 const qr=document.getElementById("qrcode");qr.innerHTML="";
 if(window.QRCode){
 new QRCode(qr,{text:"https://www.youtube.com/watch?v=dQw4w9WgXcQ",width:134,height:134,colorDark:"#291b16",colorLight:"#ffffff",correctLevel:QRCode.CorrectLevel.H});
@@ -1151,6 +1300,45 @@ new MutationObserver(records=>{
   }));
 }).observe(document.body,{childList:true,subtree:true});
 
+
+
+/* PROFIL ET HISTORIQUE LOCAL DES RÉSERVATIONS */
+let profileData={name:"",avatar:"🎬"},savedReservations=[];
+try{profileData={...profileData,...JSON.parse(localStorage.getItem("laboCineProfile")||"{}")} }catch(e){}
+try{savedReservations=JSON.parse(localStorage.getItem("laboCineReservations")||"[]");if(!Array.isArray(savedReservations))savedReservations=[]}catch(e){savedReservations=[]}
+savedReservations=savedReservations.filter(item=>item.status!=="cancelled");
+function saveProfile(){profileData.name=document.getElementById("profileName").value.trim();localStorage.setItem("laboCineProfile",JSON.stringify(profileData));renderProfile();alert("Profil enregistré sur cet appareil.")}
+document.getElementById("avatarPicker")?.addEventListener("click",event=>{const button=event.target.closest("[data-avatar]");if(!button)return;profileData.avatar=button.dataset.avatar;document.querySelectorAll(".avatar-choice").forEach(item=>item.classList.toggle("active",item===button));document.getElementById("profileAvatarPreview").textContent=profileData.avatar});
+function cancelReservation(reference){
+  const index=savedReservations.findIndex(reservation=>reservation.reference===reference);
+  if(index<0)return;
+  if(!confirm("Annuler cette réservation ? Elle sera supprimée de votre profil."))return;
+  savedReservations.splice(index,1);
+  try{localStorage.setItem("laboCineReservations",JSON.stringify(savedReservations))}catch(error){}
+  renderProfile();
+}
+function renderProfile(){
+  const name=document.getElementById("profileName");if(!name)return;
+  name.value=profileData.name||"";
+  document.getElementById("profileAvatarPreview").textContent=profileData.avatar||"🎬";
+  document.querySelectorAll(".avatar-choice").forEach(item=>item.classList.toggle("active",item.dataset.avatar===profileData.avatar));
+  const host=document.getElementById("profileReservations");host.innerHTML="";
+  const active=savedReservations.filter(item=>item.status!=="cancelled").slice().reverse();
+  const summary=document.createElement("p");summary.className="profile-reservation-summary";
+  summary.textContent=active.length+" réservation(s) enregistrée(s)";
+  host.appendChild(summary);
+  const heading=document.createElement("h3");heading.className="profile-section-title";heading.textContent="Mes réservations ("+active.length+")";host.appendChild(heading);
+  if(!active.length){const empty=document.createElement("p");empty.className="calendar-note";empty.textContent="Aucune réservation enregistrée pour le moment.";host.appendChild(empty);return;}
+  active.forEach(item=>{
+    const card=document.createElement("div");card.className="reservation-card";
+    const titleNode=document.createElement("h3");titleNode.textContent=item.movie||"Film";
+    const details=document.createElement("p");details.textContent=(item.date||"Date non renseignée")+" · "+(item.time||"Horaire non renseigné")+" · Sièges : "+(item.seats||"—")+" · Réf. "+(item.reference||"—");
+    const total=document.createElement("strong");total.textContent=item.total||"";
+    card.append(titleNode,details,total);
+    const cancel=document.createElement("button");cancel.type="button";cancel.className="reservation-cancel-btn";cancel.textContent="Annuler cette réservation";cancel.addEventListener("click",()=>cancelReservation(item.reference));card.appendChild(cancel);
+    host.appendChild(card);
+  });
+}
 
 /* INITIALISATION */
 renderMovies();
