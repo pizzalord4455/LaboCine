@@ -410,10 +410,13 @@ button::after,.custom-select-trigger::after,.custom-select-option::after,.day-ca
 }
 button:hover::after,.custom-select-trigger:hover::after,.custom-select-option:hover::after,.day-card:hover::after,.time-btn:hover::after,.quantity-control button:hover::after,.filter-btn:hover::after,.favorites-toggle:hover::after{left:135%}
 .profile-layout{display:grid;grid-template-columns:minmax(230px,.7fr) 1.3fr;gap:22px;align-items:start}
-.avatar-picker{display:flex;gap:10px;flex-wrap:wrap;margin:15px 0}
-.avatar-choice{width:54px;height:54px;border:2px solid #87663e;border-radius:50%;background:#2b1c16;color:var(--gold-light);font-size:27px;display:grid;place-items:center}
+.avatar-picker{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:15px 0}
+.avatar-choice{min-width:0;padding:5px;border:2px solid #87663e;border-radius:12px;background:#2b1c16;color:var(--gold-light);display:flex;flex-direction:column;align-items:center;gap:5px;font-size:10px;letter-spacing:.2px;overflow:hidden}
+.avatar-choice img{width:58px;height:58px;border-radius:50%;object-fit:cover;object-position:50% 24%;border:1px solid rgba(241,210,140,.7);background:#1b120f}
+.avatar-choice span{display:block;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .avatar-choice.active{border-color:var(--gold-light);background:#6c4827;box-shadow:0 0 0 3px #d7aa5244}
-.profile-avatar{font-size:54px;width:90px;height:90px;display:grid;place-items:center;border:2px solid var(--gold);border-radius:50%;background:#2b1c16;margin-bottom:15px}
+.profile-avatar{font-size:54px;width:90px;height:90px;display:grid;place-items:center;border:2px solid var(--gold);border-radius:50%;background:#2b1c16;margin-bottom:15px;overflow:hidden}
+.profile-avatar img{width:100%;height:100%;object-fit:cover;object-position:50% 24%}
 .reservation-card,.cinefile-card,.bio-card{background:#291b16;border:1px solid rgba(215,170,82,.4);padding:18px;margin:12px 0}
 .reservation-card h3,.cinefile-card h3,.bio-card h3{color:var(--gold-light);margin:0 0 8px}
 .profile-reservation-summary{color:var(--gold-light);font-size:13px;padding:10px 12px;background:#211713;border-left:3px solid var(--gold)}
@@ -459,9 +462,9 @@ select, select option, .custom-select, .custom-select-trigger, .custom-select-va
 <nav class="nav-links" aria-label="Navigation principale">
 <button onclick="goHome()" aria-label="Accueil" title="Accueil"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-label">Accueil</span></button>
 <button onclick="scrollToFilms()" aria-label="Les films" title="Les films"><span class="nav-icon nav-film" aria-hidden="true">▥</span><span class="nav-label">Les films</span></button>
-<a href="designsystem.html" aria-label="Design System" title="Design System"><span class="nav-icon" aria-hidden="true">⚙</span><span class="nav-label">Design System</span></a>
 <button onclick="showPage('profilePage');renderProfile()" aria-label="Mon profil" title="Mon profil"><span class="nav-icon" aria-hidden="true">♙</span><span class="nav-label">Mon profil</span></button>
 <button onclick="showPage('biographyPage')" aria-label="La vie de Louis de Funès" title="La vie de Louis de Funès"><span class="nav-icon" aria-hidden="true">✦</span><span class="nav-label">Sa vie</span></button>
+<a href="designsystem.html" aria-label="Design" title="Design"><span class="nav-icon" aria-hidden="true">⚙</span><span class="nav-label">Design</span></a>
 </nav>
 </div>
 </header>
@@ -691,8 +694,13 @@ select, select option, .custom-select, .custom-select-trigger, .custom-select-va
 <div class="profile-layout">
 <div class="panel"><div class="profile-avatar" id="profileAvatarPreview">🎬</div><h2>Mon identité cinéphile</h2>
 <label class="form-label" for="profileName">Mon prénom</label><input id="profileName" maxlength="35" placeholder="Votre prénom">
-<div class="form-label">Choisir un avatar</div><div class="avatar-picker" id="avatarPicker">
-<button class="avatar-choice active" type="button" data-avatar="🎬">🎬</button><button class="avatar-choice" type="button" data-avatar="🍿">🍿</button><button class="avatar-choice" type="button" data-avatar="🎭">🎭</button><button class="avatar-choice" type="button" data-avatar="🎞️">🎞️</button><button class="avatar-choice" type="button" data-avatar="⭐">⭐</button><button class="avatar-choice" type="button" data-avatar="🎩">🎩</button></div>
+<div class="form-label">Choisir un avatar — visages des affiches</div><div class="avatar-picker" id="avatarPicker">
+<button class="avatar-choice active" type="button" data-avatar="image/fantomas.png" aria-label="Fantômas"><img src="image/fantomas.png" alt="Visage de Fantômas" onerror="this.parentElement.classList.add('avatar-fallback');this.remove()"><span>Fantômas</span></button>
+<button class="avatar-choice" type="button" data-avatar="image/S-T.png" aria-label="Le Gendarme de Saint-Tropez"><img src="image/S-T.png" alt="Visage du gendarme" onerror="this.parentElement.classList.add('avatar-fallback');this.remove()"><span>Le Gendarme</span></button>
+<button class="avatar-choice" type="button" data-avatar="image/soupe.png" aria-label="La Soupe aux choux"><img src="image/soupe.png" alt="Personnage de La Soupe aux choux" onerror="this.parentElement.classList.add('avatar-fallback');this.remove()"><span>La Soupe</span></button>
+<button class="avatar-choice" type="button" data-avatar="image/cuisse.png" aria-label="L'Aile ou la Cuisse"><img src="image/cuisse.png" alt="Personnage de L'Aile ou la Cuisse" onerror="this.parentElement.classList.add('avatar-fallback');this.remove()"><span>L'Aile ou...</span></button>
+<button class="avatar-choice" type="button" data-avatar="image/Rabbi.png" aria-label="Rabbi Jacob"><img src="image/Rabbi.png" alt="Personnage de Rabbi Jacob" onerror="this.parentElement.classList.add('avatar-fallback');this.remove()"><span>Rabbi Jacob</span></button>
+<button class="avatar-choice" type="button" data-avatar="image/hibernatus.png" aria-label="Hibernatus"><img src="image/hibernatus.png" alt="Personnage de Hibernatus" onerror="this.parentElement.classList.add('avatar-fallback');this.remove()"><span>Hibernatus</span></button></div>
 <button class="primary-btn" type="button" onclick="saveProfile()">Enregistrer mon profil</button><p class="calendar-note">Ces informations restent enregistrées sur ce navigateur.</p></div>
 <div class="panel"><h2>Mes réservations</h2><p style="color:var(--muted)">Retrouvez le récapitulatif de vos réservations en cours.</p><div id="profileReservations"><p class="calendar-note">Aucune réservation enregistrée pour le moment.</p></div></div>
 </div></div></section>
@@ -1308,7 +1316,8 @@ try{profileData={...profileData,...JSON.parse(localStorage.getItem("laboCineProf
 try{savedReservations=JSON.parse(localStorage.getItem("laboCineReservations")||"[]");if(!Array.isArray(savedReservations))savedReservations=[]}catch(e){savedReservations=[]}
 savedReservations=savedReservations.filter(item=>item.status!=="cancelled");
 function saveProfile(){profileData.name=document.getElementById("profileName").value.trim();localStorage.setItem("laboCineProfile",JSON.stringify(profileData));renderProfile();alert("Profil enregistré sur cet appareil.")}
-document.getElementById("avatarPicker")?.addEventListener("click",event=>{const button=event.target.closest("[data-avatar]");if(!button)return;profileData.avatar=button.dataset.avatar;document.querySelectorAll(".avatar-choice").forEach(item=>item.classList.toggle("active",item===button));document.getElementById("profileAvatarPreview").textContent=profileData.avatar});
+function setProfileAvatarPreview(value){const preview=document.getElementById("profileAvatarPreview");if(!preview)return;preview.innerHTML="";if(typeof value==="string"&&value.startsWith("image/")){const img=document.createElement("img");img.src=value;img.alt="Avatar choisi";img.onerror=()=>{preview.textContent="🎬"};preview.appendChild(img)}else{preview.textContent=value||"🎬"}}
+document.getElementById("avatarPicker")?.addEventListener("click",event=>{const button=event.target.closest("[data-avatar]");if(!button)return;profileData.avatar=button.dataset.avatar;document.querySelectorAll(".avatar-choice").forEach(item=>item.classList.toggle("active",item===button));setProfileAvatarPreview(profileData.avatar)});
 function cancelReservation(reference){
   const index=savedReservations.findIndex(reservation=>reservation.reference===reference);
   if(index<0)return;
@@ -1320,7 +1329,7 @@ function cancelReservation(reference){
 function renderProfile(){
   const name=document.getElementById("profileName");if(!name)return;
   name.value=profileData.name||"";
-  document.getElementById("profileAvatarPreview").textContent=profileData.avatar||"🎬";
+  setProfileAvatarPreview(profileData.avatar||"🎬");
   document.querySelectorAll(".avatar-choice").forEach(item=>item.classList.toggle("active",item.dataset.avatar===profileData.avatar));
   const host=document.getElementById("profileReservations");host.innerHTML="";
   const active=savedReservations.filter(item=>item.status!=="cancelled").slice().reverse();
