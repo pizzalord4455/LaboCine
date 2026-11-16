@@ -1159,6 +1159,89 @@ section{
   overflow-x:auto;
 }
 
+/* 18 — JOURNAL CRÉATIF */
+
+.journal-intro{
+  background:var(--brown);
+  color:var(--cream);
+  border:1px solid var(--gold);
+  padding:24px;
+  margin-bottom:18px;
+}
+.journal-intro h3{color:var(--gold-light);margin:0 0 8px}
+.journal-intro p{color:#dfcba8;margin:7px 0}
+.journal-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1.15fr) minmax(280px,.85fr);
+  gap:18px;
+  align-items:start;
+}
+.journal-panel{
+  background:#fff9ed;
+  border:1px solid rgba(41,27,22,.16);
+  padding:20px;
+  min-width:0;
+}
+.journal-panel h3{font-size:19px;margin:0 0 15px}
+.journal-field{display:grid;gap:6px;margin-bottom:13px}
+.journal-field label{
+  color:var(--brown);
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.5px;
+}
+.journal-field input,.journal-field select,.journal-field textarea{
+  width:100%;
+  padding:11px 12px;
+  border:1px solid rgba(41,27,22,.3);
+  border-radius:3px;
+  background:#fffdf7;
+  color:var(--brown);
+  outline:none;
+}
+.journal-field textarea{min-height:88px;resize:vertical}
+.journal-field input:focus,.journal-field select:focus,.journal-field textarea:focus{
+  border-color:var(--gold);
+  box-shadow:0 0 0 2px rgba(215,170,82,.2);
+}
+.journal-actions{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px}
+.journal-output{
+  min-height:150px;
+  padding:15px;
+  background:#211713;
+  color:var(--gold-light);
+  border-left:3px solid var(--gold);
+  white-space:pre-wrap;
+  overflow-wrap:anywhere;
+  font-family:monospace;
+  font-size:12px;
+  line-height:1.7;
+}
+.journal-history{display:grid;gap:10px}
+.journal-entry{
+  padding:13px;
+  background:#f4e8cf;
+  border-left:3px solid var(--gold);
+}
+.journal-entry h4{font-size:15px;margin:0 0 4px}
+.journal-entry small{color:#806d55;font-size:11px}
+.journal-entry p{font-size:12px;color:#66533d;margin:8px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.journal-entry-actions{display:flex;flex-wrap:wrap;gap:7px}
+.journal-entry-actions button{
+  border:1px solid var(--red);
+  background:transparent;
+  color:var(--red);
+  padding:5px 9px;
+  cursor:pointer;
+  font-size:11px;
+}
+.journal-empty{padding:18px;text-align:center;color:#806d55;background:#f4e8cf;font-size:13px}
+.journal-status{min-height:20px;color:var(--green);font-size:12px;margin-top:9px}
+.journal-note{font-size:12px;color:#806d55;margin-top:12px}
+@media(max-width:850px){
+  .journal-layout{grid-template-columns:1fr}
+}
+
 /* FOOTER */
 
 footer{
@@ -1229,7 +1312,7 @@ footer{
         <span class="brand-subtitle">LE CINÉMA AUTREMENT</span>
       </div>
     </div>
-    <div class="topbar-label">Guide des styles · Version 2.1</div>
+    <div class="topbar-label">Guide des styles · Version 2.3</div>
   </div>
 </header>
 
@@ -1256,6 +1339,9 @@ footer{
   <a href="#ticket">13 · Billet</a>
   <a href="#icons">14 · Iconographie</a>
   <a href="#media">15 · Médias & bandes-annonces</a>
+  <a href="#profile">19 · Profil utilisateur</a>
+  <a href="#biography">20 · Vie de Louis de Funès</a>
+  <a href="#journal">18 · Journal créatif</a>
 
   <div class="sidebar-title">Règles</div>
   <a href="#accessibility">16 · Accessibilité</a>
@@ -2466,6 +2552,322 @@ footer{
 
 </section>
 
+
+<!-- 19 — PROFIL UTILISATEUR -->
+
+<section id="profile">
+  <div class="section-header">
+    <div class="eyebrow">19 · Espace personnel</div>
+    <h2>Profil utilisateur</h2>
+    <p>
+      Documentation de la page « Mon profil » présente dans l'index :
+      identité cinéphile, choix d'un avatar issu des affiches et suivi des réservations.
+    </p>
+  </div>
+
+  <div class="profile-demo-layout">
+    <div class="profile-demo-panel">
+      <div class="eyebrow">Votre espace personnel</div>
+      <div class="profile-demo-avatar">🎬</div>
+      <h3>Mon identité cinéphile</h3>
+      <label class="profile-demo-label" for="ds-profile-name">Mon prénom</label>
+      <input id="ds-profile-name" type="text" placeholder="Votre prénom" maxlength="35">
+      <div class="profile-demo-label">Choisir un avatar — visages des affiches</div>
+      <div class="profile-demo-avatars">
+        <div class="profile-demo-choice active"><span>🎭</span>Fantômas</div>
+        <div class="profile-demo-choice"><span>👮</span>Le Gendarme</div>
+        <div class="profile-demo-choice"><span>🥬</span>La Soupe</div>
+        <div class="profile-demo-choice"><span>🍗</span>L'Aile ou...</div>
+        <div class="profile-demo-choice"><span>🕺</span>Rabbi Jacob</div>
+        <div class="profile-demo-choice"><span>❄️</span>Hibernatus</div>
+      </div>
+      <button class="primary-btn" type="button">Enregistrer mon profil</button>
+      <p class="profile-demo-note">Ces informations restent enregistrées sur ce navigateur.</p>
+    </div>
+
+    <div class="profile-demo-panel">
+      <h3>Mes réservations</h3>
+      <p class="profile-demo-note">Retrouvez le récapitulatif de vos réservations en cours.</p>
+      <div class="profile-demo-reservation">
+        <strong>Exemple de réservation</strong>
+        <p>Film · Date · Horaire · Sièges · Référence</p>
+        <span class="profile-demo-total">Total de la réservation</span>
+        <button class="secondary-btn" type="button">Annuler cette réservation</button>
+      </div>
+      <p class="profile-demo-note">État vide prévu : « Aucune réservation enregistrée pour le moment. »</p>
+    </div>
+  </div>
+
+  <div class="journal-intro">
+    <h3>Règles d'interface et comportement relevés dans l'index</h3>
+    <ul>
+      <li>La page est ouverte depuis la navigation principale avec « Mon profil ».</li>
+      <li>Le profil contient un prénom limité à 35 caractères et un avatar sélectionné parmi six visuels de films.</li>
+      <li>Le bouton « Enregistrer mon profil » sauvegarde le prénom et l'avatar dans le stockage local du navigateur (<code>laboCineProfile</code>).</li>
+      <li>Les réservations sont lues depuis <code>laboCineReservations</code> ; les réservations annulées ne sont pas affichées.</li>
+      <li>Chaque réservation présente le film, la date, l'heure, les sièges, la référence et le total, avec une action d'annulation.</li>
+      <li>Après annulation, la liste est actualisée et la réservation est retirée du stockage local.</li>
+    </ul>
+    <p><strong>À respecter :</strong> conserver le vocabulaire simple, les panneaux bruns, les bordures dorées et les avatars circulaires. Les images d'avatar réelles sont celles référencées dans le dossier <code>image/</code> de l'index.</p>
+  </div>
+</section>
+
+<!-- 20 — BIOGRAPHIE DE LOUIS DE FUNÈS -->
+
+<section id="biography">
+  <div class="section-header">
+    <div class="eyebrow">20 · Page éditoriale</div>
+    <h2>La vie de Louis de Funès</h2>
+    <p>
+      Documentation de la page « Sa vie » de l'index : hommage biographique,
+      chronologie, présentation de son jeu comique et filmographie sélective.
+    </p>
+  </div>
+
+  <div class="bio-demo-panel">
+    <div class="eyebrow">Hommage à une légende</div>
+    <h3>Louis de Funès : une vie de cinéma</h3>
+    <div class="bio-demo-intro">
+      <h4>De Courbevoie aux grandes comédies françaises</h4>
+      <p>
+        La page présente son parcours, de ses débuts modestes et de ses petits rôles
+        à sa consécration comme l'un des visages les plus populaires du cinéma français.
+      </p>
+    </div>
+
+    <h4>Repères biographiques</h4>
+    <div class="bio-demo-timeline">
+      <div><strong>31 juillet 1914 — Naissance</strong><p>Naissance à Courbevoie.</p></div>
+      <div><strong>Années 1930–1940 — Les débuts</strong><p>Piano, petits métiers et premières apparitions au cinéma.</p></div>
+      <div><strong>1943 — Vie familiale</strong><p>Mariage avec Jeanne Barthélémy.</p></div>
+      <div><strong>Années 1950 — Théâtre et seconds rôles</strong><p>La troupe des Branquignols et de nombreuses apparitions à l'écran.</p></div>
+      <div><strong>1963–1966 — La consécration</strong><p><em>Pouic-Pouic</em>, <em>Le Gendarme de Saint-Tropez</em>, <em>Fantômas</em>, <em>Le Corniaud</em> et <em>La Grande Vadrouille</em>.</p></div>
+      <div><strong>Années 1970 — Les grands personnages</strong><p><em>La Folie des grandeurs</em>, <em>Rabbi Jacob</em> et <em>L'Aile ou la Cuisse</em>.</p></div>
+      <div><strong>1980 — Une reconnaissance majeure</strong><p>César d'honneur et interprétation de Harpagon dans <em>L'Avare</em>.</p></div>
+      <div><strong>27 janvier 1983 — Décès</strong><p>Décès à Nantes, à l'âge de 68 ans.</p></div>
+    </div>
+
+    <h4>Son jeu et son caractère comique</h4>
+    <p>
+      Le contenu éditorial met en avant le rythme précis, les ruptures de ton,
+      les regards, les gestes brusques et l'expressivité du visage.
+    </p>
+
+    <h4>Filmographie — rôles marquants</h4>
+    <p class="profile-demo-note">Liste chronologique sélective, non exhaustive, des films et rôles importants.</p>
+    <div class="bio-demo-films">
+      <span>1946 · La Tentation de Barbizon</span><span>1956 · La Traversée de Paris</span>
+      <span>1963 · Pouic-Pouic</span><span>1964 · Le Gendarme de Saint-Tropez</span>
+      <span>1964 · Fantômas</span><span>1965 · Le Corniaud</span>
+      <span>1966 · La Grande Vadrouille</span><span>1967 · Oscar</span>
+      <span>1969 · Hibernatus</span><span>1971 · La Folie des grandeurs</span>
+      <span>1973 · Les Aventures de Rabbi Jacob</span><span>1976 · L'Aile ou la Cuisse</span>
+      <span>1980 · L'Avare</span><span>1981 · La Soupe aux choux</span>
+    </div>
+  </div>
+
+  <div class="journal-intro">
+    <h3>Structure éditoriale à conserver</h3>
+    <ul>
+      <li>Un bouton de retour à l'accueil, puis un surtitre « Hommage à une légende ».</li>
+      <li>Un titre principal et un panneau éditorial unique pour le contenu biographique.</li>
+      <li>Une chronologie verticale matérialisée par une ligne dorée et des événements successifs.</li>
+      <li>Des sous-titres distincts pour le parcours, le jeu comique et la filmographie.</li>
+      <li>Une filmographie en colonnes sur grand écran et en une seule colonne sur petit écran.</li>
+      <li>Des liens de référence vers le Musée Louis de Funès, la Cinémathèque française et AlloCiné, comme dans l'index.</li>
+    </ul>
+  </div>
+</section>
+
+<style>
+.profile-demo-layout{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin:24px 0}
+.profile-demo-panel,.bio-demo-panel{background:#2b1c16;border:1px solid #87663e;border-radius:8px;padding:24px;color:#f4e8cf}
+.profile-demo-panel h3,.bio-demo-panel h3{color:#f1d28c;margin:8px 0 18px}
+.profile-demo-avatar{width:86px;height:86px;border:2px solid #d7aa52;border-radius:50%;display:grid;place-items:center;background:#1b120f;font-size:38px;margin:10px 0}
+.profile-demo-label{display:block;color:#f1d28c;font-size:13px;margin:16px 0 7px}
+.profile-demo-panel input{width:100%;padding:11px;border:1px solid #87663e;border-radius:4px;background:#1b120f;color:#f4e8cf}
+.profile-demo-avatars{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:10px 0 18px}
+.profile-demo-choice{border:1px solid #87663e;border-radius:8px;padding:9px 4px;text-align:center;font-size:11px;color:#f1d28c}
+.profile-demo-choice span{display:block;font-size:25px;margin-bottom:5px}
+.profile-demo-choice.active{border:2px solid #f1d28c;background:#6c4827}
+.profile-demo-note{font-size:12px;color:#c6b18d;line-height:1.6}
+.profile-demo-reservation{border:1px solid #87663e;border-radius:6px;padding:16px;margin:18px 0}
+.profile-demo-reservation p{color:#ddc9a7;font-size:13px;line-height:1.6}
+.profile-demo-total{display:block;color:#f1d28c;margin:12px 0}
+.bio-demo-panel{margin:24px 0;line-height:1.75}
+.bio-demo-panel h4{color:#f1d28c;margin:24px 0 10px}
+.bio-demo-intro{border:1px solid #87663e;border-radius:6px;padding:18px;background:#241711}
+.bio-demo-intro p,.bio-demo-timeline p{color:#ddc9a7;margin:4px 0 0}
+.bio-demo-timeline{border-left:2px solid #d7aa52;margin:18px 0 24px 8px;padding-left:20px}
+.bio-demo-timeline>div{position:relative;margin:0 0 17px}
+.bio-demo-timeline>div:before{content:"";position:absolute;width:9px;height:9px;border-radius:50%;background:#d7aa52;left:-26px;top:7px}
+.bio-demo-timeline strong{color:#f1d28c}
+.bio-demo-films{columns:2;column-gap:28px;color:#ddc9a7;font-size:13px}
+.bio-demo-films span{display:block;break-inside:avoid;margin-bottom:7px}
+@media(max-width:760px){.profile-demo-layout{grid-template-columns:1fr}.bio-demo-films{columns:1}}
+</style>
+
+<!-- 18 — JOURNAL CRÉATIF -->
+
+<section id="journal">
+  <div class="section-header">
+    <div class="eyebrow">18 · Atelier de création</div>
+    <h2>Journal créatif</h2>
+    <p>
+      Un espace de préparation et de mémoire pour construire des prompts
+      d'affiches, conserver les versions et expliquer les décisions artistiques.
+    </p>
+  </div>
+
+  <div class="journal-intro">
+    <div class="eyebrow" style="color:var(--gold)">L'atelier LaboCiné</div>
+    <h3>De l'idée à l'affiche</h3>
+    <p>
+      Le journal relie chaque création à son intention : le film choisi,
+      la direction artistique, les couleurs, la typographie, la composition
+      et les raisons de ces choix.
+    </p>
+    <p>
+      Les entrées sont enregistrées dans le stockage local de ce navigateur.
+      Elles restent disponibles sur cet appareil et dans ce navigateur.
+    </p>
+  </div>
+
+  <div class="journal-layout">
+    <div class="journal-panel">
+      <h3>01 · Construire un prompt</h3>
+
+      <div class="journal-field">
+        <label for="journal-title">Nom de la création</label>
+        <input id="journal-title" type="text" placeholder="Ex. : Rabbi Jacob — affiche hommage">
+      </div>
+
+      <div class="grid-2">
+        <div class="journal-field">
+          <label for="journal-film">Film / sujet</label>
+          <input id="journal-film" type="text" placeholder="Ex. : Rabbi Jacob">
+        </div>
+        <div class="journal-field">
+          <label for="journal-year">Année / période</label>
+          <input id="journal-year" type="text" placeholder="Ex. : 1973">
+        </div>
+      </div>
+
+      <div class="journal-field">
+        <label for="journal-style">Direction artistique</label>
+        <select id="journal-style">
+          <option value="Affiche de cinéma française vintage des années 60–70">Affiche française vintage · années 60–70</option>
+          <option value="Illustration peinte à la main, expressive et théâtrale">Illustration peinte à la main</option>
+          <option value="Illustration rétro sérigraphiée avec texture papier imprimé">Sérigraphie rétro</option>
+          <option value="Composition graphique minimaliste inspirée des affiches anciennes">Minimalisme rétro</option>
+          <option value="Photomontage cinématographique vintage">Photomontage vintage</option>
+          <option value="Style illustré comique, dynamique et caricatural">Illustration comique et dynamique</option>
+        </select>
+      </div>
+
+      <div class="grid-2">
+        <div class="journal-field">
+          <label for="journal-colors">Palette de couleurs</label>
+          <select id="journal-colors">
+            <option value="Palette LaboCiné : brun profond #291B16, or cinéma #D7AA52, crème #F4E8CF et rouge affiche #8E3028">Palette officielle LaboCiné</option>
+            <option value="Palette chaude : ocre, rouge brique, crème et brun">Ocre, brique, crème, brun</option>
+            <option value="Palette limitée à deux ou trois couleurs contrastées">Palette limitée · 2 à 3 couleurs</option>
+            <option value="Couleurs libres, choisies selon l'ambiance du film">Couleurs libres selon le film</option>
+          </select>
+        </div>
+        <div class="journal-field">
+          <label for="journal-type">Typographie souhaitée</label>
+          <select id="journal-type">
+            <option value="Titres en Roboto Slab très gras, acteurs en Oswald léger et condensé">Roboto Slab 900 + Oswald 300</option>
+            <option value="Titres en caractères slab serif massifs et acteurs en capitales condensées">Slab serif + capitales condensées</option>
+            <option value="Typographie peinte et intégrée à l'illustration">Lettrage peint</option>
+            <option value="Typographie libre, cohérente avec l'époque représentée">Typographie d'époque</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="journal-field">
+        <label for="journal-composition">Composition / éléments visuels</label>
+        <textarea id="journal-composition" placeholder="Ex. : personnages au centre, titre imposant en haut, décor parisien en arrière-plan..."></textarea>
+      </div>
+
+      <div class="journal-field">
+        <label for="journal-brief">Consignes précises du prompt</label>
+        <textarea id="journal-brief" placeholder="Décris ici les personnages, attitudes, accessoires, décor, ambiance, cadrage et détails à respecter..."></textarea>
+      </div>
+
+      <div class="journal-field">
+        <label for="journal-constraints">Contraintes à respecter</label>
+        <textarea id="journal-constraints" placeholder="Ex. : conserver la composition de référence, ne pas ajouter de personnages, texte lisible, aucun logo inventé..."></textarea>
+      </div>
+
+      <div class="journal-actions">
+        <button class="btn btn-primary" type="button" id="journal-generate">Composer le prompt</button>
+        <button class="btn btn-secondary" type="button" id="journal-reset">Réinitialiser</button>
+      </div>
+
+      <div class="journal-field" style="margin-top:18px">
+        <label for="journal-prompt">Prompt final modifiable</label>
+        <textarea id="journal-prompt" style="min-height:190px" placeholder="Le prompt composé apparaîtra ici. Tu peux ensuite le modifier librement."></textarea>
+      </div>
+
+      <div class="journal-actions">
+        <button class="btn btn-dark" type="button" id="journal-copy">Copier le prompt</button>
+      </div>
+    </div>
+
+    <div>
+      <div class="journal-panel" style="margin-bottom:18px">
+        <h3>02 · Choix artistiques expliqués</h3>
+        <div class="journal-field">
+          <label for="journal-reason-style">Pourquoi ce style ?</label>
+          <textarea id="journal-reason-style" placeholder="Ex. : retrouver le charme des affiches dessinées à la main des années 70..."></textarea>
+        </div>
+        <div class="journal-field">
+          <label for="journal-reason-colors">Pourquoi cette palette ?</label>
+          <textarea id="journal-reason-colors" placeholder="Ex. : le brun et l'or rappellent l'identité LaboCiné et les salles anciennes..."></textarea>
+        </div>
+        <div class="journal-field">
+          <label for="journal-reason-type">Pourquoi cette typographie ?</label>
+          <textarea id="journal-reason-type" placeholder="Ex. : Roboto Slab donne du poids au titre, Oswald apporte une lecture condensée..."></textarea>
+        </div>
+        <div class="journal-field">
+          <label for="journal-reason-layout">Pourquoi cette composition ?</label>
+          <textarea id="journal-reason-layout" placeholder="Explique le placement des personnages, du titre et du décor."></textarea>
+        </div>
+        <div class="journal-field">
+          <label for="journal-reason-overall">Intention générale / résultat recherché</label>
+          <textarea id="journal-reason-overall" placeholder="Quelle émotion ou quelle impression l'affiche doit-elle transmettre ?"></textarea>
+        </div>
+        <div class="journal-field">
+          <label for="journal-image">Référence ou lien de l'image (facultatif)</label>
+          <input id="journal-image" type="url" placeholder="https://...">
+        </div>
+        <button class="btn btn-primary" type="button" id="journal-save">Enregistrer dans le journal</button>
+        <div class="journal-status" id="journal-status" role="status" aria-live="polite"></div>
+      </div>
+
+      <div class="journal-panel">
+        <h3>03 · Historique des créations</h3>
+        <div id="journal-history" class="journal-history">
+          <div class="journal-empty">Aucune création enregistrée pour le moment.</div>
+        </div>
+        <p class="journal-note">
+          Chaque sauvegarde conserve le prompt et les explications artistiques.
+          Tu peux recharger une entrée pour la modifier ou la copier.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="section-note">
+    <strong>Règle du journal :</strong>
+    une affiche doit pouvoir être comprise et reproduite à partir de son
+    prompt, de ses références et de ses choix expliqués. Les raisons artistiques
+    doivent décrire une intention réelle, pas seulement répéter les paramètres.
+  </div>
+</section>
+
 <!-- 16 — ACCESSIBILITÉ -->
 
 <section id="accessibility">
@@ -2524,10 +2926,221 @@ footer{
 </main>
 
 <footer>
-  LaboCiné · Design System · Version 2.1<br>
-  Brief & Personas · Identité rétro française · Médias & bandes-annonces<br>
+  LaboCiné · Design System · Version 2.3<br>
+  Brief & Personas · Identité rétro française · Journal créatif<br>
   Roboto Slab & Oswald
 </footer>
+
+<script>
+(function(){
+  "use strict";
+
+  const STORAGE_KEY = "labocine-journal-creatif-v1";
+  const fields = [
+    "title","film","year","style","colors","type","composition","brief",
+    "constraints","prompt","reason-style","reason-colors","reason-type",
+    "reason-layout","reason-overall","image"
+  ];
+  const byId = id => document.getElementById("journal-" + id);
+  const status = byId("status");
+  let editingId = null;
+
+  function value(id){
+    const el = byId(id);
+    return el ? el.value.trim() : "";
+  }
+
+  function collect(){
+    const entry = {};
+    fields.forEach(key => entry[key] = value(key));
+    return entry;
+  }
+
+  function composePrompt(){
+    const film = value("film") || value("title") || "Sujet à préciser";
+    const year = value("year");
+    const parts = [
+      "Créer une affiche de cinéma pour : " + film + (year ? " (" + year + ")" : "") + ".",
+      "Direction artistique : " + value("style") + ".",
+      "Palette : " + value("colors") + ".",
+      "Typographie : " + value("type") + ".",
+      value("composition") ? "Composition et éléments visuels : " + value("composition") + "." : "",
+      value("brief") ? "Consignes détaillées : " + value("brief") : "",
+      value("constraints") ? "Contraintes impératives : " + value("constraints") : "",
+      "Respecter l'identité visuelle LaboCiné : esthétique de cinéma français rétro, composition lisible, hiérarchie typographique nette et finition soignée."
+    ].filter(Boolean);
+    byId("prompt").value = parts.join("\n\n");
+    byId("prompt").focus();
+  }
+
+  function readEntries(){
+    try{
+      const parsed = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    }catch(error){
+      return [];
+    }
+  }
+
+  function writeEntries(entries){
+    try{
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+      return true;
+    }catch(error){
+      status.textContent = "Enregistrement impossible : le stockage du navigateur est indisponible.";
+      return false;
+    }
+  }
+
+  function renderHistory(){
+    const host = byId("history");
+    const entries = readEntries().sort((a,b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+    host.replaceChildren();
+
+    if(!entries.length){
+      const empty = document.createElement("div");
+      empty.className = "journal-empty";
+      empty.textContent = "Aucune création enregistrée pour le moment.";
+      host.appendChild(empty);
+      return;
+    }
+
+    entries.forEach(entry => {
+      const card = document.createElement("article");
+      card.className = "journal-entry";
+
+      const heading = document.createElement("h4");
+      heading.textContent = entry.title || entry.film || "Création sans titre";
+      card.appendChild(heading);
+
+      const date = document.createElement("small");
+      date.textContent = new Date(entry.updatedAt || Date.now()).toLocaleString("fr-FR");
+      card.appendChild(date);
+
+      const summary = document.createElement("p");
+      summary.textContent = entry.film ? "Film : " + entry.film : "Sujet non précisé";
+      card.appendChild(summary);
+
+      const actions = document.createElement("div");
+      actions.className = "journal-entry-actions";
+
+      const load = document.createElement("button");
+      load.type = "button";
+      load.textContent = "Charger / modifier";
+      load.addEventListener("click", () => loadEntry(entry));
+      actions.appendChild(load);
+
+      const copy = document.createElement("button");
+      copy.type = "button";
+      copy.textContent = "Copier prompt";
+      copy.addEventListener("click", () => copyText(entry.prompt || ""));
+      actions.appendChild(copy);
+
+      const remove = document.createElement("button");
+      remove.type = "button";
+      remove.textContent = "Supprimer";
+      remove.addEventListener("click", () => deleteEntry(entry.id));
+      actions.appendChild(remove);
+
+      card.appendChild(actions);
+      host.appendChild(card);
+    });
+  }
+
+  function loadEntry(entry){
+    fields.forEach(key => {
+      if(byId(key)) byId(key).value = entry[key] || "";
+    });
+    editingId = entry.id;
+    status.textContent = "Création chargée : les modifications remplaceront cette entrée.";
+    byId("title").focus();
+  }
+
+  function saveEntry(){
+    const entry = collect();
+    if(!entry.title && !entry.film){
+      status.textContent = "Ajoute au moins un nom de création ou un film avant d'enregistrer.";
+      byId("title").focus();
+      return;
+    }
+    if(!entry.prompt){
+      status.textContent = "Compose ou saisis d'abord un prompt.";
+      byId("prompt").focus();
+      return;
+    }
+
+    const entries = readEntries();
+    const now = Date.now();
+    if(editingId){
+      const index = entries.findIndex(item => item.id === editingId);
+      if(index >= 0){
+        entry.id = editingId;
+        entry.createdAt = entries[index].createdAt || now;
+        entry.updatedAt = now;
+        entries[index] = entry;
+      }else{
+        entry.id = String(now);
+        entry.createdAt = now;
+        entry.updatedAt = now;
+        entries.push(entry);
+        editingId = entry.id;
+      }
+    }else{
+      entry.id = String(now) + "-" + Math.random().toString(36).slice(2,7);
+      entry.createdAt = now;
+      entry.updatedAt = now;
+      entries.push(entry);
+      editingId = entry.id;
+    }
+
+    if(writeEntries(entries)){
+      status.textContent = "Création enregistrée dans ton journal.";
+      renderHistory();
+    }
+  }
+
+  function deleteEntry(id){
+    const entries = readEntries().filter(item => item.id !== id);
+    if(writeEntries(entries)){
+      if(editingId === id) editingId = null;
+      status.textContent = "Entrée supprimée du journal.";
+      renderHistory();
+    }
+  }
+
+  async function copyText(text){
+    if(!text){
+      status.textContent = "Aucun prompt à copier.";
+      return;
+    }
+    try{
+      await navigator.clipboard.writeText(text);
+      status.textContent = "Prompt copié dans le presse-papiers.";
+    }catch(error){
+      const area = byId("prompt");
+      area.value = text;
+      area.focus();
+      area.select();
+      status.textContent = "Sélectionne le texte puis copie-le avec Ctrl+C.";
+    }
+  }
+
+  function resetForm(){
+    fields.forEach(key => {
+      const el = byId(key);
+      if(el) el.value = "";
+    });
+    editingId = null;
+    status.textContent = "Formulaire réinitialisé. L'historique est conservé.";
+  }
+
+  byId("generate").addEventListener("click", composePrompt);
+  byId("save").addEventListener("click", saveEntry);
+  byId("reset").addEventListener("click", resetForm);
+  byId("copy").addEventListener("click", () => copyText(value("prompt")));
+  renderHistory();
+})();
+</script>
 
 </body>
 </html>
