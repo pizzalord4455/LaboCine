@@ -436,6 +436,17 @@ button:hover::after,.custom-select-trigger:hover::after,.custom-select-option:ho
 .filmography-list li{break-inside:avoid;margin-bottom:5px}
 @media(max-width:700px){.profile-layout{grid-template-columns:1fr}.cinefile-grid{grid-template-columns:1fr}.filmography-list{columns:1}}
 
+
+
+/* Retours utilisateurs */
+.feedback-panel{background:#34231d;border:1px solid rgba(215,170,82,.6);padding:25px;margin:22px 0 38px;color:var(--cream)}
+.feedback-panel h3{font-family:var(--font-title);color:var(--gold-light);margin:0 0 10px}.feedback-panel p{color:var(--muted)}
+.feedback-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.feedback-panel label{display:block;margin:10px 0 5px;color:var(--gold-light)}
+.feedback-panel select,.feedback-panel textarea{width:100%;background:#211713;color:var(--cream);border:1px solid rgba(215,170,82,.6);border-radius:3px;padding:12px;font:inherit}
+.feedback-panel textarea{min-height:105px;resize:vertical}.feedback-panel :focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+.feedback-status{margin-top:12px;color:var(--gold-light)}
+@media(max-width:700px){.feedback-fields{grid-template-columns:1fr}}
+
 </style>
 
 <style id="user-final-adjustments">
@@ -502,6 +513,12 @@ select, select option, .custom-select, .custom-select-trigger, .custom-select-va
 <button id="resetFilters" class="secondary-btn" type="button">↻ Réinitialiser les filtres</button>
 <button id="clearFavorites" class="red-btn" type="button">Vider mes favoris</button>
 </div>
+
+
+<div class="section-heading" id="feedbackHeading"><div><div class="eyebrow">Votre expérience</div><h2>Retour utilisateur</h2><p>Partagez votre avis pour améliorer LaboCiné.</p></div></div>
+<div class="feedback-panel"><h3>Votre avis nous intéresse</h3><p>Ce formulaire de démonstration enregistre votre retour uniquement dans ce navigateur.</p>
+<form id="feedbackForm"><div class="feedback-fields"><div><label for="feedbackRating">Votre satisfaction</label><select id="feedbackRating" required><option value="">Choisir une note</option><option value="5">★★★★★ — Excellent</option><option value="4">★★★★☆ — Très bien</option><option value="3">★★★☆☆ — Bien</option><option value="2">★★☆☆☆ — À améliorer</option><option value="1">★☆☆☆☆ — Décevant</option></select></div><div><label for="feedbackTopic">Sur quel sujet ?</label><select id="feedbackTopic" required><option value="">Choisir un sujet</option><option>Navigation</option><option>Films et recommandations</option><option>Réservation</option><option>Accessibilité</option><option>Autre</option></select></div></div>
+<label for="feedbackMessage">Votre commentaire</label><textarea id="feedbackMessage" maxlength="1000" required placeholder="Racontez-nous votre expérience…"></textarea><button type="submit" class="primary-btn" style="margin-top:14px">Enregistrer mon retour</button><p id="feedbackStatus" class="feedback-status" role="status" aria-live="polite"></p></form></div>
 
 <div class="section-heading">
 <div><div class="eyebrow">Notre sélection</div><h2>Les films à découvrir</h2><p>Faites défiler les affiches horizontalement pour parcourir la sélection.</p></div>
@@ -1353,6 +1370,21 @@ function renderProfile(){
 
 /* INITIALISATION */
 renderMovies();
+</script>
+<script>
+
+/* Composant : retour utilisateur */
+(function(){
+ document.addEventListener('DOMContentLoaded',function(){
+  var form=document.getElementById('feedbackForm');if(!form)return;
+  form.addEventListener('submit',function(e){e.preventDefault();if(!form.reportValidity())return;
+   var item={rating:document.getElementById('feedbackRating').value,topic:document.getElementById('feedbackTopic').value,message:document.getElementById('feedbackMessage').value.trim(),date:new Date().toISOString()};
+   if(!item.message)return;
+   try{var entries=JSON.parse(localStorage.getItem('laboCineFeedback')||'[]');if(!Array.isArray(entries))entries=[];entries.push(item);localStorage.setItem('laboCineFeedback',JSON.stringify(entries));document.getElementById('feedbackStatus').textContent='Votre retour a été enregistré sur cet appareil. Merci !';form.reset();}
+   catch(err){document.getElementById('feedbackStatus').textContent='Enregistrement impossible dans ce navigateur.';}
+  });
+ });
+})();
 </script>
 </body>
 </html>

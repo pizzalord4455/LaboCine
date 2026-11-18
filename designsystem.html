@@ -1298,6 +1298,46 @@ footer{
   .persona-avatar{width:60px;height:60px}
 }
 
+
+
+/* Sélections personnalisées & retours utilisateurs */
+.personal-banners{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:24px 0 34px}
+.personal-banner{padding:26px;min-height:185px;background:linear-gradient(125deg,#41271d,#211713);border:1px solid var(--gold);position:relative;overflow:hidden}
+.personal-banner:after{content:"✦";position:absolute;right:18px;top:0;font-size:95px;color:rgba(215,170,82,.09);pointer-events:none}
+.personal-banner .eyebrow{font-size:11px;letter-spacing:2px}.personal-banner h3{color:var(--gold-light);font-family:var(--font-title);font-size:23px;margin:10px 0}.personal-banner p{color:#e1cfb1;font-size:14px;max-width:420px}
+.personal-banner button{margin-top:10px}.feedback-panel{background:#34231d;border:1px solid rgba(215,170,82,.6);padding:25px;margin:22px 0 38px;color:var(--cream)}
+.feedback-panel h3{font-family:var(--font-title);color:var(--gold-light);margin:0 0 10px}.feedback-panel p{color:var(--muted)}
+.feedback-fields{display:grid;grid-template-columns:1fr 1fr;gap:14px}.feedback-panel label{display:block;margin:10px 0 5px;color:var(--gold-light)}
+.feedback-panel select,.feedback-panel textarea{width:100%;background:#211713;color:var(--cream);border:1px solid rgba(215,170,82,.6);border-radius:3px;padding:12px;font:inherit}
+.feedback-panel textarea{min-height:105px;resize:vertical}.feedback-panel :focus-visible{outline:2px solid var(--gold-light);outline-offset:2px}
+.feedback-status{margin-top:12px;color:var(--gold-light)}
+@media(max-width:700px){.personal-banners,.feedback-fields{grid-template-columns:1fr}.personal-banner{min-height:unset}}
+
+
+/* Menus déroulants personnalisés — même composant que index.html */
+.custom-select{position:relative;display:block;width:100%;min-width:0;color:var(--cream);font-family:var(--font-body)}
+.catalogue-tools>.custom-select{flex:1 1 220px;width:auto;min-width:190px}
+.custom-select-native{position:absolute!important;width:1px!important;height:1px!important;padding:0!important;margin:-1px!important;overflow:hidden!important;clip:rect(0,0,0,0)!important;white-space:nowrap!important;border:0!important;opacity:0!important;pointer-events:none!important}
+.custom-select-trigger{width:100%;min-height:46px;display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 15px;background:linear-gradient(145deg,#302019,#211713);color:var(--cream);border:1px solid rgba(215,170,82,.58);border-radius:9px;text-align:left;box-shadow:0 4px 12px rgba(0,0,0,.16),inset 0 1px rgba(255,255,255,.035);transition:border-color .22s,box-shadow .22s,background .22s,transform .22s}
+.custom-select-trigger:hover,.custom-select.open .custom-select-trigger{border-color:var(--gold-light);box-shadow:0 0 0 3px rgba(215,170,82,.10),0 7px 18px rgba(0,0,0,.22)}
+.custom-select-trigger:focus-visible{outline:2px solid var(--gold-light);outline-offset:3px}
+.custom-select-value{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.custom-select-chevron{flex:0 0 auto;color:var(--gold);font-size:13px;transition:transform .22s}
+.custom-select.open .custom-select-chevron{transform:rotate(180deg)}
+.custom-select-menu{position:absolute;z-index:60;top:calc(100% + 8px);left:0;right:0;max-height:min(300px,55vh);overflow-y:auto;padding:6px;background:linear-gradient(155deg,#39271e,#241812);border:1px solid rgba(215,170,82,.58);border-radius:11px;box-shadow:0 16px 38px rgba(0,0,0,.48),0 0 0 1px rgba(215,170,82,.07);opacity:0;visibility:hidden;transform:translateY(-7px) scale(.985);transform-origin:top center;transition:opacity .18s ease,transform .18s ease,visibility .18s}
+.custom-select.open .custom-select-menu{opacity:1;visibility:visible;transform:translateY(0) scale(1)}
+.custom-select-option{width:100%;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 12px;border:0;border-radius:7px;background:transparent;color:#e8d8bc;text-align:left;font:400 14px var(--font-body);cursor:pointer;transition:background .16s,color .16s, padding .16s}
+.custom-select-option:hover,.custom-select-option:focus-visible{background:rgba(215,170,82,.13);color:var(--gold-light);outline:none;padding-left:16px}
+.custom-select-option[aria-selected="true"]{background:linear-gradient(90deg,rgba(215,170,82,.20),rgba(215,170,82,.08));color:var(--gold-light);font-weight:600}
+.custom-select-check{color:var(--gold-light);font-size:15px;opacity:0;transform:scale(.7);transition:opacity .16s,transform .16s}
+.custom-select-option[aria-selected="true"] .custom-select-check{opacity:1;transform:scale(1)}
+.custom-select-menu::-webkit-scrollbar{width:6px}
+.custom-select-menu::-webkit-scrollbar-thumb{background:rgba(215,170,82,.4);border-radius:10px}
+@media(max-width:600px){.catalogue-tools>.custom-select{width:100%;min-width:0;flex:1 1 auto}}
+@media(prefers-reduced-motion:reduce){.custom-select-trigger,.custom-select-chevron,.custom-select-menu,.custom-select-option,.custom-select-check{transition:none!important}}
+
+.journal-field .custom-select,.form-demo .custom-select{width:100%}
+.journal-field .custom-select-trigger{font-size:14px}
 </style>
 </head>
 
@@ -1330,9 +1370,13 @@ footer{
   <div class="sidebar-title">Composants</div>
   <a href="#buttons">05 · Boutons</a>
   <a href="#forms">06 · Formulaires</a>
+  <a href="#custom-dropdowns">06 bis · Menus déroulants personnalisés</a>
   <a href="#navigation">07 · Navigation et filtres</a>
   <a href="#movies">08 · Cartes de films</a>
   <a href="#carousel">09 · Carrousel</a>
+  <a href="#personalized">21 · Bannières personnalisées</a>
+  <a href="#feedback">22 · Retour utilisateur</a>
+
   <a href="#tariffs">10 · Tarifs</a>
   <a href="#seats">11 · Plan de salle</a>
   <a href="#booking">12 · Réservation</a>
@@ -1987,6 +2031,36 @@ footer{
         <option>L'Aile ou la Cuisse</option>
       </select>
     </div>
+  </div>
+</section>
+
+
+<!-- 06 BIS — MENUS DÉROULANTS PERSONNALISÉS -->
+<section id="custom-dropdowns">
+  <div class="section-header">
+    <div class="eyebrow">06 bis · Composant interactif</div>
+    <h2>Menus déroulants personnalisés</h2>
+    <p>Reprise du composant de l'index : fond brun dégradé, bordure dorée, chevron animé, liste flottante et coche de sélection. Ces menus sont également utilisés dans le Journal créatif ci-dessous.</p>
+  </div>
+  <div class="card">
+    <h3>Exemple interactif · Direction artistique</h3>
+    <div class="grid-2">
+      <div class="form-demo"><label for="ds-art">Direction artistique</label><select id="ds-art">
+        <option>Affiche française vintage · années 60–70</option><option>Illustration peinte à la main</option><option>Sérigraphie rétro</option><option>Minimalisme rétro</option><option>Photomontage vintage</option><option>Illustration comique et dynamique</option>
+      </select></div>
+      <div class="form-demo"><label for="ds-palette">Palette de couleurs</label><select id="ds-palette">
+        <option>Palette officielle LaboCiné</option><option>Ocre, brique, crème, brun</option><option>Palette limitée · 2 à 3 couleurs</option><option>Couleurs libres selon le film</option>
+      </select></div>
+      <div class="form-demo"><label for="ds-typo">Typographie souhaitée</label><select id="ds-typo">
+        <option>Roboto Slab 900 + Oswald 300</option><option>Slab serif + capitales condensées</option><option>Lettrage peint</option><option>Typographie d'époque</option>
+      </select></div>
+      <div class="form-demo"><label for="ds-composition">Composition / éléments visuels</label><textarea id="ds-composition" style="min-height:90px;width:100%;padding:12px;background:var(--dark-input);color:var(--cream);border:1px solid var(--gold);border-radius:4px" placeholder="Personnages, cadrage, décor, accessoires…"></textarea></div>
+    </div>
+  </div>
+  <div class="card">
+    <h3>Règles du composant</h3>
+    <p>Le bouton reprend le libellé de l'option active. La liste s'ouvre au clic, se referme après sélection ou avec Échap et conserve le &lt;select&gt; HTML natif pour les formulaires et la logique JavaScript. Navigation au clavier : flèches, Début et Fin. Les changements se propagent via l'événement <code>change</code>.</p>
+    <p>Styles réutilisables : <code>.custom-select</code>, <code>.custom-select-trigger</code>, <code>.custom-select-menu</code>, <code>.custom-select-option</code>, <code>.custom-select-check</code>. États : survol, focus, ouvert et sélectionné. La composition reste un champ de texte libre, comme dans le Journal créatif.</p>
   </div>
 </section>
 
@@ -2923,6 +2997,14 @@ footer{
   </div>
 </section>
 
+
+<section id="personalized"><div class="section-header"><div class="eyebrow">21 · Personnalisation</div><h2>Bannières de sélections personnalisées</h2><p>Composant de mise en avant présent sur l’accueil : deux bannières adaptées aux favoris et aux genres appréciés.</p></div>
+<div class="personal-banners"><article class="personal-banner"><div class="eyebrow">Votre cinémathèque</div><h3>Vos coups de cœur</h3><p>Retrouvez les films que vous avez ajoutés à vos favoris.</p><button type="button" class="btn btn-primary">Explorer les films</button></article><article class="personal-banner"><div class="eyebrow">À découvrir</div><h3>Une sélection pour vous</h3><p>Découvrez des films selon vos préférences.</p><button type="button" class="btn btn-secondary" style="color:var(--gold-light);border-color:var(--gold)">Voir la programmation</button></article></div>
+<div class="section-note">Règles : fond brun, contour or, titres Roboto Slab, textes Oswald ; grille de deux colonnes sur ordinateur et une colonne sur mobile. Dans l’index, le contenu s’adapte aux favoris enregistrés.</div></section>
+<section id="feedback"><div class="section-header"><div class="eyebrow">22 · Expression utilisateur</div><h2>Retour utilisateur</h2><p>Formulaire de satisfaction et de commentaire utilisé sur la page d’accueil.</p></div>
+<div class="feedback-panel"><h3>Votre avis nous intéresse</h3><p>Exemple du composant : note, catégorie, commentaire et confirmation.</p><div class="feedback-fields"><div><label for="dsFeedbackRating">Votre satisfaction</label><select id="dsFeedbackRating"><option>★★★★★ — Excellent</option><option>★★★★☆ — Très bien</option><option>★★★☆☆ — Bien</option></select></div><div><label for="dsFeedbackTopic">Sur quel sujet ?</label><select id="dsFeedbackTopic"><option>Navigation</option><option>Films et recommandations</option><option>Réservation</option></select></div></div><label for="dsFeedbackMessage">Votre commentaire</label><textarea id="dsFeedbackMessage" placeholder="Racontez-nous votre expérience…"></textarea><button type="button" class="btn btn-primary" style="margin-top:14px">Enregistrer mon retour</button><p class="feedback-status">État de confirmation : « Votre retour a été enregistré sur cet appareil. »</p></div>
+<div class="section-note">Règles : champs avec labels explicites, note obligatoire, commentaire limité à 1 000 caractères, confirmation accessible via aria-live. Dans l’index, les retours sont enregistrés localement dans le navigateur (aucun envoi à un serveur).</div></section>
+
 </main>
 
 <footer>
@@ -3142,5 +3224,104 @@ footer{
 })();
 </script>
 
+<script>
+/* MENUS DÉROULANTS PERSONNALISÉS — conserve les <select> natifs pour la logique */
+function refreshCustomSelect(select){
+  const host=select?.closest(".custom-select");
+  if(!host)return;
+  const value=host.querySelector(".custom-select-value");
+  const menu=host.querySelector(".custom-select-menu");
+  if(!value||!menu)return;
+  const selected=Array.from(select.options).find(option=>option.value===select.value);
+  value.textContent=selected?.textContent||"Sélectionner…";
+  menu.querySelectorAll(".custom-select-option").forEach(button=>{
+    const active=button.dataset.value===select.value;
+    button.setAttribute("aria-selected",String(active));
+    button.querySelector(".custom-select-check").textContent=active?"✓":"";
+  });
+}
+function enhanceSelect(select){
+  if(select.dataset.customized==="true")return;
+  select.dataset.customized="true";
+  const host=document.createElement("div");
+  host.className="custom-select";
+  const trigger=document.createElement("button");
+  trigger.type="button";trigger.className="custom-select-trigger";
+  trigger.setAttribute("aria-haspopup","listbox");trigger.setAttribute("aria-expanded","false");
+  const value=document.createElement("span");value.className="custom-select-value";
+  const chevron=document.createElement("span");chevron.className="custom-select-chevron";chevron.setAttribute("aria-hidden","true");chevron.textContent="⌄";
+  trigger.append(value,chevron);
+  const menu=document.createElement("div");menu.className="custom-select-menu";menu.setAttribute("role","listbox");
+  menu.id="custom-select-list-"+Math.random().toString(36).slice(2,9);
+  trigger.setAttribute("aria-controls",menu.id);
+  select.classList.add("custom-select-native");
+  select.parentNode.insertBefore(host,select);
+  host.append(select,trigger,menu);
+
+  function close(focus=false){
+    host.classList.remove("open");trigger.setAttribute("aria-expanded","false");
+    if(focus)trigger.focus();
+  }
+  function open(){
+    document.querySelectorAll(".custom-select.open").forEach(other=>{
+      if(other!==host){other.classList.remove("open");other.querySelector(".custom-select-trigger")?.setAttribute("aria-expanded","false")}
+    });
+    host.classList.add("open");trigger.setAttribute("aria-expanded","true");
+    const active=menu.querySelector('[data-value="'+CSS.escape(select.value)+'"]');
+    (active||menu.querySelector(".custom-select-option"))?.focus();
+  }
+  function choose(option){
+    if(!option||option.disabled)return;
+    select.value=option.value;
+    select.dispatchEvent(new Event("change",{bubbles:true}));
+    refreshCustomSelect(select);close(true);
+  }
+  function rebuild(){
+    menu.innerHTML="";
+    Array.from(select.options).forEach(option=>{
+      const item=document.createElement("button");item.type="button";
+      item.className="custom-select-option";item.setAttribute("role","option");
+      item.dataset.value=option.value;item.disabled=option.disabled;
+      const label=document.createElement("span");label.textContent=option.textContent;
+      const check=document.createElement("span");check.className="custom-select-check";check.setAttribute("aria-hidden","true");
+      item.append(label,check);item.addEventListener("click",()=>choose(option));
+      item.addEventListener("keydown",event=>{
+        const items=Array.from(menu.querySelectorAll(".custom-select-option:not(:disabled)"));
+        const index=items.indexOf(item);
+        if(event.key==="ArrowDown"){event.preventDefault();items[(index+1)%items.length]?.focus()}
+        if(event.key==="ArrowUp"){event.preventDefault();items[(index-1+items.length)%items.length]?.focus()}
+        if(event.key==="Home"){event.preventDefault();items[0]?.focus()}
+        if(event.key==="End"){event.preventDefault();items.at(-1)?.focus()}
+        if(event.key==="Escape"){event.preventDefault();close(true)}
+        if(event.key==="Tab")close();
+      });
+      menu.appendChild(item);
+    });
+    refreshCustomSelect(select);
+  }
+  trigger.addEventListener("click",()=>host.classList.contains("open")?close():open());
+  trigger.addEventListener("keydown",event=>{
+    if(["ArrowDown","Enter"," "].includes(event.key)){event.preventDefault();open()}
+    if(event.key==="Escape")close();
+  });
+  select.addEventListener("change",()=>refreshCustomSelect(select));
+  rebuild();
+  new MutationObserver(rebuild).observe(select,{childList:true,subtree:true,characterData:true,attributes:true,attributeFilter:["disabled","label"]});
+}
+function initializeCustomSelects(root=document){
+  root.querySelectorAll("select:not([data-customized='true'])").forEach(enhanceSelect);
+}
+document.addEventListener("click",event=>{
+  document.querySelectorAll(".custom-select.open").forEach(host=>{
+    if(!host.contains(event.target)){host.classList.remove("open");host.querySelector(".custom-select-trigger")?.setAttribute("aria-expanded","false")}
+  });
+});
+initializeCustomSelects();
+new MutationObserver(records=>{
+  records.forEach(record=>record.addedNodes.forEach(node=>{
+    if(node.nodeType===1){if(node.matches?.("select"))enhanceSelect(node);initializeCustomSelects(node)}
+  }));
+}).observe(document.body,{childList:true,subtree:true});
+</script>
 </body>
 </html>
